@@ -287,6 +287,8 @@ export default function Navbar() {
           <button
             onClick={toggleMobileMenu}
             aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav-overlay"
             style={{
               background: "rgba(255,255,255,0.07)",
               border: "1px solid rgba(255,255,255,0.14)",
@@ -327,6 +329,7 @@ export default function Navbar() {
           MOBILE MENU OVERLAY
           ══════════════════════════════════════════ */}
       <div
+        id="mobile-nav-overlay"
         className="md:hidden"
         aria-hidden={!menuOpen}
         style={{

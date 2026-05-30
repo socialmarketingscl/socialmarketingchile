@@ -134,7 +134,7 @@ export const COMO_TRABAJAMOS = {
   ],
   quote:
     "No ejecutamos sin entender. No proponemos sin diagnosticar. No medimos sin tener objetivos claros.",
-  link: { label: "Conoce nuestro proceso completo", href: "#proceso" },
+  link: { label: "Conoce nuestro proceso completo", href: "/como-trabajamos" },
 };
 
 /* ---- SECCIÓN 5: SOLUCIONES ---- */

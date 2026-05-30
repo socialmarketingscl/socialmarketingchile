@@ -65,8 +65,8 @@ export default function HeroSection() {
         {/* ══ Columna izquierda — max 600px ══ */}
         <div style={{ maxWidth: "600px" }}>
 
-          {/* ── H1 semántico — visual badge/label para SEO ── */}
-          <h1
+          {/* ── Badge/eyebrow — visual label para SEO ── */}
+          <div
             className="hero-seo-badge"
             style={{
               display: "inline-flex",
@@ -98,11 +98,11 @@ export default function HeroSection() {
               }}
             />
             {HERO.h1Line1}
-          </h1>
+          </div>
 
-          {/* ── Frase hero grande — <p> visual, Archivo Bold ── */}
+          {/* ── H1 principal — headline visual grande, Archivo Bold ── */}
           {/* "captar, ordenar y convertir" en Kinetic Lime */}
-          <p
+          <h1
             style={{
               fontFamily: "var(--font-archivo)",
               fontWeight: 800,
@@ -121,7 +121,7 @@ export default function HeroSection() {
             <span style={{ color: "#FFFFFF" }}>
               {headlineEnd}
             </span>
-          </p>
+          </h1>
 
           {/* ── H2 semántico — descripción visible ── */}
           <h2

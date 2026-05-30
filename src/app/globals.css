@@ -871,3 +871,38 @@ body {
 ::-webkit-scrollbar-track { background: var(--level-1); }
 ::-webkit-scrollbar-thumb { background: var(--level-3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--slate-gray); }
+
+/* ============================================================
+   PREFERS REDUCED MOTION
+   Usuarios con preferencia de movimiento reducido:
+   - Marquee infinito se detiene
+   - Pulsos y glows se desactivan
+   - Reveal animations se muestran directamente sin transición
+   - Hover transforms se eliminan
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  /* Detiene el carrusel de logos */
+  .logo-marquee-track {
+    animation: none;
+  }
+
+  /* Detiene pulsos decorativos y glow del botón WhatsApp */
+  .eyebrow-dot,
+  .whatsapp-floating-button {
+    animation: none !important;
+  }
+
+  /* Reveal sections: visibles de inmediato, sin transición */
+  .res-reveal,
+  .contact-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Elimina transform en hover de cards para evitar movimiento */
+  .card-dark:hover,
+  .service-card-featured:hover {
+    transform: none;
+  }
+}
