@@ -1,0 +1,873 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TEMA DE MARCA — SOCIAL MARKETING
+   Tailwind CSS v4
+   ============================================================ */
+
+@theme inline {
+  --color-level-0:        #060A12;
+  --color-level-1:        #0A0F1A;
+  --color-level-2:        #0F172A;
+  --color-level-3:        #1E293B;
+  --color-level-4:        #141B2D;
+  --color-kinetic-lime:   #BEF264;
+  --color-slate-gray:     #475569;
+  --color-slate-light:    #94A3B8;
+  --color-calm-white:     #F8FAFC;
+
+  --font-archivo:         var(--font-archivo);
+  --font-instrument:      var(--font-instrument);
+  --font-inter:           var(--font-inter);
+}
+
+/* ============================================================
+   CSS VARIABLES GLOBALES — 4 NIVELES DE PROFUNDIDAD
+   ============================================================ */
+:root {
+  /* Sistema de profundidad */
+  --level-0:        #060A12;   /* footer — más oscuro */
+  --level-1:        #0A0F1A;   /* hero, secciones deep dark */
+  --level-2:        #0F172A;   /* body base, secciones estándar */
+  --level-3:        #1E293B;   /* cards, elementos elevados */
+  --level-4:        #141B2D;   /* secciones dark intermedias */
+
+  /* Alias de marca (compatibilidad) */
+  --ink-blue:       #0F172A;
+  --ink-blue-2:     #1E293B;
+  --ink-blue-3:     #060A12;
+
+  /* Acento + neutros */
+  --kinetic-lime:   #BEF264;
+  --slate-gray:     #475569;
+  --slate-light:    #94A3B8;
+  --calm-white:     #F8FAFC;
+  --pure-white:     #FFFFFF;
+
+  /* Bordes */
+  --border-dark:      rgba(255, 255, 255, 0.06);
+  --border-lime:      rgba(190, 242, 100, 0.10);
+  --border-medium:    rgba(255, 255, 255, 0.10);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--level-2);
+  color: var(--pure-white);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(190, 242, 100, 0.85);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px rgba(190, 242, 100, 0.12);
+}
+
+/* ============================================================
+   BOTONES GLOBALES
+   ============================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--kinetic-lime);
+  color: var(--level-2);
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  padding: 13px 26px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  opacity: 0.90;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(190, 242, 100, 0.25);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--pure-white);
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  padding: 13px 26px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-outline:hover {
+  border-color: rgba(190, 242, 100, 0.50);
+  color: var(--kinetic-lime);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   NAV LINKS (CSS hover — no JS handlers)
+   ============================================================ */
+.nav-link {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.18s ease;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* ============================================================
+   FOOTER LINKS (CSS hover — Server Component)
+   ============================================================ */
+.footer-link {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.60);
+  text-decoration: none;
+  transition: color 0.18s ease;
+  line-height: 1.5;
+}
+.footer-link:hover { color: rgba(255, 255, 255, 0.85); }
+
+.footer-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.60);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+.footer-contact-link:hover { color: rgba(255, 255, 255, 0.85); }
+
+.footer-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.60);
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+.footer-social-btn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.80);
+}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.container-sm {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 768px) {
+  .container-sm { padding: 0 20px; }
+}
+
+.section-pad    { padding: 100px 0; }
+.section-pad-lg { padding: 120px 0; }
+
+/* ============================================================
+   TIPOGRAFÍA EDITORIAL
+   ============================================================ */
+.section-h2 {
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3.2vw, 2.7rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+.section-h2-dark { color: var(--level-2); }
+
+.section-sub {
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  color: #A8AEBB;
+  margin-top: 18px;
+  line-height: 1.75;
+}
+.section-sub-dark { color: var(--slate-gray); }
+
+/* ============================================================
+   EYEBROW BADGE
+   ============================================================ */
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(190, 242, 100, 0.08);
+  border: 1px solid rgba(190, 242, 100, 0.20);
+  border-radius: 100px;
+  padding: 5px 14px;
+}
+.eyebrow-badge span {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--kinetic-lime);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.eyebrow-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--kinetic-lime);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.30; }
+}
+
+@keyframes whatsapp-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+}
+
+@keyframes whatsapp-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translate(8px, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+.whatsapp-floating-button {
+  animation: whatsapp-glow 3s ease-in-out infinite;
+}
+
+.whatsapp-tooltip {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 14px);
+  transform: translateY(-50%);
+  width: max-content;
+  max-width: 220px;
+  background: rgba(15, 23, 42, 0.72);
+  color: rgba(248, 250, 252, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 13px;
+  font-family: var(--font-inter);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.35;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+  animation: whatsapp-tooltip-in 0.32s ease-out both;
+}
+
+.whatsapp-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: rgba(15, 23, 42, 0.72);
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card-dark {
+  background-color: var(--level-3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 32px;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-dark:hover {
+  border-color: rgba(190, 242, 100, 0.30);
+  transform: scale(1.03);
+  box-shadow: 0 8px 32px rgba(190, 242, 100, 0.08);
+}
+
+/* Section eyebrow label — consistencia visual en todas las secciones */
+.section-eyebrow {
+  font-family: var(--font-instrument), serif;
+  font-style: italic;
+  font-size: 1.10rem;
+  color: var(--kinetic-lime);
+  display: block;
+  margin-bottom: 16px;
+  letter-spacing: 0.01em;
+}
+.section-eyebrow-light {
+  color: var(--level-2);
+}
+
+/* ============================================================
+   QUOTE BANNER — statement visual fuerte
+   ============================================================ */
+.banner-quote {
+  background-color: var(--level-3);
+  border-left: 3px solid var(--kinetic-lime);
+  border-radius: 0 8px 8px 0;
+  padding: 36px 44px;
+  box-shadow: inset 3px 0 32px rgba(190, 242, 100, 0.04);
+}
+.banner-quote p {
+  font-family: var(--font-instrument), serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.9vw, 1.45rem);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.58;
+  letter-spacing: 0.004em;
+}
+
+/* ============================================================
+   HERO CTA BUTTONS (Server Component — CSS hover)
+   ============================================================ */
+.hero-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background-color: var(--kinetic-lime);
+  color: var(--level-2);
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  padding: 14px 30px;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+.hero-cta-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(190,242,100,0.30);
+}
+
+/* Borde 1.5px sólido visible — Hover: borde blanco reforzado */
+.hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  color: #FFFFFF;
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  padding: 14px 30px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.22s ease, background-color 0.22s ease;
+}
+.hero-cta-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.70);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   LOGO CAROUSEL — marquee infinito CSS puro (Server Component)
+   ============================================================ */
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-marquee-track {
+  display: flex;
+  align-items: center;
+  animation: marquee-scroll 42s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+.logo-marquee-track:hover {
+  animation-play-state: paused;
+}
+.logo-item {
+  width: clamp(220px, 16vw, 292px);
+  height: 76px;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-frame {
+  position: relative;
+  width: 190px;
+  height: 68px;
+}
+.logo-carousel-img {
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.62;
+  transition: opacity 0.25s ease;
+  display: block;
+}
+.logo-item:hover .logo-carousel-img {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .hero-seo-badge {
+    max-width: calc(100vw - 72px) !important;
+    font-size: 10.5px !important;
+    letter-spacing: 0.055em !important;
+    padding: 8px 12px !important;
+  }
+
+  .hero-logo-strip {
+    margin-top: 54px !important;
+    padding-top: 18px !important;
+    padding-bottom: 22px !important;
+  }
+
+  .hero-logo-strip-label {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 14px !important;
+    padding: 0 20px;
+  }
+
+  .logo-marquee-track {
+    animation-duration: 32s;
+  }
+
+  .logo-item {
+    width: 132px;
+    height: 56px;
+  }
+
+  .logo-frame {
+    width: 112px;
+    height: 40px;
+  }
+
+  .logo-frame-seal {
+    width: 58px;
+    height: 58px;
+  }
+
+  .logo-carousel-img {
+    opacity: 0.58;
+  }
+}
+
+/* DIAGNÓSTICO CTA button (dark on light bg) */
+.diagnostico-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background-color: var(--level-2);
+  color: #FFFFFF;
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  padding: 14px 30px;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+.diagnostico-cta:hover {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+/* COMO TRABAJAMOS inline link */
+.como-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--kinetic-lime);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+.como-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.arrow-link svg {
+  transition: transform 0.2s ease;
+}
+.arrow-link:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+.arrow-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* COMO TRABAJAMOS closing statement */
+.process-quote-area {
+  width: 100%;
+  max-width: 760px;
+  margin: 64px auto 0;
+  text-align: center;
+}
+.process-quote {
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 26px 32px 0;
+  margin: 0 auto 28px;
+  font-family: var(--font-instrument), serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.15vw, 1.75rem);
+  color: rgba(255,255,255,0.84);
+  line-height: 1.42;
+  text-align: center;
+  box-shadow: none;
+}
+.process-quote::before {
+  content: '"';
+  position: absolute;
+  top: -18px;
+  left: clamp(0px, 5vw, 42px);
+  font-family: var(--font-instrument), serif;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--kinetic-lime);
+  opacity: 0.30;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .process-quote-area {
+    margin-top: 38px;
+  }
+  .process-quote {
+    padding: 22px 14px 0;
+    font-size: clamp(1.25rem, 5vw, 1.38rem);
+  }
+}
+
+/* ============================================================
+   FOOTER GRID — 4 columnas: Marca | Navegación | Soluciones | Contacto
+   ============================================================ */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 1023px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+@media (max-width: 639px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* ============================================================
+   SECTION PADDING — responsive
+   ============================================================ */
+.section-pad     { padding: clamp(64px, 8vw, 100px) 0; }
+.section-pad-lg  { padding: clamp(80px, 10vw, 120px) 0; }
+
+/* ============================================================
+   PROBLEMA CARDS GRID — responsive 2x2 → 1 col mobile
+   ============================================================ */
+.problema-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+@media (min-width: 768px) {
+  .problema-header {
+    margin-bottom: 34px !important;
+  }
+
+  .problema-header .section-eyebrow {
+    font-size: 25px;
+  }
+
+  .problema-card {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.09);
+  }
+
+  .problema-card-number {
+    color: rgba(190, 242, 100, 0.15) !important;
+  }
+
+  .problema-cards-grid {
+    margin-bottom: 0;
+  }
+
+  .problema-quote {
+    margin-top: 36px;
+    background-color: #1E293B;
+    padding: 32px 40px;
+  }
+
+  .problema-quote p {
+    font-size: clamp(1.2rem, 2.05vw, 1.62rem);
+  }
+}
+@media (max-width: 767px) {
+  .problema-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ============================================================
+   DIAGNÓSTICO GRID — 2 col desktop → 1 col mobile
+   ============================================================ */
+.diagnostico-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .diagnostico-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* ============================================================
+   TIMELINE — horizontal desktop / vertical mobile
+   ============================================================ */
+.timeline-wrapper {
+  position: relative;
+}
+/* Línea conectora — 2px, Kinetic Lime 40% — entre bordes exteriores de los círculos */
+.timeline-connector {
+  display: none;
+}
+@media (min-width: 768px) {
+  .timeline-connector {
+    display: block;
+    position: absolute;
+    top: 24px;
+    left: calc(12.5% + 24px);
+    right: calc(12.5% + 24px);
+    height: 2px;
+    background: rgba(190, 242, 100, 0.40);
+    z-index: 0;
+  }
+}
+.timeline-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+@media (min-width: 768px) {
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+/* Mobile vertical line between steps */
+.timeline-step {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+@media (max-width: 767px) {
+  /* Línea vertical conectora mobile — 2px lime */
+  .timeline-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: -32px;
+    width: 2px;
+    background: rgba(190, 242, 100, 0.35);
+  }
+  .timeline-step {
+    padding-bottom: 32px;
+  }
+}
+@media (min-width: 768px) {
+  .timeline-step {
+    display: block;
+  }
+}
+
+/* Timeline step name — margin responsive */
+.timeline-step-name {
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .timeline-step-name { margin-top: 20px; }
+}
+
+/* ============================================================
+   SOLUCIONES — grid 3 columnas
+   ============================================================ */
+.soluciones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 1023px) {
+  .soluciones-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 639px) {
+  .soluciones-grid { grid-template-columns: 1fr; }
+}
+
+/* Servicio 6 featured — span col completa en desktop */
+.service-card-featured {
+  background-color: rgba(190, 242, 100, 0.04);
+  border: 1px solid rgba(190, 242, 100, 0.28) !important;
+  border-radius: 8px;
+  padding: 32px;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.service-card-featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(190,242,100,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.service-card-featured:hover {
+  border-color: rgba(190, 242, 100, 0.55) !important;
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(190, 242, 100, 0.10);
+}
+
+/* ============================================================
+   MARKETING IA — 3 columnas
+   ============================================================ */
+.mia-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+@media (max-width: 767px) {
+  .mia-grid { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ============================================================
+   RESULTADOS — testimonials 2 columnas
+   ============================================================ */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: stretch;
+}
+@media (max-width: 767px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+}
+
+.secondary-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 767px) {
+  .secondary-cards-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   PARA QUIÉN — 2 columnas
+   ============================================================ */
+.para-quien-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 767px) {
+  .para-quien-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ============================================================
+   HERO WATERMARK — isotipo centrado en el circuito
+   ============================================================ */
+.hero-watermark-desktop {
+  position: absolute;
+  right: clamp(120px, 9vw, 220px);
+  top: 36%;
+  transform: translateY(-50%);
+  width: clamp(546px, 33.8vw, 728px);
+  height: clamp(546px, 33.8vw, 728px);
+  opacity: 0.07;
+  filter: grayscale(1) brightness(2);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+@media (max-width: 767px) {
+  .hero-watermark-desktop {
+    display: none;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--level-1); }
+::-webkit-scrollbar-thumb { background: var(--level-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--slate-gray); }
