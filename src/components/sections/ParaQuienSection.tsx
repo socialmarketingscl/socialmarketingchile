@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { HERO, PARA_QUIEN } from "@/lib/constants";
+import { PARA_QUIEN } from "@/lib/constants";
 
 /* ============================================================
    ParaQuienSection — Sección 8
@@ -78,44 +77,10 @@ export default function ParaQuienSection() {
             transition: all 0.5s ease-out 0.4s;
           }
 
-          .fit-reveal-up {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.4s ease-out 0.6s;
-          }
-
           .fit-commercial-section-active .fit-reveal-left,
-          .fit-commercial-section-active .fit-reveal-right,
-          .fit-commercial-section-active .fit-reveal-up {
+          .fit-commercial-section-active .fit-reveal-right {
             opacity: 1;
             transform: translate(0, 0);
-          }
-
-          .fit-cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #BEF264;
-            color: #0F172A;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-family: var(--font-archivo), sans-serif;
-            font-weight: 600;
-            font-size: 0.92rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-          }
-
-          .fit-cta-button svg {
-            transition: transform 0.2s ease;
-          }
-
-          .fit-cta-button:hover {
-            background: #d4f97f;
-          }
-
-          .fit-cta-button:hover svg {
-            transform: translateX(4px);
           }
         `}
       </style>
@@ -262,32 +227,6 @@ export default function ParaQuienSection() {
 
         </div>
 
-        {/* ── CTA ── */}
-        <div
-          className="fit-reveal-up"
-          style={{
-            marginTop: "40px",
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-inter)",
-              fontSize: "clamp(1rem, 1.35vw, 1.125rem)",
-              color: "#475569",
-              lineHeight: 1.6,
-              marginBottom: "18px",
-            }}
-          >
-            Si te identificas con el lado izquierdo, conversemos.
-          </p>
-          <Link href={HERO.ctaPrimary.href} className="fit-cta-button">
-            Agendar diagnóstico
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M3 7H11M8.5 4L11 7L8.5 10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -110,11 +110,11 @@ const organizationSchema = {
     addressRegion: "Región Metropolitana",
     addressCountry: "CL",
   },
-  telephone: "+56962876789",
+  telephone: "+56961533546",
   email: "contacto@socialmarketingchile.cl",
   sameAs: [
     "https://www.instagram.com/socialmarketing_cl",
-    "https://wa.me/56962876789",
+    "https://wa.me/56961533546",
   ],
   areaServed: {
     "@type": "Country",

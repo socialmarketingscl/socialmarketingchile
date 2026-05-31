@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Mail, MessageCircle, Plus } from "lucide-react";
+import { CONTACT } from "@/lib/constants";
 
-const WHATSAPP_HREF =
-  "https://wa.me/56962876789?text=Hola%2C%20estoy%20visitando%20el%20sitio%20de%20Social%20Marketing%20y%20me%20gustar%C3%ADa%20saber%20c%C3%B3mo%20pueden%20ayudar%20a%20mi%20negocio.";
+const WHATSAPP_HREF = CONTACT.whatsappUrlWithMessage;
 
 const EMAIL_HREF =
   "mailto:contacto@socialmarketingchile.cl?subject=Consulta%20desde%20sitio%20web&body=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20servicios.";

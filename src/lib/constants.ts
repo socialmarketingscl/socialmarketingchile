@@ -5,10 +5,10 @@
 
 /* ---- DATOS DE CONTACTO ---- */
 export const CONTACT = {
-  whatsapp: "+56 9 6287 6789",
-  whatsappUrl: "https://wa.me/56962876789",
+  whatsapp: "+56 9 6153 3546",
+  whatsappUrl: "https://wa.me/56961533546",
   whatsappUrlWithMessage:
-    "https://wa.me/56962876789?text=Hola%2C%20estoy%20visitando%20el%20sitio%20de%20Social%20Marketing%20y%20me%20gustar%C3%ADa%20saber%20c%C3%B3mo%20pueden%20ayudar%20a%20mi%20negocio.",
+    "https://wa.me/56961533546?text=Hola%2C%20estoy%20visitando%20el%20sitio%20de%20Social%20Marketing%20y%20me%20gustar%C3%ADa%20saber%20c%C3%B3mo%20pueden%20ayudar%20a%20mi%20negocio.",
   email: "contacto@socialmarketingchile.cl",
   instagram: "@socialmarketing_cl",
   instagramUrl: "https://www.instagram.com/socialmarketing_cl",
