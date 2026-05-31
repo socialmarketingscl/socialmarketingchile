@@ -4,6 +4,7 @@ import type { FormEvent, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
+import { pushGtmConversionEvent } from "@/lib/gtm-events";
 
 function useReveal() {
   const ref = useRef<HTMLDivElement | HTMLElement | null>(null);
@@ -167,6 +168,7 @@ export default function ContactoClient() {
         medium: payload.utmMedium,
         campaign: payload.utmCampaign,
       });
+      pushGtmConversionEvent("formulario_contacto");
 
       form.reset();
       setSubmitted(true);
