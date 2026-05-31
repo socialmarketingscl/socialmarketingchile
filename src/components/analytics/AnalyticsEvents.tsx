@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { pushGtmConversionEvent } from "@/lib/gtm-events";
 
 function getElementText(element: Element) {
   return element.textContent?.replace(/\s+/g, " ").trim() || "";
@@ -34,6 +35,7 @@ export default function AnalyticsEvents() {
       const location = getTrackingLocation(interactiveElement);
 
       if (link?.href.includes("wa.me")) {
+        pushGtmConversionEvent("clic_whatsapp");
         trackEvent("whatsapp_clicked", {
           link_text: text || "WhatsApp",
           location,
@@ -49,7 +51,11 @@ export default function AnalyticsEvents() {
         return;
       }
 
-      if (text.toLowerCase().includes("agendar diagnóstico")) {
+      const href = link?.getAttribute("href") || "";
+      const isContactLink = link ? new URL(link.href).pathname === "/contacto" || href === "/contacto" : false;
+
+      if (isContactLink || text.toLowerCase().includes("agendar diagnóstico")) {
+        pushGtmConversionEvent("cta_diagnostico");
         trackEvent("diagnostic_cta_clicked", {
           link_text: text,
           location,
