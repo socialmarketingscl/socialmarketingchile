@@ -12,7 +12,7 @@ import AnalyticsEvents from "@/components/analytics/AnalyticsEvents";
    ============================================================ */
 const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["700", "800"],
   variable: "--font-archivo",
   display: "swap",
 });

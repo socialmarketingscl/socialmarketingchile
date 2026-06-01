@@ -28,6 +28,7 @@ export default function Footer() {
                 alt="Social Marketing, agencia de marketing digital e inteligencia artificial"
                 width={1920}
                 height={373}
+                sizes="160px"
                 style={{
                   width: "min(160px, 100%)",
                   height: "auto",
@@ -219,7 +220,7 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-inter)",
               fontSize: "0.78rem",
-              color: "rgba(255,255,255,0.40)",
+              color: "#9CA3AF",
               lineHeight: 1.6,
               textAlign: "center",
               marginTop: "18px",
