@@ -53,6 +53,7 @@ export default function HeroBackground() {
           src="/logo-blanco-social-marketing-agencia-marketing-digital-ia.png"
           alt=""
           fill
+          loading="eager"
           style={{ objectFit: "contain" }}
           sizes="560px"
         />

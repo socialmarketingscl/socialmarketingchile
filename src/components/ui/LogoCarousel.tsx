@@ -74,6 +74,7 @@ export default function LogoCarousel() {
                   alt={logo.alt}
                   fill
                   sizes="220px"
+                  loading="eager"
                   className="logo-carousel-img"
                 />
               </div>

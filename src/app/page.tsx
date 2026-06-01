@@ -14,15 +14,52 @@
    El circuito SVG está SOLO en HeroSection (regla de diseño).
 */
 
-import HeroSection             from "@/components/sections/HeroSection";
-import ProblemaComercialSection from "@/components/sections/ProblemaComercialSection";
-import DiagnosticoSection       from "@/components/sections/DiagnosticoSection";
-import ComoTrabajamosSection    from "@/components/sections/ComoTrabajamosSection";
-import SolucionesSection        from "@/components/sections/SolucionesSection";
-import MarketingIASection       from "@/components/sections/MarketingIASection";
-import ResultadosSection        from "@/components/sections/ResultadosSection";
-import ParaQuienSection         from "@/components/sections/ParaQuienSection";
-import CTAFinalSection          from "@/components/sections/CTAFinalSection";
+import HeroSection from "@/components/sections/HeroSection";
+import dynamic from "next/dynamic";
+
+/* Below-fold sections: dynamic imports for code splitting.
+   SSR is kept (default) so search engines index all content.
+   The loading fallback is only shown during client-side navigation. */
+
+const ProblemaComercialSection = dynamic(
+  () => import("@/components/sections/ProblemaComercialSection"),
+  { loading: () => <div style={{ minHeight: "600px", backgroundColor: "#0F172A" }} /> },
+);
+
+const DiagnosticoSection = dynamic(
+  () => import("@/components/sections/DiagnosticoSection"),
+  { loading: () => <div style={{ minHeight: "600px", backgroundColor: "#F8FAFC" }} /> },
+);
+
+const ComoTrabajamosSection = dynamic(
+  () => import("@/components/sections/ComoTrabajamosSection"),
+  { loading: () => <div style={{ minHeight: "700px", backgroundColor: "#0A0F1A" }} /> },
+);
+
+const SolucionesSection = dynamic(
+  () => import("@/components/sections/SolucionesSection"),
+  { loading: () => <div style={{ minHeight: "800px", backgroundColor: "#0F172A" }} /> },
+);
+
+const MarketingIASection = dynamic(
+  () => import("@/components/sections/MarketingIASection"),
+  { loading: () => <div style={{ minHeight: "600px", backgroundColor: "#0A0F1A" }} /> },
+);
+
+const ResultadosSection = dynamic(
+  () => import("@/components/sections/ResultadosSection"),
+  { loading: () => <div style={{ minHeight: "800px", backgroundColor: "#F8FAFC" }} /> },
+);
+
+const ParaQuienSection = dynamic(
+  () => import("@/components/sections/ParaQuienSection"),
+  { loading: () => <div style={{ minHeight: "600px", backgroundColor: "#F8FAFC" }} /> },
+);
+
+const CTAFinalSection = dynamic(
+  () => import("@/components/sections/CTAFinalSection"),
+  { loading: () => <div style={{ minHeight: "400px", backgroundColor: "#0A0F1A" }} /> },
+);
 
 export default function HomePage() {
   return (
