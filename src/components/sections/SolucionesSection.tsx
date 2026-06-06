@@ -1,325 +1,547 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { SOLUCIONES } from "@/lib/constants";
 
-const FULL_NOTE = SOLUCIONES.footerNote;
+type RevealOptions = {
+  threshold?: number;
+  rootMargin?: string;
+};
 
-/* Observer individual por elemento */
-function useReveal(rootMargin = "0px 0px -80px 0px") {
+function useScrollReveal({ threshold = 0.2, rootMargin = "0px 0px -80px 0px" }: RevealOptions = {}) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el || visible) return;
+    const element = ref.current;
+    if (!element || isVisible) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setIsVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.25, rootMargin },
+      { threshold, rootMargin },
     );
-    observer.observe(el);
+
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [visible, rootMargin]);
-  return [ref, visible] as const;
+  }, [isVisible, rootMargin, threshold]);
+
+  return [ref, isVisible] as const;
 }
 
-const SERVICE_ICONS = [
-  <svg key="01" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-  </svg>,
-  <svg key="02" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 11l19-9-9 19-2-8-8-2z" />
-  </svg>,
-  <svg key="03" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-    <line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" />
-  </svg>,
-  <svg key="04" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-  </svg>,
-  <svg key="05" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-  </svg>,
-  <svg key="06" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" />
-    <line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" />
-    <line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" />
-    <line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" />
-    <line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" />
-  </svg>,
-];
+const SERVICE_IMAGES = [
+  "/images/servicio-estrategia-optimized.jpg",
+  "/images/servicio-publicidad.jpeg",
+  "/images/servicio-seo.jpeg",
+  "/images/servicio-redes.jpeg",
+  "/images/servicio-branding.jpeg",
+  "/images/servicio-ia.jpeg",
+] as const;
+
+const PANEL_LABELS = [
+  "Estrategia",
+  "Publicidad Digital",
+  "SEO y Google",
+  "Redes Sociales",
+  "Identidad Visual",
+] as const;
+
+const ArrowIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    <path
+      d="M4 9H14M10.5 5.5L14 9L10.5 12.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export default function SolucionesSection() {
-  /* Un observer por card */
-  const [card0Ref, card0Visible] = useReveal();
-  const [card1Ref, card1Visible] = useReveal();
-  const [card2Ref, card2Visible] = useReveal();
-  const [card3Ref, card3Visible] = useReveal();
-  const [card4Ref, card4Visible] = useReveal();
-  const [card5Ref, card5Visible] = useReveal();
-  const [noteRef,  noteVisible]  = useReveal("0px 0px -40px 0px");
+  const [activePanel, setActivePanel] = useState(1);
+  const [headerRef, headerVisible] = useScrollReveal();
+  const [panelsRef, panelsVisible] = useScrollReveal();
+  const [featuredRef, featuredVisible] = useScrollReveal();
 
-  /* Máquina de escribir para la frase de cierre */
-  const [twText, setTwText] = useState("");
-  const [twDone, setTwDone] = useState(false);
-
-  useEffect(() => {
-    if (!noteVisible) return;
-    let idx = 0;
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        idx++;
-        setTwText(FULL_NOTE.slice(0, idx));
-        if (idx >= FULL_NOTE.length) {
-          clearInterval(interval);
-          setTwDone(true);
-        }
-      }, 32);
-      return () => clearInterval(interval);
-    }, 200);
-    return () => clearTimeout(timeout);
-  }, [noteVisible]);
-
-  const cardRefs    = [card0Ref, card1Ref, card2Ref, card3Ref, card4Ref, card5Ref];
-  const cardVisibles = [card0Visible, card1Visible, card2Visible, card3Visible, card4Visible, card5Visible];
+  const panelServices = SOLUCIONES.services.slice(0, 5);
+  const featuredService = SOLUCIONES.services[5];
 
   return (
-    <section
-      id="soluciones"
-      style={{
-        backgroundColor: "var(--level-2)",
-        padding: "clamp(64px, 8vw, 100px) 0",
-        borderTop: "1px solid rgba(255,255,255,0.04)",
-      }}
-    >
+    <section id="soluciones" className="solutions-showcase">
+      <div className="solutions-top-transition" aria-hidden="true" />
+
       <style>{`
-        /* ── Card reveal ── */
-        .sol-card {
+        .solutions-showcase {
+          position: relative;
+          overflow: hidden;
+          background: #0F172A;
+          padding: 80px 0;
+        }
+
+        .solutions-top-transition {
+          position: absolute;
+          top: -2px;
+          left: 0;
+          right: 0;
+          height: 56px;
+          pointer-events: none;
+          background: linear-gradient(to bottom, #F1F5F9 0%, #0F172A 100%);
+          z-index: 0;
+        }
+
+        .solutions-container {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 32px;
+        }
+
+        .solutions-reveal {
           opacity: 0;
-          transform: translateY(25px);
-          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+          transform: translateY(28px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .sol-card.is-visible {
+
+        .solutions-reveal.is-visible {
           opacity: 1;
-          transform: none;
+          transform: translateY(0);
         }
 
-        /* Desktop: pequeño stagger por columna cuando todas las cards de una fila se ven a la vez */
-        @media (min-width: 640px) {
-          .sol-card.is-visible:nth-child(3n+2) { transition-delay: 0.12s; }
-          .sol-card.is-visible:nth-child(3n+3) { transition-delay: 0.24s; }
+        .solutions-header {
+          max-width: 640px;
+          margin-bottom: 44px;
         }
 
-        /* ── Card featured: borde y hover reforzados ── */
-        .service-card-featured {
-          border-color: rgba(190, 242, 100, 0.4) !important;
-        }
-        .service-card-featured:hover {
-          border-color: rgba(190, 242, 100, 0.7) !important;
-          box-shadow: 0 8px 32px rgba(190, 242, 100, 0.12) !important;
-        }
-
-        /* ── "Ver más" links estándar ── */
-        .sol-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-family: var(--font-inter), sans-serif;
-          font-weight: 500;
-          font-size: 0.80rem;
-          color: rgba(255, 255, 255, 0.5);
-          text-decoration: none;
-          transition: all 0.2s ease;
+        .solutions-eyebrow {
+          display: block;
+          margin-bottom: 16px;
+          color: #BEF264;
+          font-family: var(--font-instrument), serif;
+          font-size: 1.10rem;
+          font-style: italic;
           letter-spacing: 0.01em;
         }
-        .sol-link:hover {
-          color: rgba(255, 255, 255, 0.9);
-          text-decoration: underline;
-          text-underline-offset: 4px;
-        }
-        .sol-link svg { transition: transform 0.2s ease; }
-        .sol-link:hover svg { transform: translateX(4px); }
 
-        /* ── Bloque frase de cierre ── */
-        .sol-footer-note {
-          max-width: 700px;
-          margin: 48px auto 0;
-          background-color: #1E293B;
-          border-left: 3px solid #BEF264;
-          border-radius: 4px;
-          padding: 24px 32px;
-          box-shadow: inset 3px 0 32px rgba(190, 242, 100, 0.04);
+        .solutions-title {
+          margin: 0;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: clamp(1.75rem, 3.2vw, 2.7rem);
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          line-height: 1.08;
+        }
+
+        .solutions-panels {
+          display: flex;
+          gap: 8px;
+          width: 100%;
+          height: 420px;
+          overflow: hidden;
+          border-radius: 16px;
+        }
+
+        .solutions-panel {
+          position: relative;
+          height: 100%;
+          min-width: 64px;
+          width: 64px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          background: #1E293B;
+          color: #FFFFFF;
+          cursor: pointer;
+          overflow: hidden;
+          transition:
+            flex 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            background-color 0.3s ease,
+            border-color 0.3s ease;
+        }
+
+        .solutions-panel:hover {
+          background: #253447;
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .solutions-panel.is-active {
+          flex: 1 1 auto;
+          width: auto;
+          padding: 32px;
+          cursor: default;
+        }
+
+        .solutions-panel-label {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 0.88rem;
+          font-weight: 700;
+          letter-spacing: 0.13em;
+          line-height: 1;
+          text-transform: uppercase;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          white-space: nowrap;
+          transition: opacity 0.25s ease;
+        }
+
+        .solutions-panel.is-active .solutions-panel-label {
           opacity: 0;
-          transform: translateY(15px);
-          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .sol-footer-note.is-visible {
-          opacity: 1;
-          transform: none;
-        }
-        .sol-footer-note p {
-          font-family: var(--font-instrument), serif;
-          font-style: italic;
-          font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-          color: rgba(255,255,255,0.78);
-          line-height: 1.6;
-          text-align: left;
+          pointer-events: none;
         }
 
-        /* ── Cursor máquina de escribir ── */
-        .tw-cursor {
-          display: inline-block;
-          width: 2px;
-          height: 1em;
-          background-color: var(--kinetic-lime);
-          vertical-align: text-bottom;
-          margin-left: 2px;
-          animation: tw-blink 0.65s step-start infinite;
+        .solutions-panel-content {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.25s ease;
         }
-        @keyframes tw-blink { 50% { opacity: 0; } }
+
+        .solutions-panel.is-active .solutions-panel-content {
+          opacity: 1;
+          pointer-events: auto;
+          transition-delay: 0.16s;
+        }
+
+        .solutions-panel-image {
+          position: relative;
+          flex: 0 0 45%;
+          height: 100%;
+          min-height: 0;
+          overflow: hidden;
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 0.4s ease 0.2s;
+        }
+
+        .solutions-panel.is-active .solutions-panel-image {
+          opacity: 1;
+        }
+
+        .solutions-panel-copy {
+          flex: 1;
+          min-width: 0;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+        }
+
+        .solutions-panel.is-active .solutions-panel-copy {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .solutions-panel-title {
+          margin: 0 0 16px;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 1.5rem;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          line-height: 1.08;
+        }
+
+        .solutions-panel-description {
+          max-width: 410px;
+          margin: 0 0 26px;
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+          line-height: 1.75;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .solutions-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          color: #BEF264;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.95rem;
+          font-weight: 700;
+          text-decoration: none;
+          transition: text-decoration-color 0.2s ease, gap 0.2s ease;
+        }
+
+        .solutions-link:hover {
+          gap: 14px;
+          text-decoration: underline;
+          text-underline-offset: 5px;
+        }
+
+        .solutions-featured {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          width: 100%;
+          margin-top: 24px;
+          padding: 32px 40px;
+          border: 2px solid #BEF264;
+          border-radius: 16px;
+          background: #1E293B;
+          overflow: hidden;
+        }
+
+        .solutions-featured-copy {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .solutions-badge {
+          display: inline-block;
+          margin-bottom: 18px;
+          padding: 5px 14px;
+          border-radius: 999px;
+          background: #BEF264;
+          color: #0F172A;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.72rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .solutions-featured-title {
+          margin: 0 0 14px;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 1.5rem;
+          font-weight: 800;
+          letter-spacing: -0.035em;
+          line-height: 1.08;
+        }
+
+        .solutions-featured-description {
+          max-width: 520px;
+          margin: 0 0 24px;
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+          line-height: 1.75;
+        }
+
+        .solutions-featured-image {
+          position: relative;
+          flex: 0 0 45%;
+          height: 250px;
+          overflow: hidden;
+          border-radius: 12px;
+        }
+
+        .solutions-mobile-list {
+          display: none;
+        }
+
+        .solutions-mobile-card {
+          overflow: hidden;
+          border-radius: 12px;
+          background: #1E293B;
+          padding: 20px;
+        }
+
+        .solutions-mobile-card.is-featured {
+          border: 2px solid #BEF264;
+        }
+
+        .solutions-mobile-image {
+          position: relative;
+          width: 100%;
+          height: 180px;
+          margin-bottom: 18px;
+          overflow: hidden;
+          border-radius: 8px;
+        }
+
+        .solutions-mobile-title {
+          margin: 0 0 10px;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 1.25rem;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+        }
+
+        .solutions-mobile-description {
+          margin: 0 0 18px;
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.9rem;
+          line-height: 1.65;
+        }
+
+        @media (min-width: 768px) {
+          .solutions-showcase {
+            padding: 112px 0;
+          }
+
+          .solutions-eyebrow {
+            font-size: 25px;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .solutions-showcase {
+            padding: 76px 0;
+          }
+
+          .solutions-container {
+            padding: 0 20px;
+          }
+
+          .solutions-header {
+            margin-bottom: 32px;
+          }
+
+          .solutions-title {
+            font-size: clamp(2rem, 9.5vw, 2.65rem);
+          }
+
+          .solutions-panels,
+          .solutions-featured {
+            display: none;
+          }
+
+          .solutions-mobile-list {
+            display: grid;
+            gap: 14px;
+          }
+        }
       `}</style>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px" }}>
-
-        {/* ── Encabezado ── */}
-        <div style={{ maxWidth: "720px", marginBottom: "56px" }}>
-          <span className="section-eyebrow">— Soluciones</span>
-          <h2 className="section-h2" style={{ marginBottom: "20px" }}>{SOLUCIONES.h2}</h2>
-          <p className="section-sub">{SOLUCIONES.subtitle}</p>
-        </div>
-
-        {/* ── Grid de servicios ── */}
-        <div className="soluciones-grid">
-          {SOLUCIONES.services.map((service, i) =>
-            service.featured ? (
-              /* ── Card 06 — featured ── */
-              <div
-                key={service.number}
-                ref={cardRefs[i]}
-                className={`service-card-featured sol-card${cardVisibles[i] ? " is-visible" : ""}`}
-              >
-                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "22px" }}>
-                  <div
-                    style={{
-                      width: "44px", height: "44px", borderRadius: "9px",
-                      backgroundColor: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.10)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "rgba(255,255,255,0.70)",
-                    }}
-                  >
-                    {SERVICE_ICONS[i]}
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px" }}>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-archivo)", fontWeight: 800,
-                        fontSize: "1.3rem", color: "rgba(190, 242, 100, 0.15)",
-                        letterSpacing: "-0.02em", lineHeight: 1,
-                      }}
-                    >
-                      {service.number}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-inter)", fontWeight: 600,
-                        fontSize: "0.68rem", color: "var(--kinetic-lime)",
-                        letterSpacing: "0.10em", textTransform: "uppercase",
-                        backgroundColor: "rgba(190,242,100,0.08)",
-                        border: "1px solid rgba(190,242,100,0.18)",
-                        borderRadius: "100px", padding: "4px 12px",
-                      }}
-                    >
-                      Diferenciador
-                    </span>
-                  </div>
-                </div>
-
-                <h3 style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: "1.10rem", color: "#FFFFFF", letterSpacing: "-0.01em", marginBottom: "12px" }}>
-                  {service.name}
-                </h3>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.875rem", color: "#A8AEBB", lineHeight: 1.75, marginBottom: "24px" }}>
-                  {service.description}
-                </p>
-                <Link href={service.href} className="como-link arrow-link" style={{ fontSize: "0.82rem" }}>
-                  Ver más
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M3 7H11M8.5 4L11 7L8.5 10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              </div>
-            ) : (
-              /* ── Cards estándar 01–05 ── */
-              <div
-                key={service.number}
-                ref={cardRefs[i]}
-                className={`card-dark sol-card${cardVisibles[i] ? " is-visible" : ""}`}
-              >
-                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "20px" }}>
-                  <div
-                    style={{
-                      width: "42px", height: "42px", borderRadius: "9px",
-                      backgroundColor: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.10)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "rgba(255,255,255,0.70)",
-                    }}
-                  >
-                    {SERVICE_ICONS[i]}
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-archivo)", fontWeight: 800,
-                      fontSize: "1.3rem", color: "rgba(190, 242, 100, 0.15)",
-                      letterSpacing: "-0.02em", lineHeight: 1,
-                    }}
-                  >
-                    {service.number}
-                  </span>
-                </div>
-
-                <h3 style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: "1rem", color: "#FFFFFF", letterSpacing: "-0.01em", marginBottom: "10px" }}>
-                  {service.name}
-                </h3>
-                <p style={{ fontFamily: "var(--font-inter)", fontSize: "0.855rem", color: "#A8AEBB", lineHeight: 1.75, marginBottom: "20px" }}>
-                  {service.description}
-                </p>
-                <Link href={service.href} className="sol-link">
-                  Ver más
-                  <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M3 7H11M8.5 4L11 7L8.5 10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              </div>
-            )
-          )}
-        </div>
-
-        {/* ── Frase de cierre — máquina de escribir ── */}
+      <div className="solutions-container">
         <div
-          ref={noteRef}
-          className={`sol-footer-note${noteVisible ? " is-visible" : ""}`}
+          ref={headerRef}
+          className={`solutions-header solutions-reveal${headerVisible ? " is-visible" : ""}`}
         >
-          <p>
-            {noteVisible ? (
-              <>
-                {twText}
-                {!twDone && <span className="tw-cursor" aria-hidden="true" />}
-              </>
-            ) : (
-              <span style={{ visibility: "hidden" }}>{FULL_NOTE}</span>
-            )}
-          </p>
+          <span className="solutions-eyebrow">— Soluciones</span>
+          <h2 className="solutions-title">{SOLUCIONES.h2}</h2>
         </div>
 
+        <div
+          ref={panelsRef}
+          className={`solutions-panels solutions-reveal${panelsVisible ? " is-visible" : ""}`}
+          style={{ transitionDelay: panelsVisible ? "200ms" : "0ms" }}
+        >
+          {panelServices.map((service, index) => {
+            const isActive = activePanel === index;
+
+            return (
+              <div
+                key={service.number}
+                role="button"
+                tabIndex={0}
+                className={`solutions-panel${isActive ? " is-active" : ""}`}
+                onClick={() => setActivePanel(index)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActivePanel(index);
+                  }
+                }}
+                aria-expanded={isActive}
+                aria-label={`Ver servicio ${service.name}`}
+              >
+                <span className="solutions-panel-label">{PANEL_LABELS[index]}</span>
+                <div className="solutions-panel-content">
+                  <div className="solutions-panel-image">
+                    <Image
+                      src={SERVICE_IMAGES[index]}
+                      alt={`Servicio de ${service.name} de Social Marketing`}
+                      fill
+                      sizes="(min-width: 768px) 38vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="solutions-panel-copy">
+                    <h3 className="solutions-panel-title">{service.name}</h3>
+                    <p className="solutions-panel-description">{service.description}</p>
+                    <Link
+                      href={service.href}
+                      className="solutions-link"
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      Ver servicio <ArrowIcon />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {featuredService && (
+          <div
+            ref={featuredRef}
+            className={`solutions-featured solutions-reveal${featuredVisible ? " is-visible" : ""}`}
+            style={{ transitionDelay: featuredVisible ? "400ms" : "0ms" }}
+          >
+            <div className="solutions-featured-copy">
+              <span className="solutions-badge">Diferenciador</span>
+              <h3 className="solutions-featured-title">{featuredService.name}</h3>
+              <p className="solutions-featured-description">{featuredService.description}</p>
+              <Link href={featuredService.href} className="solutions-link">
+                Ver servicio <ArrowIcon />
+              </Link>
+            </div>
+            <div className="solutions-featured-image">
+              <Image
+                src={SERVICE_IMAGES[5]}
+                alt={`Servicio de ${featuredService.name} de Social Marketing`}
+                fill
+                sizes="(min-width: 768px) 45vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="solutions-mobile-list">
+          {SOLUCIONES.services.map((service, index) => (
+            <article
+              key={service.number}
+              className={`solutions-mobile-card${service.featured ? " is-featured" : ""}`}
+            >
+              <div className="solutions-mobile-image">
+                <Image
+                  src={SERVICE_IMAGES[index]}
+                  alt={`Servicio de ${service.name} de Social Marketing`}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+              {service.featured && <span className="solutions-badge">Diferenciador</span>}
+              <h3 className="solutions-mobile-title">{service.name}</h3>
+              <p className="solutions-mobile-description">{service.description}</p>
+              <Link href={service.href} className="solutions-link">
+                Ver servicio <ArrowIcon />
+              </Link>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 /* Home — Social Marketing Chile
    Pasos 3 + 4: Secciones 1–9 completas
    ─────────────────────────────────────────────────────────
-   1. HeroSection          → #0A0F1A + glow + circuito SVG (exclusivo)
+   1. HeroSection          → #0A0F1A + imagen editorial + glow ambiental
    2. ProblemaComercial    → #0F172A (level-2) + 4 pain cards
    3. Diagnóstico          → #F8FAFC (light) — quiebre visual
    4. ComoTrabajamos       → #0A0F1A (level-1) + timeline
@@ -11,7 +11,7 @@
    8. ParaQuién            → #F8FAFC (light) — segundo quiebre
    9. CTAFinal             → #0A0F1A + glow lime centrado
    ─────────────────────────────────────────────────────────
-   El circuito SVG está SOLO en HeroSection (regla de diseño).
+   Hero usa imagen real como recurso visual principal.
 */
 
 import HeroSection             from "@/components/sections/HeroSection";

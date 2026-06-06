@@ -842,29 +842,6 @@ body {
 }
 
 /* ============================================================
-   HERO WATERMARK — isotipo centrado en el circuito
-   ============================================================ */
-.hero-watermark-desktop {
-  position: absolute;
-  right: clamp(120px, 9vw, 220px);
-  top: 36%;
-  transform: translateY(-50%);
-  width: clamp(546px, 33.8vw, 728px);
-  height: clamp(546px, 33.8vw, 728px);
-  opacity: 0.07;
-  filter: grayscale(1) brightness(2);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-
-@media (max-width: 767px) {
-  .hero-watermark-desktop {
-    display: none;
-  }
-}
-
-/* ============================================================
    SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar { width: 5px; }

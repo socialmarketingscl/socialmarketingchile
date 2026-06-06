@@ -170,6 +170,16 @@ export default function CTAFinalSection() {
               transform: scale(1.14);
             }
           }
+
+          .final-cta-tagline {
+            font-size: 1.10rem;
+          }
+
+          @media (min-width: 768px) {
+            .final-cta-tagline {
+              font-size: 25px;
+            }
+          }
         `}
       </style>
       {/* Glow ambiental — fondo, sin circuito */}
@@ -202,11 +212,10 @@ export default function CTAFinalSection() {
       >
         {/* Tagline pequeño arriba */}
         <p
-          className="final-cta-reveal"
+          className="final-cta-reveal final-cta-tagline"
           style={{
             fontFamily: "var(--font-instrument)",
             fontStyle: "italic",
-            fontSize: "1rem",
             color: "rgba(255,255,255,0.66)",
             marginBottom: "20px",
             letterSpacing: "0.01em",
@@ -221,10 +230,10 @@ export default function CTAFinalSection() {
           style={{
             fontFamily: "var(--font-archivo)",
             fontWeight: 800,
-            fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+            fontSize: "clamp(1.75rem, 3.2vw, 2.7rem)",
             color: "#FFFFFF",
             lineHeight: 1.08,
-            letterSpacing: "-0.028em",
+            letterSpacing: "-0.025em",
             marginBottom: "24px",
           }}
         >

@@ -89,7 +89,7 @@ export default function HeroSection() {
     >
       <div className="hero-bg-wrapper absolute inset-0 opacity-50 md:opacity-100" aria-hidden="true">
         <Image
-          src="/images/hero-bg.png"
+          src="/images/hero-bg-optimized.jpg"
           alt=""
           fill
           priority

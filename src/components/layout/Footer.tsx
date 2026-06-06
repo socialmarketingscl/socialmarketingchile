@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FOOTER, CONTACT, SOLUCIONES } from "@/lib/constants";
+import { FOOTER, CONTACT, MARKETING_IA, SOLUCIONES } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -201,8 +201,23 @@ export default function Footer() {
             {FOOTER.seoLocal}
           </p>
 
+          <p
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontWeight: 600,
+              fontSize: "0.65rem",
+              color: "rgba(255,255,255,0.58)",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              marginBottom: "10px",
+              textAlign: "center",
+            }}
+          >
+            Sobre Social Marketing
+          </p>
+
           {/* Párrafo AEO — visible para Google y motores IA (M2 resuelto) */}
-            <p
+          <p
             style={{
               fontFamily: "var(--font-inter)",
               fontSize: "0.78rem",
@@ -213,7 +228,7 @@ export default function Footer() {
               textAlign: "center",
             }}
           >
-            {FOOTER.aeoShort}
+            {MARKETING_IA.aeo}
           </p>
           <p
             style={{

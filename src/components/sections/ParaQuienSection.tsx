@@ -82,12 +82,18 @@ export default function ParaQuienSection() {
             opacity: 1;
             transform: translate(0, 0);
           }
+
+          @media (min-width: 768px) {
+            .para-quien-header .section-eyebrow {
+              font-size: 25px;
+            }
+          }
         `}
       </style>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px" }}>
 
         {/* ── Encabezado ── */}
-        <div style={{ maxWidth: "620px", marginBottom: "52px" }}>
+        <div className="para-quien-header" style={{ maxWidth: "620px", marginBottom: "52px" }}>
           <span className="section-eyebrow section-eyebrow-light" style={{ color: "var(--level-2)" }}>
             — Para quién es
           </span>

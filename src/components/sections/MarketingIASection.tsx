@@ -1,50 +1,21 @@
 "use client";
 
+import Link from "next/link";
+import { Brain, Target, TrendingUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MARKETING_IA } from "@/lib/constants";
 
-/* ============================================================
-   MarketingIASection — Sección 6
-   Fondo: #0A0F1A (level-1)
-   3 columnas de capacidades + quote con separador + párrafo AEO
-   Bullets: guiones lime — NO checks (checks = sección 8)
-   ============================================================ */
-
-/* Icono por columna */
-const COL_ICONS = [
-  /* Marketing Digital — trending up */
-  <svg key="mkt" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--kinetic-lime)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-    <polyline points="17 6 23 6 23 12" />
-  </svg>,
-  /* Inteligencia Artificial — cpu */
-  <svg key="ia" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--kinetic-lime)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="4" y="4" width="16" height="16" rx="2" />
-    <rect x="9" y="9" width="6" height="6" />
-    <line x1="9"  y1="1"  x2="9"  y2="4"  />
-    <line x1="15" y1="1"  x2="15" y2="4"  />
-    <line x1="9"  y1="20" x2="9"  y2="23" />
-    <line x1="15" y1="20" x2="15" y2="23" />
-    <line x1="20" y1="9"  x2="23" y2="9"  />
-    <line x1="20" y1="14" x2="23" y2="14" />
-    <line x1="1"  y1="9"  x2="4"  y2="9"  />
-    <line x1="1"  y1="14" x2="4"  y2="14" />
-  </svg>,
-  /* Conversión Comercial — target */
-  <svg key="conv" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--kinetic-lime)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="6" />
-    <circle cx="12" cy="12" r="2" />
-  </svg>,
-];
-
-
-function useReveal(rootMargin = "0px 0px -80px 0px") {
-  const ref = useRef<HTMLDivElement | null>(null);
+function useReveal<T extends HTMLElement = HTMLDivElement>(
+  threshold = 0.2,
+  rootMargin = "0px 0px -80px 0px",
+) {
+  const ref = useRef<T | null>(null);
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el || visible) return;
+    const element = ref.current;
+    if (!element || visible) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -52,229 +23,302 @@ function useReveal(rootMargin = "0px 0px -80px 0px") {
           observer.disconnect();
         }
       },
-      { threshold: 0.2, rootMargin },
+      { threshold, rootMargin },
     );
-    observer.observe(el);
+
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [visible, rootMargin]);
+  }, [rootMargin, threshold, visible]);
+
   return [ref, visible] as const;
 }
 
-export default function MarketingIASection() {
-  const [col0Ref, col0Visible] = useReveal();
-  const [col1Ref, col1Visible] = useReveal();
-  const [col2Ref, col2Visible] = useReveal();
+const ICONS = [
+  <TrendingUp key="marketing" size={24} aria-hidden="true" />,
+  <Brain key="ia" size={24} aria-hidden="true" />,
+  <Target key="conversion" size={24} aria-hidden="true" />,
+];
 
-  const colRefs    = [col0Ref, col1Ref, col2Ref];
-  const colVisibles = [col0Visible, col1Visible, col2Visible];
+export default function MarketingIASection() {
+  const [headerRef, headerVisible] = useReveal<HTMLDivElement>();
+  const [cardsRef, cardsVisible] = useReveal<HTMLDivElement>();
+  const [ctaRef, ctaVisible] = useReveal<HTMLDivElement>();
 
   return (
-    <section
-      id="ia-automatizacion"
-      style={{
-        backgroundColor: "#0A0F1A",
-        padding: "clamp(64px, 8vw, 100px) 0",
-        borderTop: "1px solid rgba(255,255,255,0.04)",
-      }}
-    >
+    <section id="ia-automatizacion" className="mia-section">
       <style>{`
-        /* ── Column reveal — each enters from its own direction ── */
-        .mia-col {
-          opacity: 0;
-          transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+        .mia-section {
+          position: relative;
+          overflow: hidden;
+          background: #F1F5F9;
+          padding: 80px 0;
         }
-        .mia-col-0 { transform: translateX(-40px); }
-        .mia-col-1 { transform: translateY(30px); }
-        .mia-col-2 { transform: translateX(40px); }
-        .mia-col.is-visible {
-          opacity: 1;
-          transform: none;
-        }
-        /* Stagger: col 1 slightly after col 0, col 2 after col 1 */
-        .mia-col-1.is-visible { transition-delay: 0.15s; }
-        .mia-col-2.is-visible { transition-delay: 0.30s; }
 
-        /* ── Bullet reveal — staggered after column appears ── */
-        .mia-bullet {
-          opacity: 0;
-          transform: translateX(-8px);
-          transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+        .mia-section::before {
+          content: "";
+          position: absolute;
+          top: -2px;
+          left: 0;
+          right: 0;
+          height: 56px;
+          pointer-events: none;
+          background: linear-gradient(to bottom, #0F172A 0%, #F1F5F9 100%);
+          z-index: 0;
         }
-        .mia-col.is-visible .mia-bullet {
-          opacity: 1;
-          transform: none;
-        }
-        .mia-col.is-visible .mia-bullet:nth-child(1)  { transition-delay: 0.25s; }
-        .mia-col.is-visible .mia-bullet:nth-child(2)  { transition-delay: 0.35s; }
-        .mia-col.is-visible .mia-bullet:nth-child(3)  { transition-delay: 0.45s; }
-        .mia-col.is-visible .mia-bullet:nth-child(4)  { transition-delay: 0.55s; }
-        .mia-col.is-visible .mia-bullet:nth-child(5)  { transition-delay: 0.65s; }
-        .mia-col.is-visible .mia-bullet:nth-child(6)  { transition-delay: 0.75s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(1) { transition-delay: 0.40s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(2) { transition-delay: 0.50s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(3) { transition-delay: 0.60s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(4) { transition-delay: 0.70s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(5) { transition-delay: 0.80s; }
-        .mia-col-1.is-visible .mia-bullet:nth-child(6) { transition-delay: 0.90s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(1) { transition-delay: 0.55s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(2) { transition-delay: 0.65s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(3) { transition-delay: 0.75s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(4) { transition-delay: 0.85s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(5) { transition-delay: 0.95s; }
-        .mia-col-2.is-visible .mia-bullet:nth-child(6) { transition-delay: 1.05s; }
 
-        /* ── Desktop: vertical separators between columns ── */
+        .mia-container {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 32px;
+        }
+
+        .mia-reveal {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .mia-reveal.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .mia-header {
+          max-width: 720px;
+          margin-bottom: 56px;
+        }
+
+        .mia-eyebrow {
+          display: block;
+          margin-bottom: 16px;
+          color: #475569;
+          font-family: var(--font-instrument), serif;
+          font-size: 1.10rem;
+          font-style: italic;
+          line-height: 1;
+          letter-spacing: 0.01em;
+        }
+
+        .mia-title {
+          max-width: 720px;
+          margin: 0 0 20px;
+          color: #0F172A;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: clamp(1.75rem, 3.2vw, 2.7rem);
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          line-height: 1.08;
+        }
+
+        .mia-subtitle {
+          max-width: 720px;
+          margin: 0;
+          color: #475569;
+          font-family: var(--font-inter), sans-serif;
+          font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+          line-height: 1.75;
+        }
+
+        .mia-cards {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 24px;
+          margin-bottom: 48px;
+        }
+
+        .mia-card {
+          min-height: 100%;
+          border: 1px solid #E2E8F0;
+          border-radius: 16px;
+          background: #FFFFFF;
+          padding: 32px;
+          opacity: 0;
+          transform: translateY(40px);
+          transition:
+            opacity 0.5s ease-out,
+            transform 0.5s ease-out,
+            border-color 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+        }
+
+        .mia-card.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .mia-card.is-featured {
+          border-color: rgba(190, 242, 100, 0.40);
+          background: #FFFFFF;
+          box-shadow: 0 0 20px rgba(190, 242, 100, 0.05);
+        }
+
+        .mia-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(190, 242, 100, 0.30);
+          background: #FFFFFF;
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .mia-icon {
+          width: 48px;
+          height: 48px;
+          margin-bottom: 24px;
+          border-radius: 12px;
+          background: rgba(190, 242, 100, 0.10);
+          color: #BEF264;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mia-card-title {
+          margin: 0 0 20px;
+          color: #0F172A;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 1.25rem;
+          font-weight: 800;
+          letter-spacing: -0.015em;
+          line-height: 1.18;
+        }
+
+        .mia-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .mia-list-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #475569;
+          font-family: var(--font-inter), sans-serif;
+          font-size: clamp(0.92rem, 1.2vw, 1rem);
+          line-height: 1.55;
+        }
+
+        .mia-dash {
+          width: 16px;
+          height: 2px;
+          border-radius: 999px;
+          background: #BEF264;
+          flex-shrink: 0;
+        }
+
+        .mia-cta-wrap {
+          display: flex;
+          justify-content: center;
+        }
+
+        .mia-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          border-radius: 999px;
+          background: #BEF264;
+          color: #0F172A;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.95rem;
+          font-weight: 700;
+          padding: 16px 32px;
+          text-decoration: none;
+          transition: filter 0.2s ease, transform 0.2s ease;
+        }
+
+        .mia-cta:hover {
+          filter: brightness(1.1);
+          transform: translateY(-1px);
+        }
+
         @media (min-width: 768px) {
-          .mia-col-0, .mia-col-1 {
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+          .mia-section {
+            padding: 112px 0;
           }
-          .mia-col-2 {
-            border-right: none;
+
+          .mia-eyebrow {
+            font-size: 25px;
           }
         }
 
-        /* ── Mobile: horizontal separators between stacked columns ── */
         @media (max-width: 767px) {
-          .mia-col-0, .mia-col-1 {
-            border-right: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 24px;
-            margin-bottom: 24px;
+          .mia-section {
+            padding: 76px 0;
           }
-          .mia-col-2 {
-            border-bottom: none;
-            border-right: none;
+
+          .mia-container {
+            padding: 0 20px;
+          }
+
+          .mia-header {
+            margin-bottom: 42px;
+          }
+
+          .mia-cards {
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+          }
+
+          .mia-card {
+            padding: 24px;
+          }
+
+          .mia-card.is-visible:nth-child(2) {
+            transition-delay: 100ms;
+          }
+
+          .mia-card.is-visible:nth-child(3) {
+            transition-delay: 200ms;
+          }
+
+          .mia-cta {
+            width: 100%;
           }
         }
-
       `}</style>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px" }}>
-
-        {/* ── Encabezado ── */}
-        <div style={{ maxWidth: "800px", marginBottom: "64px" }}>
-          <span className="section-eyebrow">— IA y automatización</span>
-          <h2 className="section-h2" style={{ marginBottom: "20px" }}>
-            {MARKETING_IA.h2}
-          </h2>
-          <p className="section-sub">{MARKETING_IA.intro}</p>
+      <div className="mia-container">
+        <div ref={headerRef} className={`mia-header mia-reveal${headerVisible ? " is-visible" : ""}`}>
+          <span className="mia-eyebrow">— IA y automatización</span>
+          <h2 className="mia-title">{MARKETING_IA.h2}</h2>
+          <p className="mia-subtitle">{MARKETING_IA.intro}</p>
         </div>
 
-        {/* ── 3 columnas — bullets con guiones lime ── */}
-        <div
-          className="mia-grid"
-          style={{
-            marginBottom: "64px",
-            borderRadius: "8px",
-            overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
-          {MARKETING_IA.columns.map((col, i) => (
-            <div
-              key={col.title}
-              ref={colRefs[i]}
-              className={`mia-col mia-col-${i}${colVisibles[i] ? " is-visible" : ""}`}
-              style={{
-                padding: "36px 32px",
-                backgroundColor: i === 1 ? "rgba(255,255,255,0.025)" : "transparent",
-              }}
+        <div ref={cardsRef} className="mia-cards">
+          {MARKETING_IA.columns.map((column, index) => (
+            <article
+              key={column.title}
+              className={`mia-card${index === 1 ? " is-featured" : ""}${cardsVisible ? " is-visible" : ""}`}
+              style={{ transitionDelay: cardsVisible ? `${index * 200}ms` : "0ms" }}
             >
-              {/* Icono */}
-              <div
-                style={{
-                  width: "46px",
-                  height: "46px",
-                  borderRadius: "10px",
-                  backgroundColor: "rgba(190,242,100,0.07)",
-                  border: "1px solid rgba(190,242,100,0.15)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                {COL_ICONS[i]}
-              </div>
-
-              {/* Título de columna */}
-              <h3
-                style={{
-                  fontFamily: "var(--font-archivo)",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "#FFFFFF",
-                  letterSpacing: "-0.01em",
-                  marginBottom: "20px",
-                }}
-              >
-                {col.title}
-              </h3>
-
-              {/* Items — guión lime como bullet */}
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "11px" }}>
-                {col.items.map((item) => (
-                  <li
-                    key={item}
-                    className="mia-bullet"
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      gap: "10px",
-                      fontFamily: "var(--font-inter)",
-                      fontSize: "0.875rem",
-                      color: "#A8AEBB",
-                      lineHeight: 1.55,
-                    }}
-                  >
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        color: "var(--kinetic-lime)",
-                        fontWeight: 700,
-                        fontSize: "1rem",
-                        flexShrink: 0,
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      —
-                    </span>
-                    {item}
+              <div className="mia-icon">{ICONS[index]}</div>
+              <h3 className="mia-card-title">{column.title}</h3>
+              <ul className="mia-list">
+                {column.items.map((item) => (
+                  <li key={item} className="mia-list-item">
+                    <span className="mia-dash" aria-hidden="true" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* ── Párrafo AEO — label + texto para Google y motores IA ── */}
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.04)", paddingTop: "32px" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-inter)",
-              fontWeight: 600,
-              fontSize: "0.65rem",
-              color: "rgba(168,174,187,0.75)",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              marginBottom: "10px",
-            }}
-          >
-            Sobre Social Marketing
-          </p>
-          <p
-            style={{
-              fontFamily: "var(--font-inter)",
-              fontSize: "0.78rem",
-              color: "#A8AEBB",
-              lineHeight: 1.82,
-              maxWidth: "760px",
-            }}
-          >
-            {MARKETING_IA.aeo}
-          </p>
+        <div ref={ctaRef} className={`mia-cta-wrap mia-reveal${ctaVisible ? " is-visible" : ""}`} style={{ transitionDelay: ctaVisible ? "600ms" : "0ms" }}>
+          <Link href="/soluciones/sistemas-de-ventas-con-ia" className="mia-cta">
+            Ver cómo funciona
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
-
       </div>
     </section>
   );

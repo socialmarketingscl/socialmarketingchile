@@ -1,24 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { RESULTADOS } from "@/lib/constants";
-
-/* ============================================================
-   ResultadosSection — Sección 7
-   Fondo: #F8FAFC (calm-white) — quiebre visual claro
-   3 testimoniales featured en grid de 3 columnas
-   ============================================================ */
 
 /* Amore no está en constants.ts — se define aquí */
 const AMORE_TESTIMONIAL = {
-  quote: "Amore pasó de vender solo por WhatsApp a tener una presencia real en Instagram. Nos armaron la identidad visual, el contenido y las campañas en fechas clave. Hoy el perfil genera consultas solo, sin depender solo del boca a boca.",
+  quote:
+    "Amore pasó de vender solo por WhatsApp a tener una presencia real en Instagram. Nos armaron la identidad visual, el contenido y las campañas en fechas clave. Hoy el perfil genera consultas solo, sin depender solo del boca a boca.",
   author: "Luciano Cataldo",
   role: "Fundador de Amore",
   metrics: [
-    { value: "+4.617", label: "seguidores construidos desde cero" },
-    { value: "3.685",  label: "visualizaciones mensuales en Instagram" },
+    { value: "+4.617", label: "seguidores — desde cero en 5 meses" },
+    { value: "3.685", label: "visualizaciones mensuales en Instagram" },
   ],
   services: ["Branding", "Gestión de redes sociales", "Meta Ads", "Contenido", "Campañas estacionales"],
 };
@@ -29,6 +24,14 @@ const EVIDENCE: string[][] = [
   ["/images/evidencia/Gasfiteria-y-Destapes-evidencia.jpeg"],
   ["/images/evidencia/Amore-evidencia-optimized.jpg"],
 ];
+
+interface TestimonialData {
+  quote: string;
+  author: string;
+  role: string;
+  metrics: { value: string; label: string }[];
+  services: string[];
+}
 
 function getEvidenceAlt(src: string, index = 0) {
   if (src.includes("Rios-Eventos")) {
@@ -46,13 +49,14 @@ function getEvidenceAlt(src: string, index = 0) {
   return `Evidencia de resultados digitales ${index + 1}`;
 }
 
-/* ── Scroll reveal hook ── */
 function useReveal(rootMargin = "0px 0px -80px 0px") {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el || visible) return;
+    const element = ref.current;
+    if (!element || visible) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -62,13 +66,14 @@ function useReveal(rootMargin = "0px 0px -80px 0px") {
       },
       { threshold: 0.15, rootMargin },
     );
-    observer.observe(el);
+
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [visible, rootMargin]);
+  }, [rootMargin, visible]);
+
   return [ref, visible] as const;
 }
 
-/* ── Lightbox ── */
 interface LightboxProps {
   images: string[];
   initialIndex: number;
@@ -85,13 +90,15 @@ function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
   }, [onClose]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") setIdx((p) => (p + 1) % images.length);
-      if (e.key === "ArrowLeft")  setIdx((p) => (p - 1 + images.length) % images.length);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+      if (event.key === "ArrowRight") setIdx((current) => (current + 1) % images.length);
+      if (event.key === "ArrowLeft") setIdx((current) => (current - 1 + images.length) % images.length);
     };
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -99,148 +106,106 @@ function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
   }, [close, images.length]);
 
   const touchStartX = useRef(0);
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd   = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) setIdx((p) => (p + 1) % images.length);
-      else        setIdx((p) => (p - 1 + images.length) % images.length);
-    }
+
+  const onTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0].clientX;
+  };
+
+  const onTouchEnd = (event: React.TouchEvent) => {
+    const deltaX = event.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(deltaX) <= 50) return;
+    if (deltaX < 0) setIdx((current) => (current + 1) % images.length);
+    else setIdx((current) => (current - 1 + images.length) % images.length);
   };
 
   return (
     <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 9999,
-        backgroundColor: "rgba(0,0,0,0.85)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        opacity: closing ? 0 : 1,
-        transition: "opacity 0.2s ease",
-      }}
+      className={`lightbox${closing ? " is-closing" : ""}`}
       onClick={close}
+      role="presentation"
     >
-      <button
-        onClick={close}
-        aria-label="Cerrar"
-        style={{
-          position: "absolute", top: "20px", right: "20px",
-          width: "32px", height: "32px",
-          background: "none", border: "none", cursor: "pointer",
-          color: "#FFFFFF", fontSize: "24px", lineHeight: 1,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "color 0.2s ease", zIndex: 1,
-        }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "var(--kinetic-lime)"; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#FFFFFF"; }}
-      >
+      <button type="button" className="lightbox-close" onClick={close} aria-label="Cerrar">
         ✕
       </button>
 
       {images.length > 1 && (
         <button
-          onClick={(e) => { e.stopPropagation(); setIdx((p) => (p - 1 + images.length) % images.length); }}
-          aria-label="Anterior"
-          style={{
-            position: "absolute", left: "20px",
-            background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "50%", width: "44px", height: "44px",
-            cursor: "pointer", color: "#FFFFFF", fontSize: "18px",
-            display: "flex", alignItems: "center", justifyContent: "center",
+          type="button"
+          className="lightbox-nav lightbox-nav-prev"
+          onClick={(event) => {
+            event.stopPropagation();
+            setIdx((current) => (current - 1 + images.length) % images.length);
           }}
-        >‹</button>
+          aria-label="Anterior"
+        >
+          ‹
+        </button>
       )}
 
       <div
-        onClick={(e) => e.stopPropagation()}
+        className={`lightbox-frame${closing ? " is-closing" : ""}`}
+        onClick={(event) => event.stopPropagation()}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        style={{
-          maxWidth: "90vw", maxHeight: "85vh",
-          borderRadius: "12px", overflow: "hidden",
-          animation: closing ? "lb-out 0.2s ease-in forwards" : "lb-in 0.3s ease-out",
-        }}
       >
         <Image
           src={images[idx]}
           alt={getEvidenceAlt(images[idx], idx)}
           width={1200}
           height={900}
-          style={{
-            maxWidth: "90vw",
-            maxHeight: "85vh",
-            width: "auto",
-            height: "auto",
-            objectFit: "contain",
-            display: "block",
-            borderRadius: "12px",
-          }}
+          className="lightbox-image"
         />
       </div>
 
       {images.length > 1 && (
         <button
-          onClick={(e) => { e.stopPropagation(); setIdx((p) => (p + 1) % images.length); }}
-          aria-label="Siguiente"
-          style={{
-            position: "absolute", right: "20px",
-            background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "50%", width: "44px", height: "44px",
-            cursor: "pointer", color: "#FFFFFF", fontSize: "18px",
-            display: "flex", alignItems: "center", justifyContent: "center",
+          type="button"
+          className="lightbox-nav lightbox-nav-next"
+          onClick={(event) => {
+            event.stopPropagation();
+            setIdx((current) => (current + 1) % images.length);
           }}
-        >›</button>
+          aria-label="Siguiente"
+        >
+          ›
+        </button>
       )}
-
-      <style>{`
-        @keyframes lb-in  { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        @keyframes lb-out { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.9); } }
-      `}</style>
     </div>
   );
 }
 
-/* ── Thumbnail strip ── */
-function EvidenceStrip({ images }: { images: string[] }) {
+function EvidenceStrip({
+  images,
+  variant = "compact",
+}: {
+  images: string[];
+  variant?: "featured" | "compact";
+}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIdx,  setLightboxIdx]  = useState(0);
-  const open = (i: number) => { setLightboxIdx(i); setLightboxOpen(true); };
+  const [lightboxIdx, setLightboxIdx] = useState(0);
+
+  const open = (index: number) => {
+    setLightboxIdx(index);
+    setLightboxOpen(true);
+  };
 
   return (
     <>
-      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
-        {images.map((src, i) => (
+      <div className={`evidence-strip evidence-strip-${variant}`}>
+        {images.map((src, index) => (
           <button
-            key={i}
+            key={src}
             type="button"
             className="evidence-thumb"
-            onClick={() => open(i)}
-            aria-label={`Abrir ${getEvidenceAlt(src, i).toLowerCase()}`}
-            style={{
-              height: "120px", borderRadius: "8px",
-              border: "1px solid rgba(0,0,0,0.1)",
-              background: "transparent", padding: 0,
-              overflow: "hidden", cursor: "pointer",
-              transition: "all 0.2s ease", flexShrink: 0,
-              display: "block",
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLButtonElement;
-              el.style.transform = "translateY(-2px)";
-              el.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLButtonElement;
-              el.style.transform = "translateY(0)";
-              el.style.boxShadow = "none";
-            }}
+            onClick={() => open(index)}
+            aria-label={`Abrir ${getEvidenceAlt(src, index).toLowerCase()}`}
           >
             <Image
               src={src}
-              alt={getEvidenceAlt(src, i)}
-              width={180}
-              height={120}
+              alt={getEvidenceAlt(src, index)}
+              width={520}
+              height={360}
               className="evidence-thumb-img"
-              style={{ height: "120px", width: "auto", objectFit: "cover", display: "block" }}
             />
           </button>
         ))}
@@ -252,225 +217,147 @@ function EvidenceStrip({ images }: { images: string[] }) {
   );
 }
 
-/* ── Testimonio card ── */
-interface TestimonialData {
-  quote: string;
-  author: string;
-  role: string;
-  metrics: { value: string; label: string }[];
-  services: string[];
-}
-
-function TestimonialCard({
-  data, evidenceImages, revealRef, visible, delay,
-}: {
-  data: TestimonialData;
-  evidenceImages: string[];
-  revealRef: React.RefObject<HTMLDivElement | null>;
-  visible: boolean;
-  delay: string;
-}) {
+function MetricList({ metrics }: { metrics: TestimonialData["metrics"] }) {
   return (
-    <div
-      ref={revealRef}
-      className={`res-reveal${visible ? " is-visible" : ""}`}
-      style={{ transitionDelay: visible ? delay : "0s" }}
-    >
-      <div
-        style={{
-          backgroundColor: "#FFFFFF",
-          border: "1px solid rgba(15,23,42,0.08)",
-          borderRadius: "10px",
-          padding: "36px",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "0 1px 4px rgba(15,23,42,0.05)",
-          height: "100%",
-        }}
-      >
-        {/* Comillas decorativas */}
-        <div
-          aria-hidden="true"
-          style={{
-            fontFamily: "var(--font-instrument)",
-            fontSize: "4rem",
-            color: "var(--kinetic-lime)",
-            opacity: 0.55,
-            lineHeight: 0.8,
-            marginBottom: "16px",
-            letterSpacing: "-0.05em",
-          }}
-        >
-          &ldquo;
+    <div className="results-metrics">
+      {metrics.map((metric) => (
+        <div key={`${metric.value}-${metric.label}`} className="results-metric">
+          <p className="results-metric-value">{metric.value}</p>
+          <p className="results-metric-label">{metric.label}</p>
         </div>
-
-        {/* Quote */}
-        <p
-          style={{
-            fontFamily: "var(--font-instrument)",
-            fontStyle: "italic",
-            fontSize: "clamp(0.95rem, 1.4vw, 1.08rem)",
-            color: "#1E293B",
-            lineHeight: 1.68,
-            marginBottom: "28px",
-            flex: 1,
-          }}
-        >
-          {data.quote}
-        </p>
-
-        {/* Métricas */}
-        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
-          {data.metrics.map((m, mi) => (
-            <div
-              key={mi}
-              style={{
-                backgroundColor: "rgba(190,242,100,0.12)",
-                border: "1px solid rgba(190,242,100,0.30)",
-                borderRadius: "8px",
-                padding: "10px 16px",
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--font-archivo)",
-                  fontWeight: 800,
-                  fontSize: "1.25rem",
-                  color: "#3D6B00",
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1,
-                  marginBottom: "4px",
-                }}
-              >
-                {m.value}
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-inter)",
-                  fontSize: "0.72rem",
-                  color: "#64748B",
-                  lineHeight: 1.4,
-                }}
-              >
-                {m.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Thumbnails de evidencia */}
-        {evidenceImages.length > 0 && <EvidenceStrip images={evidenceImages} />}
-
-        {/* Separador + autor */}
-        <div
-          style={{
-            borderTop: "1px solid rgba(15,23,42,0.08)",
-            paddingTop: "20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-archivo)",
-              fontWeight: 700,
-              fontSize: "0.92rem",
-              color: "#0F172A",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            {data.author}
-          </p>
-          <p
-            style={{
-              fontFamily: "var(--font-inter)",
-              fontSize: "0.80rem",
-              color: "#64748B",
-            }}
-          >
-            {data.role}
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "10px" }}>
-            {data.services.map((s) => (
-              <span
-                key={s}
-                style={{
-                  fontFamily: "var(--font-inter)",
-                  fontSize: "0.70rem",
-                  color: "#64748B",
-                  backgroundColor: "rgba(15,23,42,0.05)",
-                  border: "1px solid rgba(15,23,42,0.08)",
-                  borderRadius: "100px",
-                  padding: "3px 10px",
-                }}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
 
+function Tags({ services }: { services: string[] }) {
+  return (
+    <div className="results-tags">
+      {services.map((service) => (
+        <span key={service} className="results-tag">
+          {service}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function FeaturedCase({ data, evidenceImages }: { data: TestimonialData; evidenceImages: string[] }) {
+  return (
+    <article className="results-card results-card-featured">
+      <div className="results-featured-content">
+        <div className="results-quote-mark" aria-hidden="true">
+          &ldquo;
+        </div>
+        <p className="results-quote results-quote-featured">{data.quote}</p>
+        <MetricList metrics={data.metrics} />
+        <div className="results-author-block">
+          <p className="results-author">{data.author}</p>
+          <p className="results-role">{data.role}</p>
+          <Tags services={data.services} />
+        </div>
+      </div>
+
+      <div className="results-featured-evidence">
+        <EvidenceStrip images={evidenceImages} variant="featured" />
+      </div>
+    </article>
+  );
+}
+
+function CompactCase({ data, evidenceImages }: { data: TestimonialData; evidenceImages: string[] }) {
+  return (
+    <article className="results-card results-card-compact">
+      <div className="results-quote-mark" aria-hidden="true">
+        &ldquo;
+      </div>
+      <p className="results-quote">{data.quote}</p>
+      <MetricList metrics={data.metrics} />
+      {evidenceImages.length > 0 && <EvidenceStrip images={evidenceImages} />}
+      <div className="results-author-block">
+        <p className="results-author">{data.author}</p>
+        <p className="results-role">{data.role}</p>
+        <Tags services={data.services} />
+      </div>
+    </article>
+  );
+}
+
 export default function ResultadosSection() {
-  const [t0Ref, t0Visible] = useReveal();
-  const [t1Ref, t1Visible] = useReveal();
-  const [t2Ref, t2Visible] = useReveal();
+  const [featuredRef, featuredVisible] = useReveal();
+  const [secondaryRef, secondaryVisible] = useReveal();
   const [ctaRef, ctaVisible] = useReveal("0px 0px -40px 0px");
 
-  /* All testimonials: 2 from constants + Amore hardcoded */
-  const allTestimonials: TestimonialData[] = [
-    ...RESULTADOS.testimonials,
+  const featuredCase: TestimonialData = {
+    ...RESULTADOS.testimonials[0],
+    metrics: [
+      { value: "+56%", label: "en eventos — en 3 meses" },
+      { value: "+627%", label: "alcance orgánico — en 6 meses" },
+    ],
+  };
+
+  const secondaryCases: TestimonialData[] = [
+    {
+      ...RESULTADOS.testimonials[1],
+      metrics: [{ value: "+203%", label: "alcance orgánico — en 4 meses" }],
+    },
     AMORE_TESTIMONIAL,
   ];
 
-  const refs    = [t0Ref, t1Ref, t2Ref];
-  const visible = [t0Visible, t1Visible, t2Visible];
-  const delays  = ["0.2s", "0.4s", "0.6s"];
-
   return (
-    <section
-      id="resultados"
-      style={{
-        position: "relative",
-        backgroundColor: "var(--calm-white)",
-        padding: "clamp(104px, 10vw, 160px) 0 clamp(64px, 8vw, 100px)",
-        overflow: "hidden",
-      }}
-    >
+    <section id="resultados" className="results-section">
       <style>{`
-        #resultados::before {
+        .results-section {
+          position: relative;
+          overflow: hidden;
+          background: #0F172A;
+          padding: clamp(104px, 10vw, 160px) 0 clamp(64px, 8vw, 100px);
+        }
+
+        .results-section::before {
           content: "";
-          display: block;
           position: absolute;
-          top: -1px;
+          top: -2px;
           left: 0;
           right: 0;
-          width: 100%;
-          height: 61px;
-          margin-top: -1px;
-          background: linear-gradient(to bottom, #0A0F1A, #F8FAFC);
+          height: 60px;
+          background: linear-gradient(to bottom, #F1F5F9 0%, #0F172A 100%);
           pointer-events: none;
         }
 
-        .evidence-thumb {
-          height: 120px !important;
+        .results-container {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 32px;
         }
-        .evidence-thumb-img {
-          height: 120px !important;
-          width: auto !important;
+
+        .results-header {
+          margin-bottom: 52px;
         }
-        @media (max-width: 767px) {
-          .evidence-thumb {
-            height: 100px !important;
-          }
-          .evidence-thumb-img {
-            height: 100px !important;
-            width: auto !important;
-          }
+
+        .results-eyebrow {
+          display: block;
+          margin-bottom: 16px;
+          color: #BEF264;
+          font-family: var(--font-instrument), serif;
+          font-size: 1.10rem;
+          font-style: italic;
+          line-height: 1;
+          letter-spacing: 0.01em;
+        }
+
+        .results-title {
+          max-width: 760px;
+          margin: 0;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: clamp(1.75rem, 3.2vw, 2.7rem);
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          line-height: 1.08;
         }
 
         .res-reveal {
@@ -478,79 +365,380 @@ export default function ResultadosSection() {
           transform: translateY(25px);
           transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+
         .res-reveal.is-visible {
           opacity: 1;
-          transform: none;
+          transform: translateY(0);
         }
-        .res-cta-reveal {
-          opacity: 0;
-          transition: opacity 0.6s ease-out;
+
+        .results-card {
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          padding: 32px;
         }
-        .res-cta-reveal.is-visible {
+
+        .results-card-featured {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+          gap: 32px;
+          align-items: center;
+        }
+
+        .results-featured-content {
+          min-width: 0;
+        }
+
+        .results-secondary-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px;
+          margin-top: 24px;
+        }
+
+        .results-quote-mark {
+          margin-bottom: 14px;
+          color: #BEF264;
+          font-family: var(--font-instrument), serif;
+          font-size: 4rem;
+          line-height: 0.8;
+          opacity: 0.65;
+          letter-spacing: -0.05em;
+        }
+
+        .results-quote {
+          margin: 0 0 28px;
+          color: #E2E8F0;
+          font-family: var(--font-instrument), serif;
+          font-size: clamp(0.98rem, 1.35vw, 1.08rem);
+          font-style: italic;
+          line-height: 1.68;
+        }
+
+        .results-quote-featured {
+          font-size: clamp(1.08rem, 1.55vw, 1.26rem);
+        }
+
+        .results-metrics {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+
+        .results-metric {
+          border: 1px solid rgba(190, 242, 100, 0.24);
+          border-radius: 8px;
+          background: rgba(190, 242, 100, 0.08);
+          padding: 10px 16px;
+        }
+
+        .results-metric-value {
+          margin: 0 0 5px;
+          color: #BEF264;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 1.25rem;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          line-height: 1;
+        }
+
+        .results-metric-label {
+          margin: 0;
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.74rem;
+          line-height: 1.4;
+        }
+
+        .results-author-block {
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+          padding-top: 20px;
+        }
+
+        .results-author {
+          margin: 0 0 6px;
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 0.94rem;
+          font-weight: 800;
+          letter-spacing: -0.01em;
+        }
+
+        .results-role {
+          margin: 0;
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.82rem;
+        }
+
+        .results-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 12px;
+        }
+
+        .results-tag {
+          border: 1px solid rgba(255, 255, 255, 0.10);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.05);
+          color: #94A3B8;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.70rem;
+          padding: 4px 10px;
+        }
+
+        .evidence-strip {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+
+        .evidence-strip-featured {
+          height: 100%;
+          margin-bottom: 0;
+        }
+
+        .evidence-thumb {
+          height: 120px;
+          border: 1px solid rgba(255, 255, 255, 0.10);
+          border-radius: 12px;
+          background: transparent;
+          padding: 0;
+          overflow: hidden;
+          cursor: pointer;
+          flex-shrink: 0;
+          display: block;
+          transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .evidence-strip-featured .evidence-thumb {
+          width: 100%;
+          height: 300px;
+        }
+
+        .evidence-thumb:hover {
+          transform: translateY(-2px);
+          border-color: rgba(190, 242, 100, 0.24);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .evidence-thumb-img {
+          height: 120px;
+          width: auto;
+          object-fit: cover;
+          display: block;
+          border-radius: 12px;
+        }
+
+        .evidence-strip-featured .evidence-thumb-img {
+          width: 100%;
+          height: 300px;
+        }
+
+        .results-cta {
+          margin-top: 52px;
+          text-align: center;
+        }
+
+        .results-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #BEF264;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.875rem;
+          font-weight: 700;
+          text-decoration: none;
+          text-decoration-color: transparent;
+          text-underline-offset: 4px;
+          transition: text-decoration-color 0.2s ease, gap 0.2s ease;
+        }
+
+        .results-link:hover {
+          gap: 12px;
+          text-decoration: underline;
+          text-decoration-color: rgba(190, 242, 100, 0.75);
+        }
+
+        .lightbox {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          background: rgba(0, 0, 0, 0.85);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           opacity: 1;
+          transition: opacity 0.2s ease;
+        }
+
+        .lightbox.is-closing {
+          opacity: 0;
+        }
+
+        .lightbox-close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          z-index: 1;
+          width: 32px;
+          height: 32px;
+          border: 0;
+          background: none;
+          color: #FFFFFF;
+          cursor: pointer;
+          font-size: 24px;
+          line-height: 1;
+        }
+
+        .lightbox-close:hover {
+          color: #BEF264;
+        }
+
+        .lightbox-nav {
+          position: absolute;
+          width: 44px;
+          height: 44px;
+          border: 1px solid rgba(255, 255, 255, 0.20);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.10);
+          color: #FFFFFF;
+          cursor: pointer;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .lightbox-nav-prev {
+          left: 20px;
+        }
+
+        .lightbox-nav-next {
+          right: 20px;
+        }
+
+        .lightbox-frame {
+          max-width: 90vw;
+          max-height: 85vh;
+          border-radius: 12px;
+          overflow: hidden;
+          animation: lb-in 0.3s ease-out;
+        }
+
+        .lightbox-frame.is-closing {
+          animation: lb-out 0.2s ease-in forwards;
+        }
+
+        .lightbox-image {
+          max-width: 90vw;
+          max-height: 85vh;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          display: block;
+          border-radius: 12px;
+        }
+
+        @keyframes lb-in {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes lb-out {
+          from { opacity: 1; transform: scale(1); }
+          to { opacity: 0; transform: scale(0.9); }
+        }
+
+        @media (min-width: 768px) {
+          .results-eyebrow {
+            font-size: 25px;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .results-card-featured {
+            grid-template-columns: 1fr;
+          }
+
+          .evidence-strip-featured .evidence-thumb,
+          .evidence-strip-featured .evidence-thumb-img {
+            height: 240px;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .results-section {
+            padding: 88px 0 72px;
+          }
+
+          .results-container {
+            padding: 0 20px;
+          }
+
+          .results-secondary-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-top: 16px;
+          }
+
+          .results-card {
+            padding: 24px;
+          }
+
+          .evidence-thumb,
+          .evidence-thumb-img {
+            height: 100px;
+          }
+
+          .evidence-strip-featured .evidence-thumb,
+          .evidence-strip-featured .evidence-thumb-img {
+            height: 210px;
+          }
         }
       `}</style>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "1200px", margin: "0 auto", padding: "0 32px" }}>
+      <div className="results-container">
+        <header className="results-header">
+          <span className="results-eyebrow">— Resultados</span>
+          <h2 className="results-title">{RESULTADOS.h2}</h2>
+        </header>
 
-        {/* ── Encabezado ── */}
-        <div style={{ marginBottom: "52px" }}>
-          <span className="section-eyebrow section-eyebrow-light" style={{ color: "var(--level-2)" }}>
-            — Resultados
-          </span>
-          <h2 className="section-h2 section-h2-dark">
-            {RESULTADOS.h2}
-          </h2>
+        <div
+          ref={featuredRef}
+          className={`res-reveal${featuredVisible ? " is-visible" : ""}`}
+          style={{ transitionDelay: featuredVisible ? "0.15s" : "0s" }}
+        >
+          <FeaturedCase data={featuredCase} evidenceImages={EVIDENCE[0]} />
         </div>
 
-        {/* ── 3 testimoniales — grid 3 columnas desktop ── */}
-        <div className="testimonials-grid">
-          {allTestimonials.map((t, i) => (
-            <TestimonialCard
-              key={i}
-              data={t}
-              evidenceImages={EVIDENCE[i] ?? []}
-              revealRef={refs[i]}
-              visible={visible[i]}
-              delay={delays[i]}
+        <div
+          ref={secondaryRef}
+          className={`results-secondary-grid res-reveal${secondaryVisible ? " is-visible" : ""}`}
+          style={{ transitionDelay: secondaryVisible ? "0.25s" : "0s" }}
+        >
+          {secondaryCases.map((testimonial, index) => (
+            <CompactCase
+              key={testimonial.author}
+              data={testimonial}
+              evidenceImages={EVIDENCE[index + 1] ?? []}
             />
           ))}
         </div>
 
-        {/* ── CTA ── */}
         <div
           ref={ctaRef}
-          className={`res-cta-reveal${ctaVisible ? " is-visible" : ""}`}
-          style={{
-            textAlign: "center",
-            marginTop: "52px",
-            transitionDelay: ctaVisible ? "1s" : "0s",
-          }}
+          className={`results-cta res-reveal${ctaVisible ? " is-visible" : ""}`}
+          style={{ transitionDelay: ctaVisible ? "0.3s" : "0s" }}
         >
-          <Link
-            href={RESULTADOS.cta.href}
-            className="arrow-link"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "var(--font-inter)",
-              fontWeight: 600,
-              fontSize: "0.875rem",
-              color: "#0F172A",
-              textDecoration: "none",
-              borderBottom: "1px solid rgba(15,23,42,0.25)",
-              paddingBottom: "2px",
-              transition: "border-color 0.2s ease",
-            }}
-          >
+          <Link href={RESULTADOS.cta.href} className="results-link">
             {RESULTADOS.cta.label}
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M3 7H11M8.5 4L11 7L8.5 10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <span aria-hidden="true">→</span>
           </Link>
         </div>
-
       </div>
     </section>
   );

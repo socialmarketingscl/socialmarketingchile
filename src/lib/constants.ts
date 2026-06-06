@@ -198,9 +198,9 @@ export const SOLUCIONES = {
 
 /* ---- SECCIÓN 6: MARKETING DIGITAL + IA + AUTOMATIZACIÓN ---- */
 export const MARKETING_IA = {
-  h2: "Marketing digital, inteligencia artificial y automatización comercial en un solo sistema.",
+  h2: "La tecnología que convierte tu marketing en un sistema de ventas.",
   intro:
-    "No trabajamos acciones digitales aisladas. Diseñamos sistemas que conectan estrategia, contenido, publicidad, automatización e inteligencia comercial para generar oportunidades reales.",
+    "No sumamos herramientas. Conectamos estrategia, publicidad, automatización e inteligencia comercial para generar oportunidades reales.",
   columns: [
     {
       title: "Marketing Digital",
