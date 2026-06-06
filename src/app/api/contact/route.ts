@@ -27,6 +27,10 @@ const REQUIRED_FIELDS = [
 ] as const;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONTACT_NOTIFICATION_EMAILS = [
+  "martiinalonsoo84@gmail.com",
+  "socialmarketingscl@gmail.com",
+] as const;
 
 function getString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -89,6 +93,9 @@ export async function POST(request: Request) {
     utmSource: getString(payload.utmSource),
     utmMedium: getString(payload.utmMedium),
     utmCampaign: getString(payload.utmCampaign),
+    avisoCorreoPara: CONTACT_NOTIFICATION_EMAILS.join(", "),
+    notificationEmails: [...CONTACT_NOTIFICATION_EMAILS],
+    notificationSubject: `Nuevo contacto web: ${getString(payload.nombre)}`,
   };
 
   try {
