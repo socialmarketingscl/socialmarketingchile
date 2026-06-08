@@ -93,7 +93,20 @@ export default function CTAFinalSection() {
             position: relative;
             isolation: isolate;
             overflow: visible;
+            box-shadow: 0 6px 22px rgba(190, 242, 100, 0.20);
+          }
+
+          .final-cta-primary-pulse::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            z-index: -2;
+            border-radius: inherit;
+            background: rgba(190, 242, 100, 0.18);
+            opacity: 0.24;
+            transform: scale(0.96);
             animation: final-cta-button-glow 2.8s ease-in-out infinite;
+            pointer-events: none;
           }
 
           .final-cta-primary-pulse::after {
@@ -142,15 +155,13 @@ export default function CTAFinalSection() {
 
           @keyframes final-cta-button-glow {
             0%, 100% {
-              box-shadow:
-                0 6px 22px rgba(190, 242, 100, 0.20),
-                0 0 0 rgba(190, 242, 100, 0);
+              opacity: 0.24;
+              transform: scale(0.96);
             }
 
             45% {
-              box-shadow:
-                0 10px 34px rgba(190, 242, 100, 0.34),
-                0 0 30px rgba(190, 242, 100, 0.20);
+              opacity: 0.52;
+              transform: scale(1.06);
             }
           }
 

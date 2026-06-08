@@ -20,7 +20,7 @@ export default function Analytics() {
           <Script
             id="gtm-script"
             src={`https://www.googletagmanager.com/gtm.js?id=${gtmId}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
           <noscript>
             <iframe
@@ -39,7 +39,7 @@ export default function Analytics() {
           <Script
             id="ga-script"
             src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
           <Script id="ga-init" strategy="afterInteractive">
             {`

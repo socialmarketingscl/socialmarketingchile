@@ -481,6 +481,7 @@ export default function SolucionesSection() {
                     <Link
                       href={service.href}
                       className="solutions-link"
+                      aria-label={`Ver servicio: ${service.name}`}
                       onClick={(event) => event.stopPropagation()}
                     >
                       Ver servicio <ArrowIcon />
@@ -502,7 +503,11 @@ export default function SolucionesSection() {
               <span className="solutions-badge">Diferenciador</span>
               <h3 className="solutions-featured-title">{featuredService.name}</h3>
               <p className="solutions-featured-description">{featuredService.description}</p>
-              <Link href={featuredService.href} className="solutions-link">
+              <Link
+                href={featuredService.href}
+                className="solutions-link"
+                aria-label={`Ver servicio: ${featuredService.name}`}
+              >
                 Ver servicio <ArrowIcon />
               </Link>
             </div>
@@ -536,7 +541,11 @@ export default function SolucionesSection() {
               {service.featured && <span className="solutions-badge">Diferenciador</span>}
               <h3 className="solutions-mobile-title">{service.name}</h3>
               <p className="solutions-mobile-description">{service.description}</p>
-              <Link href={service.href} className="solutions-link">
+              <Link
+                href={service.href}
+                className="solutions-link"
+                aria-label={`Ver servicio: ${service.name}`}
+              >
                 Ver servicio <ArrowIcon />
               </Link>
             </article>
