@@ -146,7 +146,10 @@ const organizationSchema = {
       ],
       telephone: "+56961533546",
       email: "contacto@socialmarketingchile.cl",
-      sameAs: ["https://www.instagram.com/socialmarketing_cl"],
+      sameAs: [
+        "https://www.instagram.com/socialmarketing_cl",
+        "https://share.google/oe8amNvyOkbtjiG0Q",
+      ],
       areaServed: {
         "@type": "Country",
         name: "Chile",
