@@ -3,22 +3,41 @@ import NosotrosClient from "./NosotrosClient";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Nosotros | Social Marketing — Agencia de Marketing Digital e IA en Santiago, Chile",
+    absolute: "Nosotros — Social Marketing Chile",
   },
   description:
-    "Conoce a Social Marketing: una agencia que integra marketing digital, inteligencia artificial y automatización comercial para ayudar a negocios a captar, ordenar y convertir clientes.",
+    "Conoce a Social Marketing: la agencia que integra marketing digital e IA para ayudar a negocios a captar, ordenar y convertir clientes en Chile.",
   alternates: {
-    canonical: "https://socialmarketingchile.cl/nosotros",
+    canonical: "/nosotros",
   },
   openGraph: {
-    title: "Nosotros | Social Marketing — Agencia de Marketing Digital e IA en Santiago, Chile",
+    title: "Nosotros — Social Marketing Chile",
     description:
-      "Conoce a Social Marketing: una agencia que integra marketing digital, inteligencia artificial y automatización comercial para ayudar a negocios a captar, ordenar y convertir clientes.",
+      "Conoce a Social Marketing: la agencia que integra marketing digital e IA para ayudar a negocios a captar, ordenar y convertir clientes en Chile.",
     type: "website",
-    url: "https://socialmarketingchile.cl/nosotros",
+    url: "/nosotros",
   },
 };
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio",
+      "item": "https://socialmarketingchile.cl" },
+    { "@type": "ListItem", "position": 2, "name": "Nosotros",
+      "item": "https://socialmarketingchile.cl/nosotros" }
+  ]
+};
+
 export default function NosotrosPage() {
-  return <NosotrosClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <NosotrosClient />
+    </>
+  );
 }

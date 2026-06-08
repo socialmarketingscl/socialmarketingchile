@@ -471,20 +471,17 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
 };
 
 export function createServiceMetadata(service: ServicePageData): Metadata {
-  const title = `${service.title} | Social Marketing — Marketing Digital e IA en Chile`;
-  const canonicalUrl = `https://socialmarketingchile.cl${service.href}`;
-
   return {
-    title: { absolute: title },
+    title: { absolute: service.title },
     description: service.description,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: service.href,
     },
     openGraph: {
-      title,
+      title: service.title,
       description: service.description,
       type: "website",
-      url: canonicalUrl,
+      url: service.href,
     },
   };
 }

@@ -3,22 +3,41 @@ import ComoTrabajamosClient from "./ComoTrabajamosClient";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Cómo Trabajamos | Social Marketing — Proceso de Marketing Digital e IA",
+    absolute: "Cómo Trabajamos — Nuestro Proceso | Social Marketing",
   },
   description:
-    "Conoce el proceso de trabajo de Social Marketing: diagnóstico, propuesta personalizada, ejecución y optimización continua. Sin paquetes genéricos.",
+    "Conoce el proceso de trabajo de Social Marketing: desde el diagnóstico hasta la implementación del sistema de captación y conversión.",
   alternates: {
-    canonical: "https://socialmarketingchile.cl/como-trabajamos",
+    canonical: "/como-trabajamos",
   },
   openGraph: {
-    title: "Cómo Trabajamos | Social Marketing — Proceso de Marketing Digital e IA",
+    title: "Cómo Trabajamos — Nuestro Proceso | Social Marketing",
     description:
-      "Conoce el proceso de trabajo de Social Marketing: diagnóstico, propuesta personalizada, ejecución y optimización continua. Sin paquetes genéricos.",
+      "Conoce el proceso de trabajo de Social Marketing: desde el diagnóstico hasta la implementación del sistema de captación y conversión.",
     type: "website",
-    url: "https://socialmarketingchile.cl/como-trabajamos",
+    url: "/como-trabajamos",
   },
 };
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio",
+      "item": "https://socialmarketingchile.cl" },
+    { "@type": "ListItem", "position": 2, "name": "Cómo Trabajamos",
+      "item": "https://socialmarketingchile.cl/como-trabajamos" }
+  ]
+};
+
 export default function ComoTrabajamosPage() {
-  return <ComoTrabajamosClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <ComoTrabajamosClient />
+    </>
+  );
 }

@@ -1,0 +1,23 @@
+# Social Marketing Chile
+
+> Agencia de marketing digital e inteligencia artificial en Santiago, Chile.
+> Especializada en sistemas de captación, conversión y automatización comercial
+> para pymes y empresas de servicios.
+
+## Páginas principales
+
+- [Inicio](https://socialmarketingchile.cl/): Propuesta de valor, servicios disponibles y casos de resultado con métricas verificables.
+- [Cómo Trabajamos](https://socialmarketingchile.cl/como-trabajamos/): Metodología de diagnóstico y proceso de implementación paso a paso.
+- [Soluciones](https://socialmarketingchile.cl/soluciones/): Hub de los seis servicios: Estrategia y Consultoría, Publicidad Digital, SEO, Redes Sociales, Branding, Sistemas de Ventas con IA.
+- [Resultados](https://socialmarketingchile.cl/resultados/): Casos de éxito documentados: Ríos Eventos (+56% en eventos, +627% alcance), Gasfitería y Destapes (+203% alcance), Amore (+4.617 seguidores en 5 meses).
+- [Nosotros](https://socialmarketingchile.cl/nosotros/): Identidad de la agencia, áreas Growth e Intelligence, filosofía y enfoque.
+- [Contacto](https://socialmarketingchile.cl/contacto/): WhatsApp +56961533546, contacto@socialmarketingchile.cl.
+
+## Servicios
+
+- [Estrategia y Consultoría Digital](https://socialmarketingchile.cl/soluciones/estrategia-y-consultoria/)
+- [Publicidad Digital en Meta Ads y Google Ads](https://socialmarketingchile.cl/soluciones/publicidad-digital/)
+- [Posicionamiento en Google (SEO)](https://socialmarketingchile.cl/soluciones/posicionamiento-en-google/)
+- [Gestión de Redes Sociales](https://socialmarketingchile.cl/soluciones/gestion-de-redes-sociales/)
+- [Identidad Visual y Branding](https://socialmarketingchile.cl/soluciones/identidad-visual-y-marca/)
+- [Sistemas de Ventas con Inteligencia Artificial](https://socialmarketingchile.cl/soluciones/sistemas-de-ventas-con-ia/)

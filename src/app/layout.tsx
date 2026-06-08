@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: "%s | Social Marketing",
   },
   description:
-    "Agencia de marketing digital en Santiago, Chile. Conectamos estrategia, publicidad digital, automatización e inteligencia artificial para captar clientes, ordenar procesos comerciales y convertir oportunidades en ventas reales. Agenda tu diagnóstico gratuito.",
+    "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
   keywords: [
     "agencia de marketing digital Chile",
     "agencia de marketing digital Santiago",
@@ -67,10 +67,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_CL",
     url: "https://socialmarketingchile.cl",
-    siteName: "Social Marketing",
+    siteName: "Social Marketing Chile",
     title: "Social Marketing | Agencia de Marketing Digital e IA en Chile",
-    description:
-      "Agencia de marketing digital en Santiago, Chile. Conectamos estrategia, publicidad digital, automatización e inteligencia artificial para captar clientes, ordenar procesos comerciales y convertir oportunidades en ventas reales.",
+    description: "Sistemas digitales para captar, ordenar y convertir clientes.",
     images: [
       {
         url: "/opengraph-image",
@@ -83,8 +82,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Social Marketing | Agencia de Marketing Digital e IA en Chile",
-    description:
-      "Agencia de marketing digital en Santiago, Chile. Estrategia, publicidad digital, automatización e IA para captar y convertir clientes.",
+    description: "Sistemas digitales para captar, ordenar y convertir clientes.",
     images: ["/opengraph-image"],
   },
   icons: {
@@ -96,7 +94,10 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-icon.png" }],
   },
   alternates: {
-    canonical: "https://socialmarketingchile.cl",
+    canonical: "/",
+    languages: {
+      "es-CL": "https://socialmarketingchile.cl/",
+    },
   },
 };
 
@@ -105,30 +106,75 @@ export const metadata: Metadata = {
    ============================================================ */
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": ["Organization", "LocalBusiness"],
-  name: "Social Marketing",
-  url: "https://socialmarketingchile.cl",
-  logo: "https://socialmarketingchile.cl/social-marketing-agencia-marketing-digital-ia.png",
-  image: "https://socialmarketingchile.cl/opengraph-image",
-  description:
-    "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial.",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Santiago",
-    addressRegion: "Región Metropolitana",
-    addressCountry: "CL",
-  },
-  telephone: "+56961533546",
-  email: "contacto@socialmarketingchile.cl",
-  sameAs: [
-    "https://www.instagram.com/socialmarketing_cl",
-    "https://wa.me/56961533546",
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": "https://socialmarketingchile.cl/#organization",
+      name: "Social Marketing",
+      legalName: "Social Marketing Chile",
+      url: "https://socialmarketingchile.cl",
+      logo: {
+        "@type": "ImageObject",
+        "@id": "https://socialmarketingchile.cl/#logo",
+        url: "https://socialmarketingchile.cl/social-marketing-agencia-marketing-digital-ia.png",
+        caption: "Social Marketing — Agencia de Marketing Digital e IA en Chile",
+      },
+      description:
+        "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial para empresas que necesitan crecer con estrategia y tecnología.",
+      slogan: "Más que presencia digital, sistemas para crecer.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Santiago",
+        addressRegion: "Región Metropolitana",
+        addressCountry: "CL",
+      },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+56961533546",
+          contactType: "customer service",
+          availableLanguage: "Spanish",
+          areaServed: "CL",
+        },
+        {
+          "@type": "ContactPoint",
+          email: "contacto@socialmarketingchile.cl",
+          contactType: "sales",
+          availableLanguage: "Spanish",
+          areaServed: "CL",
+        },
+      ],
+      telephone: "+56961533546",
+      email: "contacto@socialmarketingchile.cl",
+      sameAs: ["https://www.instagram.com/socialmarketing_cl"],
+      areaServed: {
+        "@type": "Country",
+        name: "Chile",
+      },
+      knowsAbout: [
+        "Marketing Digital",
+        "Publicidad Digital",
+        "Meta Ads",
+        "Google Ads",
+        "SEO",
+        "Gestión de Redes Sociales",
+        "Branding",
+        "Automatización Comercial",
+        "Inteligencia Artificial",
+      ],
+      priceRange: "$$",
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://socialmarketingchile.cl/#website",
+      url: "https://socialmarketingchile.cl",
+      name: "Social Marketing",
+      inLanguage: "es-CL",
+      publisher: {
+        "@id": "https://socialmarketingchile.cl/#organization",
+      },
+    },
   ],
-  areaServed: {
-    "@type": "Country",
-    name: "Chile",
-  },
-  priceRange: "$$",
 };
 
 /* ============================================================

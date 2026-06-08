@@ -3,22 +3,41 @@ import SolucionesIndexClient from "./SolucionesIndexClient";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Soluciones | Social Marketing — Marketing Digital e IA en Chile",
+    absolute: "Soluciones de Marketing Digital e IA | Social Marketing",
   },
   description:
-    "Soluciones de marketing digital, publicidad, SEO, redes sociales, branding y sistemas de ventas con IA para empresas en Chile.",
+    "Estrategia, publicidad digital, SEO, redes sociales, branding y sistemas de ventas con IA. Soluciones diseñadas para hacer crecer tu negocio.",
   alternates: {
-    canonical: "https://socialmarketingchile.cl/soluciones",
+    canonical: "/soluciones",
   },
   openGraph: {
-    title: "Soluciones | Social Marketing — Marketing Digital e IA en Chile",
+    title: "Soluciones de Marketing Digital e IA | Social Marketing",
     description:
-      "Soluciones de marketing digital, publicidad, SEO, redes sociales, branding y sistemas de ventas con IA para empresas en Chile.",
+      "Estrategia, publicidad digital, SEO, redes sociales, branding y sistemas de ventas con IA. Soluciones diseñadas para hacer crecer tu negocio.",
     type: "website",
-    url: "https://socialmarketingchile.cl/soluciones",
+    url: "/soluciones",
   },
 };
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio",
+      "item": "https://socialmarketingchile.cl" },
+    { "@type": "ListItem", "position": 2, "name": "Soluciones",
+      "item": "https://socialmarketingchile.cl/soluciones" }
+  ]
+};
+
 export default function SolucionesPage() {
-  return <SolucionesIndexClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <SolucionesIndexClient />
+    </>
+  );
 }

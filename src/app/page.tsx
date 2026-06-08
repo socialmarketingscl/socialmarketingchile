@@ -14,6 +14,7 @@
    Hero usa imagen real como recurso visual principal.
 */
 
+import type { Metadata } from "next";
 import HeroSection             from "@/components/sections/HeroSection";
 import ProblemaComercialSection from "@/components/sections/ProblemaComercialSection";
 import DiagnosticoSection       from "@/components/sections/DiagnosticoSection";
@@ -23,6 +24,20 @@ import MarketingIASection       from "@/components/sections/MarketingIASection";
 import ResultadosSection        from "@/components/sections/ResultadosSection";
 import ParaQuienSection         from "@/components/sections/ParaQuienSection";
 import CTAFinalSection          from "@/components/sections/CTAFinalSection";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Social Marketing | Agencia de Marketing Digital e IA en Chile",
+  },
+  description:
+    "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "es-CL": "https://socialmarketingchile.cl/",
+    },
+  },
+};
 
 export default function HomePage() {
   return (

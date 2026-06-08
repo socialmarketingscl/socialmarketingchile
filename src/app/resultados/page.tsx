@@ -3,22 +3,41 @@ import ResultadosClient from "./ResultadosClient";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Resultados | Social Marketing — Casos Reales de Marketing Digital e IA",
+    absolute: "Resultados — Casos de Éxito | Social Marketing",
   },
   description:
-    "Conoce los resultados reales que hemos logrado con negocios en Chile. Casos de éxito en redes sociales, publicidad digital, branding y automatización.",
+    "Casos reales: Ríos Eventos +56% en eventos, Gasfitería y Destapes +627% en alcance, Amore +4.617 seguidores. Marketing digital que funciona.",
   alternates: {
-    canonical: "https://socialmarketingchile.cl/resultados",
+    canonical: "/resultados",
   },
   openGraph: {
-    title: "Resultados | Social Marketing — Casos Reales de Marketing Digital e IA",
+    title: "Resultados — Casos de Éxito | Social Marketing",
     description:
-      "Conoce los resultados reales que hemos logrado con negocios en Chile. Casos de éxito en redes sociales, publicidad digital, branding y automatización.",
+      "Casos reales: Ríos Eventos +56% en eventos, Gasfitería y Destapes +627% en alcance, Amore +4.617 seguidores. Marketing digital que funciona.",
     type: "website",
-    url: "https://socialmarketingchile.cl/resultados",
+    url: "/resultados",
   },
 };
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio",
+      "item": "https://socialmarketingchile.cl" },
+    { "@type": "ListItem", "position": 2, "name": "Resultados",
+      "item": "https://socialmarketingchile.cl/resultados" }
+  ]
+};
+
 export default function ResultadosPage() {
-  return <ResultadosClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <ResultadosClient />
+    </>
+  );
 }

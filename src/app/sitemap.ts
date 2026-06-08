@@ -1,33 +1,81 @@
-import type { MetadataRoute } from "next";
-import { SERVICE_LINKS } from "@/lib/services";
-
-const SITE_URL = "https://socialmarketingchile.cl";
-// Actualizar esta fecha solo cuando el despliegue incluya cambios reales de contenido.
-const SITE_LAST_MODIFIED = "2026-05-29";
-const LAST_MODIFIED = new Date(SITE_LAST_MODIFIED);
-
-const staticRoutes = [
-  { path: "/", priority: 1 },
-  { path: "/soluciones", priority: 0.9 },
-  { path: "/como-trabajamos", priority: 0.8 },
-  { path: "/nosotros", priority: 0.7 },
-  { path: "/resultados", priority: 0.8 },
-  { path: "/contacto", priority: 0.9 },
-];
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://socialmarketingchile.cl'
+  const now = new Date()
+
   return [
-    ...staticRoutes.map((route) => ({
-      url: `${SITE_URL}${route.path === "/" ? "" : route.path}`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly" as const,
-      priority: route.priority,
-    })),
-    ...SERVICE_LINKS.map((service) => ({
-      url: `${SITE_URL}${service.href}`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly" as const,
+    {
+      url: baseUrl,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/soluciones`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/contacto`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/como-trabajamos`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/resultados`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/nosotros`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/soluciones/estrategia-y-consultoria`,
+      lastModified: now,
+      changeFrequency: 'monthly',
       priority: 0.75,
-    })),
-  ];
+    },
+    {
+      url: `${baseUrl}/soluciones/publicidad-digital`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/soluciones/posicionamiento-en-google`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/soluciones/gestion-de-redes-sociales`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/soluciones/identidad-visual-y-marca`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/soluciones/sistemas-de-ventas-con-ia`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+  ]
 }
