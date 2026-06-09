@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT } from "@/lib/constants";
 
@@ -348,6 +349,41 @@ export default function NosotrosClient() {
               </article>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      <section className="about-section about-light">
+        <div className="about-shell">
+          <Reveal delay="0.1s">
+            <h2 className="section-h2 section-h2-dark" style={{ marginBottom: "34px" }}>El equipo</h2>
+            <article className="about-stat-card about-grid-2" style={{ alignItems: "center" }}>
+              <Image
+                src="/images/equipo/martin-cataldo.jpg"
+                alt="Martín Cataldo Sánchez — CEO y Fundador de Social Marketing Chile"
+                width={400}
+                height={400}
+                className="object-cover"
+                style={{ width: "100%", maxWidth: "400px", aspectRatio: "1 / 1", borderRadius: "12px" }}
+              />
+              <div>
+                <h3 className="about-h3" style={{ color: "#FFFFFF", fontSize: "1.55rem", lineHeight: 1.18, marginBottom: "8px" }}>
+                  Martín Cataldo Sánchez
+                </h3>
+                <p style={{ color: "#BEF264", fontFamily: "var(--font-inter)", fontWeight: 600, marginBottom: "22px" }}>
+                  CEO & Fundador
+                </p>
+                <p style={{ color: "#A8AEBB", fontFamily: "var(--font-inter)", lineHeight: 1.75, marginBottom: "16px" }}>
+                  Ingeniero en Marketing Digital con experiencia desarrollando estrategias digitales, contenido, campañas y propuestas comerciales para marcas y proyectos reales.
+                </p>
+                <p style={{ color: "#A8AEBB", fontFamily: "var(--font-inter)", lineHeight: 1.75, marginBottom: "16px" }}>
+                  Ha trabajado en marketing para negocios como Garage Carwash, Amore SCL, Gasfitería y Destapes, Ríos Eventos e Infinity Club, abordando redes sociales, branding, publicidad y posicionamiento.
+                </p>
+                <p style={{ color: "#A8AEBB", fontFamily: "var(--font-inter)", lineHeight: 1.75 }}>
+                  Integra IA y automatización en procesos de marketing y ventas, usando herramientas como N8n, Make y Claude para clasificar leads, generar mensajes y optimizar la gestión comercial.
+                </p>
+              </div>
+            </article>
+          </Reveal>
         </div>
       </section>
 
