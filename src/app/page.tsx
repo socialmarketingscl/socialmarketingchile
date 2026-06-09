@@ -65,7 +65,7 @@ const faqSchema = {
       "name": "¿En cuánto tiempo se ven resultados?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Si hacemos campañas pagadas, los primeros datos los tienes en las primeras semanas. Si trabajamos redes sociales y contenido orgánico, la tracción real empieza a notarse entre el segundo y tercer mes. SEO es más lento, ahí estamos hablando de 3 a 6 meses para ver movimiento real en Google. Y si implementamos automatización, eso funciona desde el día uno — un agente de WhatsApp empieza a responder apenas lo activamos. Lo importante es que todo lo medimos con datos, no con sensaciones. Vas a saber exactamente qué está funcionando y qué no."
+        "text": "Si hacemos campañas pagadas, los primeros datos los tienes en las primeras semanas. Si trabajamos redes sociales y contenido orgánico, la tracción real empieza a notarse entre el segundo y tercer mes. SEO es más lento, ahí estamos hablando de 3 a 6 meses para ver movimiento real en Google. Y si implementamos automatización, eso funciona desde el día uno — un agente de WhatsApp empieza a responder apenas lo activamos. Lo importante es que todo lo medimos con datos, no con sensaciones."
       }
     },
     {
@@ -81,7 +81,7 @@ const faqSchema = {
       "name": "¿En qué se diferencian de otras agencias?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La mayoría de las agencias te ofrecen servicios sueltos. Te manejan las redes, o te hacen una campaña, o te diseñan un logo. Nosotros conectamos todo. No tiene sentido hacer una campaña de publicidad si después nadie le hace seguimiento a los leads que llegan. No tiene sentido tener redes sociales si no hay un objetivo comercial detrás. Lo que hacemos es armar un sistema completo donde la captación, el seguimiento y la conversión funcionan juntos. Y además integramos inteligencia artificial y automatización — agentes que responden por WhatsApp, sistemas que califican leads solos, CRM que ordena todo el proceso comercial. Eso es algo que la agencia promedio no ofrece."
+        "text": "La mayoría de las agencias te ofrecen servicios sueltos. Te manejan las redes, o te hacen una campaña, o te diseñan un logo. Nosotros conectamos todo. No tiene sentido hacer una campaña de publicidad si después nadie le hace seguimiento a los leads que llegan. Lo que hacemos es armar un sistema completo donde la captación, el seguimiento y la conversión funcionan juntos. Y además integramos inteligencia artificial y automatización — agentes que responden por WhatsApp, sistemas que califican leads solos, CRM que ordena todo tu proceso comercial. Eso es algo que la agencia promedio no te ofrece."
       }
     }
   ]
@@ -102,8 +102,8 @@ export default function HomePage() {
         <SolucionesSection />
         <MarketingIASection />
         <ResultadosSection />
-        <FAQSection />
         <ParaQuienSection />
+        <FAQSection />
         <CTAFinalSection />
       </main>
     </>

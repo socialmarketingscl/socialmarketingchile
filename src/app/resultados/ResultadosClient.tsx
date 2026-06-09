@@ -9,6 +9,7 @@ import { CONTACT } from "@/lib/constants";
 type ResultCase = {
   business: string;
   subtitle: string;
+  periodo: string;
   tags: string[];
   problem: string;
   work: string;
@@ -22,6 +23,7 @@ const CASES: ResultCase[] = [
   {
     business: "Ríos Eventos",
     subtitle: "Planificación de eventos — Bar & Catering",
+    periodo: "Marzo – Abril 2026",
     tags: ["Branding", "Sitio web", "Gestión de redes sociales", "SEO local", "Meta Ads", "Google Ads"],
     problem:
       "Llevaban más de 9 años en el rubro pero nunca habían profesionalizado su presencia digital. Dependían del boca a boca y no tenían un sistema para captar clientes nuevos de forma constante.",
@@ -40,6 +42,7 @@ const CASES: ResultCase[] = [
   {
     business: "Gasfitería y Destapes 24H",
     subtitle: "Servicios de gasfitería — Santiago y Chillán",
+    periodo: "Mayo – Junio 2026",
     tags: ["Logo", "Sitio web", "Formulario + WhatsApp", "Gestión de redes sociales", "Campañas", "Asesoría"],
     problem:
       "Dependían del contacto directo por recomendaciones. No tenían presencia digital profesional ni un sistema para recibir y gestionar consultas de clientes nuevos.",
@@ -58,6 +61,7 @@ const CASES: ResultCase[] = [
   {
     business: "Amore",
     subtitle: "Florería y detalles — Santiago",
+    periodo: "Octubre 2025 – Junio 2026",
     tags: ["Branding", "Gestión de redes sociales", "Meta Ads", "Contenido", "Campañas estacionales"],
     problem:
       "Vendían solo por WhatsApp sin presencia en redes sociales. No tenían identidad visual profesional ni un canal de captación de clientes más allá del boca a boca.",
@@ -192,6 +196,7 @@ function CaseBlock({ item, index }: { item: ResultCase; index: number }) {
         <p className="result-case-kicker">Caso {String(index + 1).padStart(2, "0")}</p>
         <h2 className="result-case-title">{item.business}</h2>
         <p className="result-case-subtitle">{item.subtitle}</p>
+        <p className="result-case-subtitle">Campaña: {item.periodo}</p>
         <div className="result-tags">
           {item.tags.map((tag) => (
             <span key={tag}>{tag}</span>

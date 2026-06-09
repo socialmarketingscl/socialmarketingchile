@@ -361,9 +361,9 @@ export default function NosotrosClient() {
                 src="/images/equipo/martin-cataldo.jpg"
                 alt="Martín Cataldo Sánchez — CEO y Fundador de Social Marketing Chile"
                 width={400}
-                height={400}
+                height={600}
                 className="object-cover"
-                style={{ width: "100%", maxWidth: "400px", aspectRatio: "1 / 1", borderRadius: "12px" }}
+                style={{ width: "100%", maxWidth: "400px", height: "auto", borderRadius: "12px", objectPosition: "top center" }}
               />
               <div>
                 <h3 className="about-h3" style={{ color: "#FFFFFF", fontSize: "1.55rem", lineHeight: 1.18, marginBottom: "8px" }}>
