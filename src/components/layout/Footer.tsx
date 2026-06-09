@@ -234,6 +234,19 @@ export default function Footer() {
             style={{
               fontFamily: "var(--font-inter)",
               fontSize: "0.78rem",
+              lineHeight: 1.6,
+              textAlign: "center",
+              marginTop: "18px",
+            }}
+          >
+            <Link href="/politica-de-privacidad" className="footer-link">
+              Política de privacidad
+            </Link>
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontSize: "0.78rem",
               color: "rgba(255,255,255,0.40)",
               lineHeight: 1.6,
               textAlign: "center",
