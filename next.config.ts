@@ -53,6 +53,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  trailingSlash: false,
   images: {
     qualities: [75, 95],
   },

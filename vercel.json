@@ -1,0 +1,35 @@
+{
+  "redirects": [
+    {
+      "source": "/soluciones/posicionamiento-google-ia",
+      "destination": "https://socialmarketingchile.cl/soluciones/posicionamiento-en-google",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones/gestion-redes-sociales",
+      "destination": "https://socialmarketingchile.cl/soluciones/gestion-de-redes-sociales",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones/identidad-visual-marca",
+      "destination": "https://socialmarketingchile.cl/soluciones/identidad-visual-y-marca",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones/sistemas-ventas-ia",
+      "destination": "https://socialmarketingchile.cl/soluciones/sistemas-de-ventas-con-ia",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.socialmarketingchile.cl"
+        }
+      ],
+      "destination": "https://socialmarketingchile.cl/:path*",
+      "permanent": true
+    }
+  ]
+}
