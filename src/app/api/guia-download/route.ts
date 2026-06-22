@@ -3,10 +3,9 @@ type GuiaDownloadPayload = {
   email?: unknown;
   whatsapp?: unknown;
   rubro?: unknown;
-  equipo?: unknown;
 };
 
-const REQUIRED_FIELDS = ["nombre", "email", "whatsapp", "rubro", "equipo"] as const;
+const REQUIRED_FIELDS = ["nombre", "email", "whatsapp", "rubro"] as const;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function getString(value: unknown) {
@@ -60,7 +59,6 @@ export async function POST(request: Request) {
     email,
     whatsapp: getString(payload.whatsapp),
     rubro: getString(payload.rubro),
-    equipo: getString(payload.equipo),
     fuente: "landing-guia-claude",
     fecha: new Date().toISOString(),
   };

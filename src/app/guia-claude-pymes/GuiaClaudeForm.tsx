@@ -7,7 +7,6 @@ type FormState = {
   email: string;
   whatsapp: string;
   rubro: string;
-  equipo: string;
 };
 
 const INITIAL_FORM_STATE: FormState = {
@@ -15,7 +14,6 @@ const INITIAL_FORM_STATE: FormState = {
   email: "",
   whatsapp: "",
   rubro: "",
-  equipo: "",
 };
 
 const RUBROS = [
@@ -27,13 +25,6 @@ const RUBROS = [
   "Educación",
   "Tecnología",
   "Otro",
-];
-
-const EQUIPOS = [
-  "Solo yo",
-  "2 a 5 personas",
-  "6 a 20 personas",
-  "Más de 20 personas",
 ];
 
 export default function GuiaClaudeForm() {
@@ -100,15 +91,15 @@ export default function GuiaClaudeForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-sm md:p-10"
+      className="rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] md:p-10"
     >
       <div className="mb-8 text-center">
-        <p className="font-instrument text-lg italic text-[#475569]">Formulario</p>
+        <p className="font-instrument text-lg italic text-[#475569]">Descarga gratuita</p>
         <h2 className="mt-3 font-archivo text-3xl font-black leading-tight text-[#0F172A] md:text-4xl">
-          Descarga la guía gratis
+          Recibe la guía gratis en tu correo
         </h2>
         <p className="mt-4 font-inter text-base leading-relaxed text-[#475569]">
-          Completa el formulario y recibe el PDF de inmediato en tu correo.
+          Completa tus datos y te enviaremos el PDF de inmediato para que empieces a aplicar Claude en tu negocio.
         </p>
       </div>
 
@@ -176,26 +167,6 @@ export default function GuiaClaudeForm() {
           </select>
         </label>
 
-        <label className="block">
-          <span className="mb-2 block font-inter text-sm font-semibold text-[#0F172A]">
-            Tamaño de tu equipo
-          </span>
-          <select
-            required
-            value={form.equipo}
-            onChange={(event) => updateField("equipo", event.target.value)}
-            className="w-full rounded-lg border border-[#E2E8F0] bg-white px-4 py-3 font-inter text-base text-[#0F172A] focus:border-2 focus:border-[#BEF264] focus:outline-none"
-          >
-            <option value="" disabled>
-              ¿Cuántas personas trabajan contigo?
-            </option>
-            {EQUIPOS.map((equipo) => (
-              <option key={equipo} value={equipo}>
-                {equipo}
-              </option>
-            ))}
-          </select>
-        </label>
       </div>
 
       <button
@@ -203,7 +174,7 @@ export default function GuiaClaudeForm() {
         disabled={isSubmitting}
         className="mt-6 w-full rounded-lg bg-[#BEF264] px-6 py-3.5 font-archivo text-base font-black text-[#0F172A] transition hover:bg-[#A3E635] disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {isSubmitting ? "Enviando..." : "Descargar guía gratis →"}
+        {isSubmitting ? "Enviando..." : "Enviar guía gratis →"}
       </button>
 
       {error ? (
@@ -211,7 +182,7 @@ export default function GuiaClaudeForm() {
       ) : null}
 
       <p className="mt-4 font-inter text-xs leading-relaxed text-[#94A3B8]">
-        Al enviar, aceptas que Social Marketing guarde tus datos para enviarte la guía y eventualmente información relevante sobre marketing digital. Sin spam.
+        Tus datos no se comparten. Solo los usaremos para enviarte la guía y contenido útil para tu negocio.
       </p>
     </form>
   );

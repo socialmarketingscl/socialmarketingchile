@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import GuiaClaudeForm from "./GuiaClaudeForm";
 
-const pageTitle = "Guía de Claude para Pymes Chilenas | Gratis | Social Marketing";
+const pageTitle = "Claude para Emprendedores Chilenos";
 const pageDescription =
   "30 páginas sobre cómo usar Claude AI en tu negocio. Sin tecnicismos. Pensada para pymes chilenas. Descárgala gratis.";
 
@@ -35,23 +36,17 @@ export const metadata: Metadata = {
   },
 };
 
-const guideBullets = [
-  "Cómo elegir el plan correcto sin gastar de más",
-  "Casos de uso reales para tu tipo de negocio",
-  "Automatiza tareas sin saber programar",
-];
-
 const stats = [
   {
     value: "30",
-    label: "páginas de contenido aplicable",
+    label: "páginas prácticas",
   },
   {
     value: "0",
-    label: "tecnicismos sin traducir",
+    label: "tecnicismos innecesarios",
   },
   {
-    value: "Chile 🇨🇱",
+    value: "Chile",
     label: "pensada para pymes chilenas",
   },
 ];
@@ -60,45 +55,34 @@ const contentCards = [
   {
     icon: "document",
     title: "Planes y precios",
-    description: "Cómo decidir qué plan de Claude te conviene según tu uso real",
+    description: "Cómo elegir el plan de Claude que más te conviene según tu uso real.",
   },
   {
     icon: "folder",
     title: "Proyectos y memoria",
-    description: "Organiza tu trabajo para que Claude recuerde el contexto de tu negocio",
+    description: "Cómo organizar el contexto de tu negocio para trabajar mejor con Claude.",
   },
   {
     icon: "bolt",
     title: "Automatización básica",
-    description: "Tareas programadas y flujos que ahorran horas sin necesitar código",
+    description: "Cómo ahorrar tiempo en tareas repetitivas sin necesidad de programar.",
   },
   {
     icon: "chat",
     title: "Atención al cliente",
-    description: "Cómo usar Claude para responder consultas frecuentes de forma consistente",
+    description: "Cómo usar Claude para responder consultas de forma más clara y consistente.",
   },
   {
     icon: "proposal",
     title: "Cotizaciones y propuestas",
-    description: "Genera propuestas comerciales en minutos con el contexto de tu negocio",
+    description: "Cómo generar propuestas comerciales más rápido con mejor estructura.",
   },
   {
     icon: "chart",
     title: "Casos reales de pyme",
-    description: "Ejemplos concretos aplicados a rubros como servicios, comercio y gastronomía",
+    description: "Ejemplos aplicados a rubros como servicios, comercio, gastronomía y negocios locales.",
   },
 ];
-
-function CheckIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="h-5 w-5 flex-none text-[#BEF264]">
-      <path
-        fill="currentColor"
-        d="M8.143 13.61 4.57 10.036l1.414-1.414 2.159 2.158 5.873-5.873 1.414 1.414z"
-      />
-    </svg>
-  );
-}
 
 function ContentIcon({ type }: { type: string }) {
   const commonProps = {
@@ -161,48 +145,46 @@ export default function GuiaClaudePymesPage() {
     <main className="bg-[#0F172A]">
       <style>{`body > footer { display: none; }`}</style>
 
-      <section className="bg-[#0F172A] px-4 pb-16 pt-28 md:px-6 md:pb-24 md:pt-36">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)] lg:items-center">
+      <section className="relative overflow-hidden bg-[#0F172A] px-4 pb-16 pt-28 md:px-6 md:pb-24 md:pt-36">
+        <div className="pointer-events-none absolute right-[-18%] top-24 h-[420px] w-[420px] rounded-full bg-[#BEF264]/10 blur-[110px]" />
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-center">
           <div>
-            <p className="font-instrument text-lg italic text-[#BEF264] md:text-xl">
-              Guía gratuita · Claude AI para pymes
+            <p className="font-inter text-xs font-bold uppercase tracking-[0.18em] text-[#BEF264] md:text-sm">
+              GUÍA GRATUITA 2026 · PARA PYMES CHILENAS
             </p>
             <h1 className="mt-5 max-w-3xl font-archivo text-4xl font-black leading-[0.98] tracking-[-0.03em] text-[#F8FAFC] md:text-6xl lg:text-7xl">
-              La guía de Claude que toda pyme chilena debería leer
+              Aprende a usar Claude para vender, ordenar y automatizar tu pyme
             </h1>
             <p className="mt-6 max-w-2xl font-inter text-lg leading-relaxed text-[#CBD5E1] md:text-xl">
-              30 páginas. Sin tecnicismos. Pensada para negocios que quieren usar IA de verdad, no solo hablar de ella.
+              30 páginas prácticas, sin tecnicismos, para aplicar inteligencia artificial en ventas, marketing, atención al cliente, automatización y publicidad digital.
             </p>
             <div className="mt-8">
               <a
                 href="#formulario"
-                className="inline-flex rounded-lg bg-[#BEF264] px-7 py-3.5 font-archivo text-base font-black text-[#0F172A] transition hover:bg-[#A3E635]"
+                className="inline-flex rounded-full bg-[#BEF264] px-7 py-3.5 font-archivo text-base font-black text-[#0F172A] shadow-[0_12px_30px_rgba(190,242,100,0.22)] transition hover:bg-[#A3E635]"
               >
-                Descargar guía gratis
+                Quiero descargar la guía gratis
               </a>
               <p className="mt-3 font-inter text-sm text-[#475569]">
-                Sin spam. Tus datos solo se usan para enviarte la guía.
+                Te enviaremos la guía al correo. Sin spam ni mensajes innecesarios.
               </p>
             </div>
           </div>
 
-          <div className="rounded-xl border border-[#334155] bg-[#1E293B] p-5 shadow-2xl shadow-black/20 md:p-7">
-            <div className="rounded-lg border border-[#BEF264] bg-[#0F172A] p-8 text-center">
-              <p className="font-archivo text-3xl font-black leading-tight text-[#BEF264] md:text-4xl">
-                Guía Claude · Pymes Chile
-              </p>
-              <p className="mt-4 font-inter text-base text-[#CBD5E1]">
-                30 páginas · Edición 2026
-              </p>
+          <div className="relative">
+            <div className="absolute inset-x-10 bottom-4 h-28 rounded-full bg-[#BEF264]/20 blur-3xl" />
+            <div className="relative">
+              <Image
+                src="/images/lead-magnets/claude-guia-hero.png"
+                alt="Mockup premium de la guía Claude para Emprendedores Chilenos"
+                width={2400}
+                height={1501}
+                priority
+                quality={95}
+                sizes="(min-width: 1024px) 44vw, 100vw"
+                className="h-auto w-full drop-shadow-[0_36px_90px_rgba(0,0,0,0.35)]"
+              />
             </div>
-            <ul className="mt-6 space-y-4">
-              {guideBullets.map((bullet) => (
-                <li key={bullet} className="flex gap-3 font-inter text-sm leading-relaxed text-[#CBD5E1]">
-                  <CheckIcon />
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
@@ -210,13 +192,13 @@ export default function GuiaClaudePymesPage() {
       <section className="bg-[#F8FAFC] px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto max-w-[720px] text-center">
           <p className="font-instrument text-lg italic text-[#475569] md:text-xl">
-            ¿Por qué confiar en esta guía?
+            Hecha desde la práctica
           </p>
           <h2 className="mt-4 font-archivo text-3xl font-black leading-tight tracking-[-0.025em] text-[#0F172A] md:text-5xl">
-            La hicimos porque usamos Claude todos los días en nuestra agencia
+            ¿Por qué confiar en esta guía?
           </h2>
           <p className="mt-6 font-inter text-base leading-relaxed text-[#475569] md:text-lg">
-            En Social Marketing llevamos meses usando Claude para automatizar prospección, generar contenido y armar propuestas. Vimos que el 90% de los dueños de pyme están perdidos entre tutoriales gringos que no aplican a Chile. Esta guía es lo que nos hubiera gustado leer hace un año.
+            En Social Marketing llevamos meses usando Claude para automatizar prospección, crear propuestas, responder mejor y ordenar procesos reales de negocio. Esta guía reúne lo que sí le sirve a una pyme chilena para empezar, sin teoría innecesaria ni ejemplos que no aplican a Chile.
           </p>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {stats.map((stat) => (
@@ -267,23 +249,37 @@ export default function GuiaClaudePymesPage() {
 
       <section className="bg-[#0F172A] px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[auto_1fr] md:items-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-[#1E293B] font-archivo text-2xl font-black text-[#BEF264]">
-            SM
+          <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-[#1E293B] p-3">
+            <Image
+              src="/logo-blanco-social-marketing-agencia-marketing-digital-ia.png"
+              alt="Logo de Social Marketing"
+              width={849}
+              height={1021}
+              className="h-full w-full object-contain"
+            />
           </div>
           <div>
-            <p className="font-instrument text-lg italic text-[#BEF264] md:text-xl">Quiénes somos</p>
+            <p className="font-instrument text-lg italic text-[#BEF264] md:text-xl">Hecha por Social Marketing</p>
             <h3 className="mt-3 font-archivo text-2xl font-black leading-tight text-[#F8FAFC] md:text-4xl">
-              Social Marketing — Agencia de marketing digital e IA para pymes
+              Agencia de marketing digital e inteligencia artificial aplicada a ventas, automatización y crecimiento para pymes en Chile.
             </h3>
             <p className="mt-4 font-inter text-base leading-relaxed text-[#CBD5E1] md:text-lg">
-              Ayudamos a pymes chilenas a captar más clientes, automatizar respuestas y medir lo que importa. Sin humo.
+              Ayudamos a negocios a captar más clientes, ordenar su proceso comercial y usar IA con sentido práctico.
             </p>
-            <a
-              href="https://socialmarketingchile.cl"
-              className="mt-5 inline-flex font-inter text-base font-semibold text-[#BEF264] underline underline-offset-4"
-            >
-              socialmarketingchile.cl
-            </a>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a
+                href="/contacto"
+                className="inline-flex rounded-full bg-[#BEF264] px-6 py-3 font-archivo text-sm font-black text-[#0F172A] transition hover:bg-[#A3E635]"
+              >
+                Agendar diagnóstico gratuito →
+              </a>
+              <a
+                href="https://socialmarketingchile.cl"
+                className="inline-flex items-center font-inter text-base font-semibold text-[#BEF264] underline underline-offset-4"
+              >
+                socialmarketingchile.cl
+              </a>
+            </div>
           </div>
         </div>
       </section>
