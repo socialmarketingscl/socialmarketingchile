@@ -145,14 +145,15 @@ export default function GuiaClaudePymesPage() {
     <main className="bg-[#0F172A]">
       <style>{`body > footer { display: none; }`}</style>
 
-      <section className="relative overflow-hidden bg-[#0F172A] px-4 pb-16 pt-28 md:px-6 md:pb-24 md:pt-36">
-        <div className="pointer-events-none absolute right-[-18%] top-24 h-[420px] w-[420px] rounded-full bg-[#BEF264]/10 blur-[110px]" />
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-center">
-          <div>
+      <section className="relative overflow-hidden bg-[#0F172A] px-4 pb-20 pt-28 md:px-6 md:pb-28 md:pt-36">
+        <div className="pointer-events-none absolute right-[-16%] top-20 h-[520px] w-[520px] rounded-full bg-[#BEF264]/10 blur-[130px]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#F8FAFC]" />
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(520px,1.1fr)] lg:items-center lg:gap-14">
+          <div className="lg:max-w-[760px]">
             <p className="font-inter text-xs font-bold uppercase tracking-[0.18em] text-[#BEF264] md:text-sm">
               GUÍA GRATUITA 2026 · PARA PYMES CHILENAS
             </p>
-            <h1 className="mt-5 max-w-3xl font-archivo text-4xl font-black leading-[0.98] tracking-[-0.03em] text-[#F8FAFC] md:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-[780px] font-archivo text-4xl font-black leading-[1.03] tracking-[-0.03em] text-[#F8FAFC] md:text-6xl lg:text-[4.75rem]">
               Aprende a usar Claude para vender, ordenar y automatizar tu pyme
             </h1>
             <p className="mt-6 max-w-2xl font-inter text-lg leading-relaxed text-[#CBD5E1] md:text-xl">
@@ -171,9 +172,10 @@ export default function GuiaClaudePymesPage() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-x-10 bottom-4 h-28 rounded-full bg-[#BEF264]/20 blur-3xl" />
-            <div className="relative">
+          <div className="relative flex items-center justify-center lg:min-h-[560px]">
+            <div className="absolute inset-x-4 bottom-0 h-36 rounded-full bg-[#BEF264]/20 blur-[70px] lg:inset-x-0 lg:h-44" />
+            <div className="absolute inset-8 rounded-[2rem] bg-[#1E293B]/70 blur-[90px]" />
+            <div className="relative w-full max-w-[640px] rounded-2xl shadow-[0_34px_110px_rgba(0,0,0,0.48)] ring-1 ring-white/10 lg:max-w-none lg:scale-[1.24]">
               <Image
                 src="/images/lead-magnets/claude-guia-hero.png"
                 alt="Mockup premium de la guía Claude para Emprendedores Chilenos"
@@ -181,15 +183,15 @@ export default function GuiaClaudePymesPage() {
                 height={1501}
                 priority
                 quality={95}
-                sizes="(min-width: 1024px) 44vw, 100vw"
-                className="h-auto w-full drop-shadow-[0_36px_90px_rgba(0,0,0,0.35)]"
+                sizes="(min-width: 1280px) 52vw, (min-width: 1024px) 50vw, 100vw"
+                className="h-auto w-full rounded-2xl"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#F8FAFC] px-4 py-16 md:px-6 md:py-24">
+      <section className="bg-[#F8FAFC] px-4 pb-16 pt-14 md:px-6 md:pb-24 md:pt-20">
         <div className="mx-auto max-w-[720px] text-center">
           <p className="font-instrument text-lg italic text-[#475569] md:text-xl">
             Hecha desde la práctica
