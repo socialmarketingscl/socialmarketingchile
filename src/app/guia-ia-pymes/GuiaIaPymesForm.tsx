@@ -3,17 +3,29 @@
 import { FormEvent, useState } from "react";
 
 type FormState = {
-  nombre: string;
+  name: string;
+  businessName: string;
   email: string;
   whatsapp: string;
-  rubro: string;
+  businessType: string;
+  website: string;
 };
 
 const INITIAL_FORM_STATE: FormState = {
-  nombre: "",
+  name: "",
+  businessName: "",
   email: "",
   whatsapp: "",
-  rubro: "",
+  businessType: "",
+  website: "",
+};
+
+const REQUIRED_FIELD_LABELS: Record<Exclude<keyof FormState, "website">, string> = {
+  name: "Nombre completo",
+  businessName: "Nombre de tu pyme o negocio",
+  email: "Email",
+  whatsapp: "WhatsApp",
+  businessType: "Rubro de tu negocio",
 };
 
 const RUBROS = [
@@ -27,11 +39,14 @@ const RUBROS = [
   "Otro",
 ];
 
-export default function GuiaClaudeForm() {
+export default function GuiaIaPymesForm() {
   const [form, setForm] = useState<FormState>(INITIAL_FORM_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState(
+    "/downloads/tu-pyme-con-ia-15-dias-social-marketing.pdf",
+  );
 
   function updateField(field: keyof FormState, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -40,11 +55,19 @@ export default function GuiaClaudeForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     setError("");
 
+    for (const [field, label] of Object.entries(REQUIRED_FIELD_LABELS)) {
+      if (!form[field as keyof typeof REQUIRED_FIELD_LABELS].trim()) {
+        setError(`Falta el campo obligatorio: ${label}.`);
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
+
     try {
-      const response = await fetch("/api/guia-download", {
+      const response = await fetch("/api/lead-magnet", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,17 +75,22 @@ export default function GuiaClaudeForm() {
         body: JSON.stringify(form),
       });
 
-      const data = (await response.json()) as { success?: boolean; error?: string };
+      const data = (await response.json()) as {
+        success?: boolean;
+        error?: string;
+        downloadUrl?: string;
+      };
 
       if (!response.ok || !data.success) {
         throw new Error(data.error || "Hubo un problema.");
       }
 
       setSubmittedEmail(form.email);
+      if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
       setForm(INITIAL_FORM_STATE);
     } catch {
       setError(
-        "Hubo un problema. Intenta de nuevo o escríbenos a contacto@socialmarketingchile.cl",
+        "No pudimos enviar la guía en este momento. Intenta nuevamente o escríbenos por WhatsApp.",
       );
     } finally {
       setIsSubmitting(false);
@@ -73,17 +101,26 @@ export default function GuiaClaudeForm() {
     return (
       <div className="rounded-xl border border-[#E2E8F0] bg-white p-8 text-center shadow-sm md:p-10">
         <h3 className="font-archivo text-2xl font-black leading-tight text-[#0F172A] md:text-3xl">
-          ¡Listo! Revisa tu correo
+          Listo. Te enviamos la guía a tu correo.
         </h3>
         <p className="mt-4 font-inter text-base leading-relaxed text-[#475569]">
-          Te enviamos la guía a {submittedEmail}. Si no llega en 5 minutos, revisa la carpeta de spam.
+          Revisa también spam o promociones si no la ves en unos minutos.
         </p>
         <a
-          href="/guia-claude-pymes.pdf"
+          href={downloadUrl}
           className="mt-7 inline-flex items-center justify-center rounded-lg bg-[#BEF264] px-6 py-3.5 font-archivo text-base font-black text-[#0F172A] transition hover:bg-[#A3E635]"
         >
-          También puedes descargarla aquí →
+          Descargar guía ahora →
         </a>
+        <a
+          href="/contacto"
+          className="mt-4 inline-flex items-center justify-center rounded-lg border border-[#CBD5E1] px-6 py-3.5 font-archivo text-base font-black text-[#0F172A] transition hover:border-[#BEF264]"
+        >
+          Agendar diagnóstico gratuito →
+        </a>
+        <p className="mt-5 font-inter text-sm leading-relaxed text-[#475569]">
+          Si quieres aplicar esta guía en tu negocio con ayuda, puedes agendar un diagnóstico gratuito con Social Marketing.
+        </p>
       </div>
     );
   }
@@ -91,6 +128,7 @@ export default function GuiaClaudeForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.12)] md:p-10"
     >
       <div className="mb-8 text-center">
@@ -99,7 +137,7 @@ export default function GuiaClaudeForm() {
           Recibe la guía gratis en tu correo
         </h2>
         <p className="mt-4 font-inter text-base leading-relaxed text-[#475569]">
-          Completa tus datos y te enviaremos el PDF de inmediato para que empieces a aplicar Claude en tu negocio.
+          Completa tus datos y te enviaremos la guía gratis para que empieces a aplicar inteligencia artificial en tu negocio, paso a paso.
         </p>
       </div>
 
@@ -111,9 +149,23 @@ export default function GuiaClaudeForm() {
           <input
             required
             type="text"
-            value={form.nombre}
-            onChange={(event) => updateField("nombre", event.target.value)}
+            value={form.name}
+            onChange={(event) => updateField("name", event.target.value)}
             placeholder="Tu nombre"
+            className="w-full rounded-lg border border-[#E2E8F0] px-4 py-3 font-inter text-base text-[#0F172A] placeholder:text-[#94A3B8] focus:border-2 focus:border-[#BEF264] focus:outline-none"
+          />
+        </label>
+
+        <label className="block">
+          <span className="mb-2 block font-inter text-sm font-semibold text-[#0F172A]">
+            Nombre de tu pyme o negocio
+          </span>
+          <input
+            required
+            type="text"
+            value={form.businessName}
+            onChange={(event) => updateField("businessName", event.target.value)}
+            placeholder="Ej: Cafetería Barrio Sur"
             className="w-full rounded-lg border border-[#E2E8F0] px-4 py-3 font-inter text-base text-[#0F172A] placeholder:text-[#94A3B8] focus:border-2 focus:border-[#BEF264] focus:outline-none"
           />
         </label>
@@ -152,8 +204,8 @@ export default function GuiaClaudeForm() {
           </span>
           <select
             required
-            value={form.rubro}
-            onChange={(event) => updateField("rubro", event.target.value)}
+            value={form.businessType}
+            onChange={(event) => updateField("businessType", event.target.value)}
             className="w-full rounded-lg border border-[#E2E8F0] bg-white px-4 py-3 font-inter text-base text-[#0F172A] focus:border-2 focus:border-[#BEF264] focus:outline-none"
           >
             <option value="" disabled>
@@ -167,6 +219,16 @@ export default function GuiaClaudeForm() {
           </select>
         </label>
 
+        <label className="hidden" aria-hidden="true">
+          Sitio web
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={form.website}
+            onChange={(event) => updateField("website", event.target.value)}
+          />
+        </label>
       </div>
 
       <button

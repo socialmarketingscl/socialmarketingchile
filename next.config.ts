@@ -68,6 +68,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/guia-claude-pymes",
+        destination: "/guia-ia-pymes",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

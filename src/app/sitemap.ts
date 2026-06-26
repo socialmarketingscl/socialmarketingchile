@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/guia-claude-pymes`,
+      url: `${baseUrl}/guia-ia-pymes`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,
