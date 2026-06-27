@@ -477,7 +477,7 @@ export default function ContactoClient() {
                     <select className="contact-input" name="origen" defaultValue="Google">
                       <option>Google</option>
                       <option>Instagram</option>
-                      <option>Referido</option>
+                      <option value="Recomendación">Referido</option>
                       <option>Otro</option>
                     </select>
                   </label>
