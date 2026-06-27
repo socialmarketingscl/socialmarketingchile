@@ -9,7 +9,7 @@ import { HERO } from "@/lib/constants";
 const METRICS = [
   { end: 56, type: "percent", label: "en ventas generadas" },
   { end: 627, type: "percent", label: "alcance orgánico" },
-  { end: 6, type: "number", label: "negocios activos" },
+  { end: 50, type: "plus", label: "negocios han confiado" },
 ];
 
 function useCountUp(end: number, duration: number = 2000) {
@@ -62,7 +62,7 @@ function HeroMetric({
   type: string;
 }) {
   const { count, ref } = useCountUp(end);
-  const formattedValue = type === "percent" ? `+${count}%` : `${count}`;
+  const formattedValue = type === "percent" ? `+${count}%` : type === "plus" ? `+${count}` : `${count}`;
 
   return (
     <div ref={ref} className="hero-metric">
@@ -89,7 +89,7 @@ export default function HeroSection() {
     >
       <div className="hero-bg-wrapper absolute inset-0 opacity-50 md:opacity-100" aria-hidden="true">
         <Image
-          src="/images/hero-bg-optimized.jpg"
+          src="/images/nuevo-hero-bg-optimized.png"
           alt=""
           fill
           priority
@@ -113,7 +113,7 @@ export default function HeroSection() {
           border-radius: 999px;
           background: radial-gradient(circle, rgba(190, 242, 100, 0.22) 0%, rgba(190, 242, 100, 0.08) 36%, rgba(190, 242, 100, 0) 70%);
           filter: blur(24px);
-          opacity: 0.6;
+          opacity: 0;
           z-index: 1;
           pointer-events: none;
         }
@@ -129,7 +129,7 @@ export default function HeroSection() {
           position: absolute;
           inset: 0;
           z-index: 2;
-          background: linear-gradient(to right, #0F172A 0%, #0F172A 30%, rgba(15, 23, 42, 0.7) 50%, transparent 70%);
+          background: linear-gradient(to right, rgba(15, 23, 42, 0.62) 0%, rgba(15, 23, 42, 0.38) 34%, rgba(15, 23, 42, 0.08) 58%, transparent 78%);
           pointer-events: none;
         }
 
@@ -140,7 +140,7 @@ export default function HeroSection() {
           bottom: 0;
           height: 36%;
           z-index: 2;
-          background: linear-gradient(to top, #0F172A 0%, transparent 30%);
+          background: linear-gradient(to top, rgba(226, 232, 240, 0.76) 0%, rgba(226, 232, 240, 0.24) 28%, transparent 64%);
           pointer-events: none;
         }
 
@@ -195,6 +195,7 @@ export default function HeroSection() {
           font-weight: 800;
           line-height: 0.98;
           letter-spacing: -0.035em;
+          text-shadow: 0 4px 22px rgba(15, 23, 42, 0.34);
         }
 
         .hero-title-accent {
@@ -204,11 +205,12 @@ export default function HeroSection() {
         .hero-subtitle {
           max-width: 560px;
           margin: 0 0 38px;
-          color: #94A3B8;
+          color: rgba(255, 255, 255, 0.82);
           font-family: var(--font-inter), sans-serif;
           font-size: clamp(1.03rem, 1.35vw, 1.16rem);
           font-weight: 400;
           line-height: 1.75;
+          text-shadow: 0 2px 14px rgba(15, 23, 42, 0.28);
         }
 
         .hero-ctas {
@@ -276,10 +278,10 @@ export default function HeroSection() {
           align-items: center;
           padding-top: 26px;
           padding-bottom: 34px;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-          background: #0F172A;
-          backdrop-filter: blur(14px);
+          border-top: 1px solid rgba(15, 23, 42, 0.08);
+          border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+          background: rgba(241, 245, 249, 0.9);
+          backdrop-filter: blur(16px);
           text-align: center;
         }
 
@@ -287,7 +289,7 @@ export default function HeroSection() {
           width: 100%;
           margin: 0 0 24px;
           padding: 0 24px;
-          color: #94A3B8;
+          color: #475569;
           font-family: var(--font-inter), sans-serif;
           font-size: 0.75rem;
           font-weight: 500;
@@ -295,6 +297,15 @@ export default function HeroSection() {
           line-height: 1.4;
           text-align: center;
           text-transform: uppercase;
+        }
+
+        .hero-redesign .logo-carousel-img {
+          filter: brightness(0) !important;
+          opacity: 0.72 !important;
+        }
+
+        .hero-redesign .logo-item:hover .logo-carousel-img {
+          opacity: 0.95 !important;
         }
 
         @media (max-width: 1024px) {
@@ -313,7 +324,7 @@ export default function HeroSection() {
           }
 
           .hero-bg-wrapper {
-            opacity: 0.5 !important;
+            opacity: 0.62 !important;
           }
 
           .hero-redesign .hero-bg-image {
@@ -325,11 +336,11 @@ export default function HeroSection() {
             top: 140px;
             width: 360px;
             height: 360px;
-            opacity: 0.45;
+            opacity: 0;
           }
 
           .hero-left-overlay {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.42) 0%, rgba(15, 23, 42, 0.58) 48%, #0F172A 100%);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.56) 0%, rgba(15, 23, 42, 0.64) 52%, rgba(15, 23, 42, 0.82) 100%);
           }
 
           .hero-content-shell {

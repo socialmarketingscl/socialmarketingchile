@@ -128,7 +128,7 @@ export default function ProblemaComercialSection() {
           height: 40px;
           z-index: 1;
           pointer-events: none;
-          background: linear-gradient(to bottom, #0F172A, #F8FAFC);
+          background: linear-gradient(to bottom, #E2E8F0 0%, #F1F5F9 42%, #F8FAFC 100%);
         }
 
         .problema-accordion {
