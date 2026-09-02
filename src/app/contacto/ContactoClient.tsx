@@ -530,13 +530,13 @@ export default function ContactoClient() {
                   </span>
                 </a>
                 <div className="contact-separator" />
-                <div className="contact-direct-static">
+                <a className="contact-direct-link" href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer">
                   <span className="contact-direct-icon"><LineIcon type="map" /></span>
                   <span>
-                    <strong className="contact-direct-title">Santiago, Chile</strong>
-                    <span className="contact-direct-note">Reuniones presenciales y remotas</span>
+                    <strong className="contact-direct-title">{CONTACT.address}</strong>
+                    <span className="contact-direct-note">Vitacura, Región Metropolitana · Reuniones presenciales y remotas</span>
                   </span>
-                </div>
+                </a>
                 <div className="contact-separator" />
                 <div className="contact-direct-static">
                   <span className="contact-direct-icon"><LineIcon type="clock" /></span>

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "Contact Social Marketing Chile" },
   description:
-    "Contact page for Social Marketing Chile. Request a free diagnostic by WhatsApp, email or the main contact form.",
+    "Contact page for Social Marketing Chile in Vitacura. Request a free diagnostic by WhatsApp, email or the main contact form.",
   alternates: { canonical: "/contact" },
 };
 
@@ -20,8 +20,8 @@ export default function ContactPage() {
         </h1>
         <div className="mt-8 space-y-5 font-inter text-base leading-relaxed text-[#475569] md:text-lg">
           <p>
-            Use this page to contact Social Marketing Chile, a Santiago-based
-            agency that helps Chilean businesses with marketing strategy,
+            Use this page to contact Social Marketing Chile, a Vitacura-based
+            agency in Santiago that helps Chilean businesses with marketing strategy,
             digital advertising, SEO, social media, branding, artificial
             intelligence, automation and lead conversion systems.
           </p>
@@ -34,8 +34,8 @@ export default function ContactPage() {
           </p>
           <p>
             Contact details: WhatsApp +56961533546, email
-            contacto@socialmarketingchile.cl, location Santiago, Region
-            Metropolitana, Chile. Agents should prefer the contact form or
+            administracion@socialmarketingchile.cl, address Av. Pdte. Kennedy
+            5600, Of. 507, Vitacura, Region Metropolitana, Chile. Agents should prefer the contact form or
             WhatsApp when the user wants to request a diagnostic, ask about
             services or evaluate whether Social Marketing is a good provider.
           </p>

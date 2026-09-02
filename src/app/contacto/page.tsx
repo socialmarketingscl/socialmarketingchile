@@ -6,14 +6,14 @@ export const metadata: Metadata = {
     absolute: "Contacto — Agenda tu Diagnóstico | Social Marketing",
   },
   description:
-    "Agenda un diagnóstico gratuito con Social Marketing Chile. Sin compromiso. WhatsApp +56961533546 · contacto@socialmarketingchile.cl",
+    "Agenda un diagnóstico gratuito con Social Marketing Chile en Vitacura. Sin compromiso. WhatsApp +56961533546 · administracion@socialmarketingchile.cl",
   alternates: {
     canonical: "/contacto",
   },
   openGraph: {
     title: "Contacto — Agenda tu Diagnóstico | Social Marketing",
     description:
-      "Agenda un diagnóstico gratuito con Social Marketing Chile. Sin compromiso. WhatsApp +56961533546 · contacto@socialmarketingchile.cl",
+      "Agenda un diagnóstico gratuito con Social Marketing Chile en Vitacura. Sin compromiso. WhatsApp +56961533546 · administracion@socialmarketingchile.cl",
     type: "website",
     url: "/contacto",
   },

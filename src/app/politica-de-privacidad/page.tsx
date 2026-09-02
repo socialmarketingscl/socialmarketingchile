@@ -29,11 +29,11 @@ export default function PoliticaDePrivacidadPage() {
           <br />
           RUT: 78.385.946-7
           <br />
-          Correo electrónico: contacto@socialmarketingchile.cl
+          Correo electrónico: administracion@socialmarketingchile.cl
           <br />
           Teléfono: +56961533546
           <br />
-          Domicilio: Santiago, Región Metropolitana, Chile
+          Domicilio: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Región Metropolitana, Chile
         </p>
 
         <h2>2. Datos que recopilamos</h2>
@@ -61,7 +61,7 @@ export default function PoliticaDePrivacidadPage() {
           En conformidad con la Ley N° 19.628, usted tiene derecho a solicitar información sobre sus datos personales, su origen y destinatario, el propósito del almacenamiento, así como a solicitar su modificación, bloqueo o eliminación cuando resulten erróneos, desactualizados o innecesarios para la finalidad con que fueron recopilados.
         </p>
         <p>
-          Para ejercer estos derechos, escríbanos a: contacto@socialmarketingchile.cl
+          Para ejercer estos derechos, escríbanos a: administracion@socialmarketingchile.cl
         </p>
 
         <h2>7. Seguridad</h2>

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: { absolute: "About Social Marketing Chile" },
   description:
-    "Trust anchor page for Social Marketing Chile, a marketing digital and artificial intelligence agency based in Santiago, Chile.",
+    "Trust anchor page for Social Marketing Chile, a marketing digital and artificial intelligence agency based in Vitacura, Santiago de Chile.",
   alternates: { canonical: "/about" },
 };
 
@@ -21,7 +21,7 @@ export default function AboutPage() {
         <div className="mt-8 space-y-5 font-inter text-base leading-relaxed text-[#475569] md:text-lg">
           <p>
             Social Marketing Chile is a marketing digital and artificial
-            intelligence agency based in Santiago, Chile. The agency helps small
+            intelligence agency based in Vitacura, Santiago de Chile. The agency helps small
             and medium-sized businesses capture more leads, organize their
             commercial process and convert opportunities through measurable
             digital systems.

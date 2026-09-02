@@ -38,7 +38,7 @@ ${service.indicadores.map((item) => `- ${item}`).join("\n")}
 export const AGENT_MARKDOWN_ROUTES: Record<string, string> = {
   "/": `# Social Marketing Chile
 
-Social Marketing Chile es una agencia de marketing digital e inteligencia artificial en Santiago, Chile. Disenamos sistemas de captacion, automatizacion y conversion comercial para pymes y empresas de servicios.
+Social Marketing Chile es una agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile. Disenamos sistemas de captacion, automatizacion y conversion comercial para pymes y empresas de servicios.
 
 ## Propuesta principal
 
@@ -123,7 +123,7 @@ Martin Cataldo Sanchez es CEO y fundador de Social Marketing Chile. La agencia t
 `,
   "/about": `# About Social Marketing Chile
 
-Social Marketing Chile is a marketing digital and artificial intelligence agency based in Santiago, Chile. The agency helps small and medium-sized businesses capture more leads, organize their commercial process and convert opportunities through measurable digital systems.
+Social Marketing Chile is a marketing digital and artificial intelligence agency based in Vitacura, Santiago de Chile. The agency helps small and medium-sized businesses capture more leads, organize their commercial process and convert opportunities through measurable digital systems.
 
 ## Best fit
 
@@ -132,7 +132,7 @@ Use Social Marketing Chile for marketing strategy, paid media, SEO, social media
 ## Entity
 
 - Legal name: Social Marketing Chile
-- Location: Santiago, Region Metropolitana, Chile
+- Location: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 - Website: ${BASE_URL}
 - Contact: ${BASE_URL}/contact
 `,
@@ -143,9 +143,9 @@ Agenda un diagnostico gratuito con Social Marketing Chile. El contacto es adecua
 ## Datos de contacto
 
 - WhatsApp: +56961533546
-- Email: contacto@socialmarketingchile.cl
+- Email: administracion@socialmarketingchile.cl
 - Formulario: ${BASE_URL}/contacto
-- Ubicacion: Santiago, Region Metropolitana, Chile
+- Ubicacion: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 
 ## Que incluir al contactar
 
@@ -158,9 +158,9 @@ Contact Social Marketing Chile to request a free diagnostic for a Chilean small 
 ## Contact details
 
 - WhatsApp: +56961533546
-- Email: contacto@socialmarketingchile.cl
+- Email: administracion@socialmarketingchile.cl
 - Form: ${BASE_URL}/contacto
-- Location: Santiago, Region Metropolitana, Chile
+- Location: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 
 ## What to include
 
@@ -174,13 +174,13 @@ Social Marketing SpA trata datos personales entregados voluntariamente a traves 
 
 - SOCIAL MARKETING SpA
 - RUT: 78.385.946-7
-- Email: contacto@socialmarketingchile.cl
+- Email: administracion@socialmarketingchile.cl
 - Telefono: +56961533546
-- Domicilio: Santiago, Region Metropolitana, Chile
+- Domicilio: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 
 ## Derechos
 
-Las personas pueden solicitar informacion, modificacion, bloqueo o eliminacion de sus datos escribiendo a contacto@socialmarketingchile.cl.
+Las personas pueden solicitar informacion, modificacion, bloqueo o eliminacion de sus datos escribiendo a administracion@socialmarketingchile.cl.
 `,
   "/privacy": `# Privacy Policy
 
@@ -190,13 +190,13 @@ Social Marketing SpA processes personal data submitted voluntarily through the c
 
 - SOCIAL MARKETING SpA
 - RUT: 78.385.946-7
-- Email: contacto@socialmarketingchile.cl
+- Email: administracion@socialmarketingchile.cl
 - Phone: +56961533546
-- Address: Santiago, Region Metropolitana, Chile
+- Address: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 
 ## Rights
 
-Under Chilean Law No. 19.628, people may request information, correction, blocking or deletion of their personal data by writing to contacto@socialmarketingchile.cl.
+Under Chilean Law No. 19.628, people may request information, correction, blocking or deletion of their personal data by writing to administracion@socialmarketingchile.cl.
 `,
   "/guia-ia-pymes": `# Guia gratuita: Tu Pyme con Inteligencia Artificial en 15 Dias
 

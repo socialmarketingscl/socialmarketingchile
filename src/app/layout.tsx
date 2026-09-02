@@ -42,10 +42,14 @@ export const metadata: Metadata = {
     template: "%s | Social Marketing",
   },
   description:
-    "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
+    "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
   keywords: [
     "agencia de marketing digital Chile",
     "agencia de marketing digital Santiago",
+    "agencia de marketing digital Vitacura",
+    "agencia de inteligencia artificial Vitacura",
+    "marketing digital Vitacura",
+    "agencia marketing IA Vitacura",
     "marketing digital e inteligencia artificial",
     "captación de clientes",
     "automatización comercial",
@@ -121,11 +125,12 @@ const organizationSchema = {
         caption: "Social Marketing — Agencia de Marketing Digital e IA en Chile",
       },
       description:
-        "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial para empresas que necesitan crecer con estrategia y tecnología.",
+        "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile. Diseñamos sistemas de captación, automatización y conversión comercial para empresas que necesitan crecer con estrategia y tecnología.",
       slogan: "Más que presencia digital, sistemas para crecer.",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Santiago",
+        streetAddress: "Av. Pdte. Kennedy 5600, Of. 507",
+        addressLocality: "Vitacura",
         addressRegion: "Región Metropolitana",
         addressCountry: "CL",
       },
@@ -139,14 +144,14 @@ const organizationSchema = {
         },
         {
           "@type": "ContactPoint",
-          email: "contacto@socialmarketingchile.cl",
+          email: "administracion@socialmarketingchile.cl",
           contactType: "sales",
           availableLanguage: "Spanish",
           areaServed: "CL",
         },
       ],
       telephone: "+56961533546",
-      email: "contacto@socialmarketingchile.cl",
+      email: "administracion@socialmarketingchile.cl",
       sameAs: [
         "https://www.instagram.com/socialmarketing_cl",
         "https://share.google/oe8amNvyOkbtjiG0Q",

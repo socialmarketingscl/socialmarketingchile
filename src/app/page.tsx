@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     absolute: "Social Marketing | Agencia de Marketing Digital e IA en Chile",
   },
   description:
-    "Agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
+    "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile. Diseñamos sistemas de captación, automatización y conversión comercial. Diagnóstico gratuito.",
   alternates: {
     canonical: "/",
     languages: {

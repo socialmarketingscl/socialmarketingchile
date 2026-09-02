@@ -271,7 +271,7 @@ export default function NosotrosClient() {
             <span className="section-eyebrow section-eyebrow-light" style={{ color: "#0F172A" }}>— Quiénes somos</span>
             <h2 className="section-h2 section-h2-dark" style={{ marginBottom: "26px" }}>Una agencia construida desde la trinchera.</h2>
             <p className="about-copy">
-              Social Marketing nace en Santiago, Chile, con un enfoque claro: ayudar a empresas y emprendedores a dejar de improvisar en lo digital. Vimos cómo negocios gastaban tiempo y dinero en acciones desconectadas — publicar sin estrategia, invertir en publicidad sin medir, responder leads sin sistema — y decidimos que había una forma mejor de hacerlo.
+              Social Marketing nace en Santiago, Chile, y hoy opera desde Vitacura con un enfoque claro: ayudar a empresas y emprendedores a dejar de improvisar en lo digital. Vimos cómo negocios gastaban tiempo y dinero en acciones desconectadas — publicar sin estrategia, invertir en publicidad sin medir, responder leads sin sistema — y decidimos que había una forma mejor de hacerlo.
             </p>
             <p className="about-copy">
               No venimos del mundo de las agencias creativas tradicionales. Venimos del marketing de resultados, la automatización comercial y la inteligencia artificial aplicada a ventas. Eso define cómo pensamos cada proyecto: desde el problema del negocio hacia la solución, no al revés.
@@ -280,7 +280,7 @@ export default function NosotrosClient() {
           <Reveal delay="0.25s">
             <aside className="about-stat-card">
               {[
-                ["Santiago, Chile", "Base de operaciones"],
+                ["Vitacura, Santiago", "Oficina comercial"],
                 ["2 áreas integradas", "Growth + Intelligence"],
                 ["6 líneas de servicio", "Marketing, publicidad, SEO, redes, marca y automatización con IA"],
               ].map(([value, label]) => (

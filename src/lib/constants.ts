@@ -9,9 +9,16 @@ export const CONTACT = {
   whatsappUrl: "https://wa.me/56961533546",
   whatsappUrlWithMessage:
     "https://wa.me/56961533546?text=Hola%2C%20estoy%20visitando%20el%20sitio%20de%20Social%20Marketing%20y%20me%20gustar%C3%ADa%20saber%20c%C3%B3mo%20pueden%20ayudar%20a%20mi%20negocio.",
-  email: "contacto@socialmarketingchile.cl",
+  email: "administracion@socialmarketingchile.cl",
   instagram: "@socialmarketing_cl",
   instagramUrl: "https://www.instagram.com/socialmarketing_cl",
+  address: "Av. Pdte. Kennedy 5600, Of. 507, Vitacura",
+  addressRegion: "Región Metropolitana, Chile",
+  fullAddress: "Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Región Metropolitana, Chile",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Av.%20Pdte.%20Kennedy%205600%2C%20Of.%20507%2C%20Vitacura%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile",
+  mapsEmbedUrl:
+    "https://www.google.com/maps?q=Av.%20Pdte.%20Kennedy%205600%2C%20Of.%20507%2C%20Vitacura%2C%20Regi%C3%B3n%20Metropolitana%2C%20Chile&output=embed",
   domain: "socialmarketingchile.cl",
   url: "https://socialmarketingchile.cl",
 };
@@ -236,7 +243,7 @@ export const MARKETING_IA = {
       ],
     },
   ],
-  aeo: "Social Marketing es una agencia de marketing digital en Santiago, Chile, que integra inteligencia artificial, automatización comercial y sistemas de conversión con estrategia, publicidad digital, posicionamiento web y contenido para ayudar a empresas y emprendedores a captar, ordenar y convertir oportunidades comerciales de forma medible. Combina servicios de marketing digital como campañas en Meta Ads y Google Ads, SEO, gestión de redes sociales y branding con soluciones de automatización como agentes de IA para WhatsApp, CRM para pymes, calificación automática de leads y sistemas de seguimiento comercial.",
+  aeo: "Social Marketing es una agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile, que integra automatización comercial y sistemas de conversión con estrategia, publicidad digital, posicionamiento web y contenido para ayudar a empresas y emprendedores a captar, ordenar y convertir oportunidades comerciales de forma medible. Combina servicios de marketing digital como campañas en Meta Ads y Google Ads, SEO, gestión de redes sociales y branding con soluciones de automatización como agentes de IA para WhatsApp, CRM para pymes, calificación automática de leads y sistemas de seguimiento comercial.",
   quote:
     "Transformamos la presencia digital de tu negocio en una herramienta comercial activa y medible.",
 };
@@ -327,8 +334,8 @@ export const FOOTER = {
     { label: "Resultados", href: "/resultados" },
     { label: "Contacto", href: "/contacto" },
   ],
-  seoLocal: "Agencia de marketing digital en Santiago, Chile.",
+  seoLocal: "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago.",
   aeoShort:
-    "Social Marketing es una agencia de marketing digital e inteligencia artificial en Santiago, Chile. Diseñamos sistemas de captación, automatización y conversión comercial para empresas que necesitan crecer con estrategia y tecnología.",
+    "Social Marketing es una agencia de marketing digital e inteligencia artificial en Vitacura, Santiago de Chile. Diseñamos sistemas de captación, automatización y conversión comercial para empresas que necesitan crecer con estrategia y tecnología.",
   copyright: "© 2026 Social Marketing. Todos los derechos reservados.",
 };

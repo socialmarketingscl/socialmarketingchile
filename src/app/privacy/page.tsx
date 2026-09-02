@@ -35,8 +35,8 @@ export default function PrivacyPage() {
           </p>
           <p>
             Controller details: SOCIAL MARKETING SpA, RUT 78.385.946-7, email
-            contacto@socialmarketingchile.cl, phone +56961533546, address
-            Santiago, Region Metropolitana, Chile. Under Chilean Law No. 19.628,
+            administracion@socialmarketingchile.cl, phone +56961533546, address
+            Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile. Under Chilean Law No. 19.628,
             people may request information, correction, blocking or deletion of
             their personal data by writing to the contact email.
           </p>

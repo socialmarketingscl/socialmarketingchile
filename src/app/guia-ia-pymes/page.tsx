@@ -299,7 +299,7 @@ export default function GuiaIaPymesPage() {
 
       <footer className="bg-[#0A0F1A] px-4 py-6 text-center">
         <p className="font-inter text-[13px] text-[#475569]">
-          © 2026 Social Marketing Chile · contacto@socialmarketingchile.cl
+          © 2026 Social Marketing Chile · administracion@socialmarketingchile.cl
         </p>
       </footer>
     </main>

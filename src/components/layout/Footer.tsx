@@ -12,6 +12,93 @@ export default function Footer() {
     >
       <div
         style={{
+          backgroundColor: "#F8FAFC",
+          padding: "0 24px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              overflow: "hidden",
+              height: "clamp(260px, 31vw, 390px)",
+              borderRadius: "0 0 18px 18px",
+              border: "1px solid rgba(15, 23, 42, 0.08)",
+              boxShadow: "0 24px 70px rgba(15, 23, 42, 0.18)",
+            }}
+          >
+            <iframe
+              title="Mapa de Social Marketing en Vitacura"
+              src={CONTACT.mapsEmbedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{
+                width: "100%",
+                height: "100%",
+                border: 0,
+                display: "block",
+              }}
+            />
+            <a
+              href={CONTACT.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                position: "absolute",
+                top: "20px",
+                left: "20px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "12px",
+                maxWidth: "min(440px, calc(100% - 40px))",
+                padding: "14px 16px",
+                borderRadius: "14px",
+                background: "rgba(255, 255, 255, 0.94)",
+                color: "#0F172A",
+                textDecoration: "none",
+                boxShadow: "0 16px 34px rgba(15, 23, 42, 0.16)",
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
+              }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "38px",
+                  height: "38px",
+                  borderRadius: "999px",
+                  background: "#BEF264",
+                  color: "#0F172A",
+                  flexShrink: 0,
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </span>
+              <span style={{ display: "grid", gap: "3px" }}>
+                <strong style={{ fontFamily: "var(--font-archivo)", fontSize: "0.98rem", lineHeight: 1.2 }}>
+                  {CONTACT.address}
+                </strong>
+                <span style={{ fontFamily: "var(--font-inter)", fontSize: "0.82rem", color: "#475569", lineHeight: 1.35 }}>
+                  {CONTACT.addressRegion} · Abrir en Google Maps
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
           maxWidth: "1200px",
           margin: "0 auto",
           padding: "72px 32px 0",
@@ -162,6 +249,22 @@ export default function Footer() {
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                   {CONTACT.email}
+                </a>
+              </li>
+              <li>
+                <a href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer" className="footer-contact-link">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
+                    <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span>
+                    <strong style={{ display: "block", fontWeight: 700, color: "rgba(255,255,255,0.76)" }}>
+                      {CONTACT.address}
+                    </strong>
+                    <span style={{ display: "block", marginTop: "4px", color: "rgba(255,255,255,0.48)", lineHeight: 1.45 }}>
+                      {CONTACT.addressRegion}
+                    </span>
+                  </span>
                 </a>
               </li>
               <li>
