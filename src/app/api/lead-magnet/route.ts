@@ -5,6 +5,13 @@ type LeadMagnetPayload = {
   whatsapp?: unknown;
   businessType?: unknown;
   website?: unknown;
+  utmSource?: unknown;
+  utmMedium?: unknown;
+  utmCampaign?: unknown;
+  utmContent?: unknown;
+  utmTerm?: unknown;
+  landingPage?: unknown;
+  referrer?: unknown;
 };
 
 const REQUIRED_FIELDS = ["name", "businessName", "email", "whatsapp", "businessType"] as const;
@@ -107,6 +114,21 @@ export async function POST(request: Request) {
   const email = getString(payload.email);
   const whatsapp = getString(payload.whatsapp);
   const businessType = getString(payload.businessType);
+  const utmSource = getString(payload.utmSource);
+  const utmMedium = getString(payload.utmMedium);
+  const utmCampaign = getString(payload.utmCampaign);
+  const utmContent = getString(payload.utmContent);
+  const utmTerm = getString(payload.utmTerm);
+  const attributionParts = [
+    utmSource && `source=${utmSource}`,
+    utmMedium && `medium=${utmMedium}`,
+    utmCampaign && `campaign=${utmCampaign}`,
+    utmContent && `content=${utmContent}`,
+    utmTerm && `term=${utmTerm}`,
+  ].filter(Boolean);
+  const leadSource = attributionParts.length > 0
+    ? `${LEAD_MAGNET_SOURCE} | First touch: ${attributionParts.join("; ")}`
+    : LEAD_MAGNET_SOURCE;
 
   if (!EMAIL_PATTERN.test(email)) {
     return jsonError("El email ingresado no tiene un formato válido.", 400);
@@ -126,7 +148,7 @@ export async function POST(request: Request) {
     [AIRTABLE_FIELDS.whatsapp]: whatsapp,
     [AIRTABLE_FIELDS.businessType]: businessType,
     [AIRTABLE_FIELDS.team]: "Social Marketing",
-    [AIRTABLE_FIELDS.source]: LEAD_MAGNET_SOURCE,
+    [AIRTABLE_FIELDS.source]: leadSource,
     [AIRTABLE_FIELDS.date]: createdAt,
     [AIRTABLE_FIELDS.status]: "Nuevo",
   };

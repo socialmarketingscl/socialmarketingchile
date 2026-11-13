@@ -78,6 +78,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="hero"
       className="hero-redesign"
       style={{
         position: "relative",

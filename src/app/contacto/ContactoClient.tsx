@@ -4,6 +4,7 @@ import type { FormEvent, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { CONTACT } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
+import { getFirstTouchAttribution } from "@/lib/first-touch-attribution";
 import { pushGtmConversionEvent } from "@/lib/gtm-events";
 
 function useReveal() {
@@ -121,7 +122,7 @@ export default function ContactoClient() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const searchParams = new URLSearchParams(window.location.search);
+    const attribution = getFirstTouchAttribution();
 
     const payload = {
       nombre: String(formData.get("nombre") ?? ""),
@@ -138,9 +139,7 @@ export default function ContactoClient() {
       origen: "Sitio web Social Marketing",
       fechaIngreso: new Date().toISOString(),
       pageUrl: window.location.href,
-      utmSource: searchParams.get("utm_source") ?? "",
-      utmMedium: searchParams.get("utm_medium") ?? "",
-      utmCampaign: searchParams.get("utm_campaign") ?? "",
+      ...attribution,
     };
 
     try {

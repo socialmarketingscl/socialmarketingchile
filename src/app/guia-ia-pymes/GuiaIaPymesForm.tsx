@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { getFirstTouchAttribution } from "@/lib/first-touch-attribution";
+import { pushGtmConversionEvent } from "@/lib/gtm-events";
 
 type FormState = {
   name: string;
@@ -67,12 +69,13 @@ export default function GuiaIaPymesForm() {
     setIsSubmitting(true);
 
     try {
+      const attribution = getFirstTouchAttribution();
       const response = await fetch("/api/lead-magnet", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, ...attribution }),
       });
 
       const data = (await response.json()) as {
@@ -87,6 +90,12 @@ export default function GuiaIaPymesForm() {
 
       setSubmittedEmail(form.email);
       if (data.downloadUrl) setDownloadUrl(data.downloadUrl);
+      pushGtmConversionEvent("descarga_guia", {
+        form_name: "guia_ia_pymes",
+        source: attribution.utmSource,
+        medium: attribution.utmMedium,
+        campaign: attribution.utmCampaign,
+      });
       setForm(INITIAL_FORM_STATE);
     } catch {
       setError(

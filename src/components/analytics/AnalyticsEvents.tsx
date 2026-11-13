@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { captureFirstTouchAttribution } from "@/lib/first-touch-attribution";
 import { pushGtmConversionEvent } from "@/lib/gtm-events";
 
 function getElementText(element: Element) {
@@ -22,6 +23,8 @@ function getTrackingLocation(element: Element) {
 
 export default function AnalyticsEvents() {
   useEffect(() => {
+    captureFirstTouchAttribution();
+
     const handleClick = (event: MouseEvent) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
@@ -34,7 +37,7 @@ export default function AnalyticsEvents() {
       const text = getElementText(interactiveElement);
       const location = getTrackingLocation(interactiveElement);
 
-      if (link?.href.includes("wa.me")) {
+      if (link && /wa\.me|whatsapp/i.test(link.href)) {
         pushGtmConversionEvent("clic_whatsapp");
         trackEvent("whatsapp_clicked", {
           link_text: text || "WhatsApp",
@@ -55,7 +58,6 @@ export default function AnalyticsEvents() {
       const isContactLink = link ? new URL(link.href).pathname === "/contacto" || href === "/contacto" : false;
 
       if (isContactLink || text.toLowerCase().includes("agendar diagnóstico")) {
-        pushGtmConversionEvent("cta_diagnostico");
         trackEvent("diagnostic_cta_clicked", {
           link_text: text,
           location,

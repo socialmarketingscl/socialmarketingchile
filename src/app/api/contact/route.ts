@@ -16,6 +16,10 @@ type ContactPayload = {
   utmSource?: unknown;
   utmMedium?: unknown;
   utmCampaign?: unknown;
+  utmContent?: unknown;
+  utmTerm?: unknown;
+  landingPage?: unknown;
+  referrer?: unknown;
 };
 
 const REQUIRED_FIELDS = ["nombre", "email", "whatsapp", "servicioInteres", "mensaje"] as const;
@@ -126,6 +130,22 @@ async function readErrorBody(response: Response) {
 }
 
 function buildContactData(payload: ContactPayload, email: string) {
+  const utmSource = getString(payload.utmSource);
+  const utmMedium = getString(payload.utmMedium);
+  const utmCampaign = getString(payload.utmCampaign);
+  const utmContent = getString(payload.utmContent);
+  const utmTerm = getString(payload.utmTerm);
+  const landingPage = getString(payload.landingPage);
+  const referrer = getString(payload.referrer);
+  const attributionParts = [
+    utmSource && `source=${utmSource}`,
+    utmMedium && `medium=${utmMedium}`,
+    utmCampaign && `campaign=${utmCampaign}`,
+    utmContent && `content=${utmContent}`,
+    utmTerm && `term=${utmTerm}`,
+  ].filter(Boolean);
+  const baseOrigin = getString(payload.origen) || "Sitio web Social Marketing";
+
   return {
     nombre: getString(payload.nombre),
     cargo: getString(payload.cargo),
@@ -137,12 +157,18 @@ function buildContactData(payload: ContactPayload, email: string) {
     presupuesto: getString(payload.presupuesto),
     comoNosEncontro: getString(payload.comoNosEncontro),
     estado: getString(payload.estado) || "Nuevo contacto web",
-    origen: getString(payload.origen) || "Sitio web Social Marketing",
+    origen: attributionParts.length > 0
+      ? `${baseOrigin} | First touch: ${attributionParts.join("; ")}`
+      : baseOrigin,
     fechaIngreso: getString(payload.fechaIngreso) || new Date().toISOString(),
     pageUrl: getString(payload.pageUrl),
-    utmSource: getString(payload.utmSource),
-    utmMedium: getString(payload.utmMedium),
-    utmCampaign: getString(payload.utmCampaign),
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    utmContent,
+    utmTerm,
+    landingPage,
+    referrer,
   };
 }
 
@@ -175,6 +201,10 @@ function buildInternalEmailHtml(contact: ReturnType<typeof buildContactData>) {
     ["UTM Source", contact.utmSource],
     ["UTM Medium", contact.utmMedium],
     ["UTM Campaign", contact.utmCampaign],
+    ["UTM Content", contact.utmContent],
+    ["UTM Term", contact.utmTerm],
+    ["Landing de primera visita", contact.landingPage],
+    ["Referente inicial", contact.referrer],
   ];
 
   const tableRows = rows
@@ -229,7 +259,11 @@ Fecha de ingreso: ${emptyFallback(contact.fechaIngreso)}
 URL de origen: ${emptyFallback(contact.pageUrl)}
 UTM Source: ${emptyFallback(contact.utmSource)}
 UTM Medium: ${emptyFallback(contact.utmMedium)}
-UTM Campaign: ${emptyFallback(contact.utmCampaign)}`;
+UTM Campaign: ${emptyFallback(contact.utmCampaign)}
+UTM Content: ${emptyFallback(contact.utmContent)}
+UTM Term: ${emptyFallback(contact.utmTerm)}
+Landing de primera visita: ${emptyFallback(contact.landingPage)}
+Referente inicial: ${emptyFallback(contact.referrer)}`;
 }
 
 function buildProspectEmailHtml(contact: ReturnType<typeof buildContactData>) {
