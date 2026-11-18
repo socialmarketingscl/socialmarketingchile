@@ -40,7 +40,7 @@ export default function CalBooking() {
         layout: "month_view",
         styles: {
           branding: {
-            brandColor: "#BEF264",
+            brandColor: "#0F172A",
           },
         },
       });
