@@ -219,7 +219,7 @@ export default function Navbar() {
 
           {/* CTA pill desktop */}
           <Link
-            href="/contacto"
+            href="/contacto#agenda"
             style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
               backgroundColor: "var(--kinetic-lime)", color: "var(--level-2)",
@@ -242,7 +242,7 @@ export default function Navbar() {
               el.style.boxShadow = "none";
             }}
           >
-            Agendar diagnóstico
+            Agendar diagnóstico gratuito
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M3 7H11M8.5 4L11 7L8.5 10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -427,7 +427,7 @@ export default function Navbar() {
             );
           })}
           <div style={{ paddingTop: "28px", display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Link href="/contacto" onClick={closeMobileMenu} tabIndex={menuOpen ? 0 : -1} style={{
+            <Link href="/contacto#agenda" onClick={closeMobileMenu} tabIndex={menuOpen ? 0 : -1} style={{
               display: "flex", alignItems: "center", justifyContent: "center",
               backgroundColor: "var(--kinetic-lime)", color: "var(--level-2)",
               fontFamily: "var(--font-archivo)", fontWeight: 700,

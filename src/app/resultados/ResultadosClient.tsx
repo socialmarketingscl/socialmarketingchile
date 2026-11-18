@@ -517,8 +517,8 @@ export default function ResultadosClient() {
               Agenda un diagnóstico gratuito y evaluemos cómo construir un sistema de crecimiento para tu empresa.
             </p>
             <div className="results-actions">
-              <Link href="/contacto" className="hero-cta-primary">
-                Agendar diagnóstico
+              <Link href="/contacto#agenda" className="hero-cta-primary">
+                Agendar diagnóstico gratuito
                 <ArrowIcon />
               </Link>
               <a href={CONTACT.whatsappUrlWithMessage} target="_blank" rel="noopener noreferrer" className="hero-cta-secondary">

@@ -281,7 +281,7 @@ export default function GuiaIaPymesPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-4">
               <a
-                href="/contacto"
+                href="/contacto#agenda"
                 className="inline-flex rounded-full bg-[#BEF264] px-6 py-3 font-archivo text-sm font-black text-[#0F172A] transition hover:bg-[#A3E635]"
               >
                 Agendar diagnóstico gratuito →

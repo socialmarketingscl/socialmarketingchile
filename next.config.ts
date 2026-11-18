@@ -4,12 +4,12 @@ const isDev = process.env.NODE_ENV === "development";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms https://bzrcdn.openai.com${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms https://bzrcdn.openai.com https://app.cal.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https:",
-  "frame-src https://www.googletagmanager.com https://www.google.com https://www.facebook.com",
+  "frame-src https://www.googletagmanager.com https://www.google.com https://www.facebook.com https://app.cal.com",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",

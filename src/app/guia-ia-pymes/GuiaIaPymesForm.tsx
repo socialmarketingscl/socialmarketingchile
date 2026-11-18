@@ -122,7 +122,7 @@ export default function GuiaIaPymesForm() {
           Descargar guía ahora →
         </a>
         <a
-          href="/contacto"
+          href="/contacto#agenda"
           className="mt-4 inline-flex items-center justify-center rounded-lg border border-[#CBD5E1] px-6 py-3.5 font-archivo text-base font-black text-[#0F172A] transition hover:border-[#BEF264]"
         >
           Agendar diagnóstico gratuito →

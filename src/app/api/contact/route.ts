@@ -22,14 +22,12 @@ type ContactPayload = {
   referrer?: unknown;
 };
 
-const REQUIRED_FIELDS = ["nombre", "email", "whatsapp", "servicioInteres", "mensaje"] as const;
+const REQUIRED_FIELDS = ["nombre", "whatsapp", "mensaje"] as const;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const REQUIRED_FIELD_LABELS: Record<(typeof REQUIRED_FIELDS)[number], string> = {
   nombre: "Nombre",
-  email: "Mail",
   whatsapp: "WhatsApp",
-  servicioInteres: "Servicio de interés",
   mensaje: "Mensaje",
 };
 
@@ -148,6 +146,7 @@ function buildContactData(payload: ContactPayload, email: string) {
 
   return {
     nombre: getString(payload.nombre),
+    empresa: getString(payload.empresa),
     cargo: getString(payload.cargo),
     email,
     whatsapp: getString(payload.whatsapp),
@@ -186,6 +185,7 @@ function addAirtableField(
 function buildInternalEmailHtml(contact: ReturnType<typeof buildContactData>) {
   const rows = [
     ["Nombre", contact.nombre],
+    ["Empresa o negocio", contact.empresa],
     ["Cargo", contact.cargo],
     ["Mail", contact.email],
     ["WhatsApp", contact.whatsapp],
@@ -245,6 +245,7 @@ function buildInternalEmailText(contact: ReturnType<typeof buildContactData>) {
   return `Nuevo contacto desde la web
 
 Nombre: ${emptyFallback(contact.nombre)}
+Empresa o negocio: ${emptyFallback(contact.empresa)}
 Cargo: ${emptyFallback(contact.cargo)}
 Mail: ${emptyFallback(contact.email)}
 WhatsApp: ${emptyFallback(contact.whatsapp)}
@@ -358,7 +359,7 @@ async function sendContactEmails(contact: ReturnType<typeof buildContactData>) {
   }
 
   try {
-    const [internalEmailSent, prospectEmailSent] = await Promise.all([
+    const emailRequests = [
       sendResendEmail({
         apiKey: envConfig.RESEND_API_KEY,
         from: envConfig.RESEND_FROM,
@@ -367,17 +368,22 @@ async function sendContactEmails(contact: ReturnType<typeof buildContactData>) {
         html: buildInternalEmailHtml(contact),
         text: buildInternalEmailText(contact),
       }),
-      sendResendEmail({
+    ];
+
+    if (contact.email) {
+      emailRequests.push(sendResendEmail({
         apiKey: envConfig.RESEND_API_KEY,
         from: envConfig.RESEND_FROM,
         to: [contact.email],
         subject: "Recibimos tu mensaje — Social Marketing",
         html: buildProspectEmailHtml(contact),
         text: buildProspectEmailText(contact),
-      }),
-    ]);
+      }));
+    }
 
-    return internalEmailSent && prospectEmailSent;
+    const results = await Promise.all(emailRequests);
+
+    return results.every(Boolean);
   } catch (error) {
     console.error("[contact] Resend request failed:", error);
     return false;
@@ -401,7 +407,7 @@ export async function POST(request: Request) {
 
   const email = getString(payload.email);
 
-  if (!EMAIL_PATTERN.test(email)) {
+  if (email && !EMAIL_PATTERN.test(email)) {
     return jsonError("El email ingresado no tiene un formato válido.", 400);
   }
 
@@ -416,7 +422,7 @@ export async function POST(request: Request) {
   addAirtableField(airtableFields, AIRTABLE_FIELDS.nombre, contact.nombre, true);
   addAirtableField(airtableFields, AIRTABLE_FIELDS.mensaje, contact.mensaje, true);
   addAirtableField(airtableFields, AIRTABLE_FIELDS.cargo, contact.cargo);
-  addAirtableField(airtableFields, AIRTABLE_FIELDS.email, contact.email, true);
+  addAirtableField(airtableFields, AIRTABLE_FIELDS.email, contact.email);
   addAirtableField(airtableFields, AIRTABLE_FIELDS.whatsapp, contact.whatsapp, true);
   addAirtableField(airtableFields, AIRTABLE_FIELDS.servicioInteres, contact.servicioInteres, true);
   addAirtableField(airtableFields, AIRTABLE_FIELDS.sitioWebInstagram, contact.sitioWebInstagram);

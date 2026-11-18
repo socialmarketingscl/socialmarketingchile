@@ -1,6 +1,10 @@
 "use client";
 
-type ConversionEvent = "clic_whatsapp" | "descarga_guia" | "formulario_contacto";
+type ConversionEvent =
+  | "agenda_confirmada"
+  | "clic_whatsapp"
+  | "descarga_guia"
+  | "formulario_contacto";
 
 type ConversionParams = Record<string, string | number | boolean>;
 

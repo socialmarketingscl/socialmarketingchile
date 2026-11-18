@@ -37,7 +37,7 @@ export const HERO = {
   h1Line1: "Agencia de marketing digital e inteligencia artificial en Chile.",
   h1Line2: "Sistemas digitales para captar, ordenar y convertir clientes.",
   h2: "Conectamos estrategia, publicidad, automatización e IA para que tu negocio deje de perder clientes y empiece a crecer con un sistema medible.",
-  ctaPrimary: { label: "Agendar diagnóstico gratuito", href: "/contacto" },
+  ctaPrimary: { label: "Agendar diagnóstico gratuito", href: "/contacto#agenda" },
   ctaSecondary: { label: "Ver cómo trabajamos", href: "#proceso" },
   logosBar: {
     visible: true,
@@ -105,7 +105,7 @@ export const DIAGNOSTICO = {
         "Diseñamos un plan con servicios, plazos y presupuesto adaptado a lo que realmente necesitas. Sin paquetes genéricos.",
     },
   ],
-  cta: { label: "Solicitar diagnóstico", href: "/contacto" },
+  cta: { label: "Agendar diagnóstico gratuito", href: "/contacto#agenda" },
   note: "Sin compromiso. Sin propuestas genéricas. Solo una conversación para entender si podemos ayudarte.",
 };
 
@@ -318,7 +318,7 @@ export const PARA_QUIEN = {
 export const CTA_FINAL = {
   h2: "Conversemos sobre el crecimiento digital de tu negocio.",
   body: "Agenda una reunión de diagnóstico y evaluemos cómo convertir tu presencia digital en un sistema real de captación, seguimiento y conversión de clientes.",
-  ctaPrimary: { label: "Agendar diagnóstico", href: "/contacto" },
+  ctaPrimary: { label: "Agendar diagnóstico gratuito", href: "/contacto#agenda" },
   ctaSecondary: { label: "Escribir por WhatsApp", href: CONTACT.whatsappUrlWithMessage },
   tagline: "Más que presencia digital, sistemas para crecer.",
 };

@@ -41,8 +41,8 @@ export default function ContactPage() {
           </p>
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link className="rounded-full bg-[#BEF264] px-6 py-3 font-archivo text-sm font-black text-[#0F172A]" href="/contacto">
-            Agendar diagnostico
+          <Link className="rounded-full bg-[#BEF264] px-6 py-3 font-archivo text-sm font-black text-[#0F172A]" href="/contacto#agenda">
+            Agendar diagnóstico gratuito
           </Link>
           <a className="rounded-full border border-[#CBD5E1] px-6 py-3 font-archivo text-sm font-black text-[#0F172A]" href="https://wa.me/56961533546">
             WhatsApp

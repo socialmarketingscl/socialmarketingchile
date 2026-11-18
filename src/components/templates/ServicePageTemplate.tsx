@@ -469,8 +469,8 @@ export default function ServicePageTemplate({
             <span className="service-label">— {serviceName}</span>
             <h1 className="service-h1">{title}</h1>
             <p className="service-description">{description}</p>
-            <Link href="/contacto" className="hero-cta-primary">
-              Agendar diagnóstico
+            <Link href="/contacto#agenda" className="hero-cta-primary">
+              Agendar diagnóstico gratuito
               <ArrowIcon />
             </Link>
           </RevealBlock>
@@ -570,8 +570,8 @@ export default function ServicePageTemplate({
             </h2>
             <p className="service-final-copy">{CTA_FINAL.body}</p>
             <div className="service-actions">
-              <Link href="/contacto" className="hero-cta-primary">
-                Agendar diagnóstico
+              <Link href="/contacto#agenda" className="hero-cta-primary">
+                Agendar diagnóstico gratuito
                 <ArrowIcon />
               </Link>
               <a

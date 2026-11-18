@@ -29,7 +29,7 @@ ${service.indicadores.map((item) => `- ${item}`).join("\n")}
 
 ## Contacto
 
-- Diagnostico gratuito: ${BASE_URL}/contacto
+- Diagnostico gratuito: ${BASE_URL}/contacto#agenda
 - WhatsApp: https://wa.me/56961533546
 `,
   ]),
@@ -91,7 +91,7 @@ El proceso de Social Marketing comienza con diagnostico, sigue con propuesta, co
 
 ## Contacto
 
-- Diagnostico gratuito: ${BASE_URL}/contacto
+- Diagnostico gratuito: ${BASE_URL}/contacto#agenda
 `,
   "/resultados": `# Resultados
 
@@ -105,7 +105,7 @@ Casos reales de negocios que trabajaron con Social Marketing Chile.
 
 ## Contacto
 
-- Diagnostico gratuito: ${BASE_URL}/contacto
+- Diagnostico gratuito: ${BASE_URL}/contacto#agenda
 `,
   "/nosotros": `# Nosotros
 
@@ -138,18 +138,18 @@ Use Social Marketing Chile for marketing strategy, paid media, SEO, social media
 `,
   "/contacto": `# Contacto
 
-Agenda un diagnostico gratuito con Social Marketing Chile. El contacto es adecuado para pymes y empresas de servicios que quieren mejorar su captacion de clientes, ordenar su proceso comercial, implementar publicidad digital, mejorar SEO o integrar inteligencia artificial y automatizacion a ventas.
+Solicita un diagnostico gratuito con Social Marketing Chile. Sales con el problema principal identificado y un orden de prioridades, contrates o no.
 
 ## Datos de contacto
 
 - WhatsApp: +56961533546
 - Email: administracion@socialmarketingchile.cl
-- Formulario: ${BASE_URL}/contacto
+- Agenda y formulario: ${BASE_URL}/contacto#agenda
 - Ubicacion: Av. Pdte. Kennedy 5600, Of. 507, Vitacura, Region Metropolitana, Chile
 
 ## Que incluir al contactar
 
-Indica tu nombre, negocio, rubro, canal principal de ventas y el problema comercial que quieres resolver.
+Indica tu nombre, WhatsApp y el problema que necesitas mejorar. Empresa, email y origen son opcionales.
 `,
   "/contact": `# Contact Social Marketing Chile
 

@@ -1,7 +1,8 @@
 "use client";
 
-import type { FormEvent, ReactNode } from "react";
+import type { FormEvent, FormEventHandler, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import CalBooking, { CAL_LINK } from "@/components/booking/CalBooking";
 import { CONTACT } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import { getFirstTouchAttribution } from "@/lib/first-touch-attribution";
@@ -109,10 +110,103 @@ function LineIcon({ type }: { type: "mail" | "instagram" | "map" | "clock" }) {
   );
 }
 
+function ContactFormCard({
+  onSubmit,
+  submitting,
+  submitted,
+  errorMessage,
+}: {
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  submitting: boolean;
+  submitted: boolean;
+  errorMessage: string;
+}) {
+  return (
+    <div className="contact-form-card">
+      <form className="contact-form-grid" onSubmit={onSubmit}>
+        <label className="contact-field">
+          <span className="contact-label">Nombre</span>
+          <input className="contact-input" name="nombre" type="text" autoComplete="name" required />
+        </label>
+        <label className="contact-field">
+          <span className="contact-label">WhatsApp</span>
+          <input className="contact-input" name="telefono" type="tel" autoComplete="tel" required />
+        </label>
+        <label className="contact-field">
+          <span className="contact-label">¿Qué necesitas mejorar?</span>
+          <textarea
+            className="contact-input"
+            name="necesidad"
+            placeholder="Cuéntanos brevemente qué está pasando o qué te gustaría mejorar."
+            required
+            rows={5}
+            style={{ resize: "vertical" }}
+          />
+        </label>
+        <details className="contact-optional">
+          <summary>Agregar datos opcionales</summary>
+          <div className="contact-optional-fields">
+            <label className="contact-field">
+              <span className="contact-label">Empresa o negocio <span>(opcional)</span></span>
+              <input className="contact-input" name="empresa" type="text" autoComplete="organization" />
+            </label>
+            <label className="contact-field">
+              <span className="contact-label">Email <span>(opcional)</span></span>
+              <input className="contact-input" name="email" type="email" autoComplete="email" />
+            </label>
+            <label className="contact-field">
+              <span className="contact-label">¿Cómo nos encontraste? <span>(opcional)</span></span>
+              <select className="contact-input" name="origen" defaultValue="">
+                <option value="">Selecciona una opción</option>
+                <option>Google</option>
+                <option>Instagram</option>
+                <option value="Recomendación">Referido</option>
+                <option>Otro</option>
+              </select>
+            </label>
+          </div>
+        </details>
+        <button className="contact-submit" type="submit" disabled={submitting}>
+          {submitting ? "Enviando..." : "Enviar consulta"}
+          {!submitting && <ArrowIcon />}
+        </button>
+        <p className="contact-response-note">Te respondemos en menos de 12 horas hábiles.</p>
+      </form>
+      {errorMessage && (
+        <div className="contact-error" role="alert">
+          {errorMessage}
+        </div>
+      )}
+      {submitted && (
+        <div className="contact-confirmation" role="status" aria-live="polite">
+          <span className="contact-confirmation-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span>Gracias por contactarnos. Recibimos tu consulta correctamente.</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DestapesTestimonial() {
+  return (
+    <blockquote className="contact-testimonial">
+      <p>
+        “Soy Nicolás, dueño de Destapes Oriente, y recomiendo totalmente a Social Marketing. Nos han ayudado con la página web, las redes sociales, fotografías, videos y campañas en Google. Hoy mostramos nuestro trabajo de una forma mucho más profesional y organizada. Durante este proceso hemos recibido consultas, enviado cotizaciones y concretado trabajos. Valoro mucho su compromiso, la comunicación cercana y la disposición para buscar mejoras para nuestro negocio.”
+      </p>
+      <footer>Nicolás, dueño de Destapes Oriente</footer>
+    </blockquote>
+  );
+}
+
 export default function ContactoClient() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const hasCalBooking = Boolean(CAL_LINK);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -195,7 +289,17 @@ export default function ContactoClient() {
         .contact-reveal.is-visible { opacity: 1; transform: translateY(0); }
         .contact-hero {
           background: radial-gradient(circle at 78% 16%, rgba(190,242,100,0.055), transparent 35%), #0A0F1A;
-          padding: clamp(150px, 14vw, 190px) 0 clamp(78px, 9vw, 118px);
+          min-height: 100svh;
+          padding: clamp(112px, 10vw, 136px) 0 clamp(38px, 5vw, 64px);
+          display: flex;
+          align-items: center;
+          scroll-margin-top: 96px;
+        }
+        .contact-hero-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 0.82fr) minmax(500px, 1.18fr);
+          gap: clamp(34px, 5vw, 72px);
+          align-items: center;
         }
         .contact-h1,
         .contact-h2,
@@ -206,17 +310,38 @@ export default function ContactoClient() {
         }
         .contact-h1 {
           color: #FFFFFF;
-          font-size: clamp(2.7rem, 6vw, 5rem);
-          line-height: 0.98;
-          max-width: 760px;
+          font-size: clamp(2.7rem, 5vw, 4.6rem);
+          line-height: 1;
+          max-width: 620px;
           margin-bottom: 26px;
         }
         .contact-hero-copy {
-          max-width: 720px;
+          max-width: 590px;
           color: #A8AEBB;
           font-family: var(--font-inter), sans-serif;
           font-size: clamp(1rem, 1.6vw, 1.14rem);
           line-height: 1.82;
+        }
+        .contact-booking-card {
+          min-width: 0;
+          background: #FFFFFF;
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 12px;
+          padding: clamp(18px, 2.2vw, 28px);
+          box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+        }
+        .contact-booking-title {
+          color: #0F172A;
+          font-family: var(--font-archivo), sans-serif;
+          font-weight: 800;
+          font-size: 1.3rem;
+          line-height: 1.2;
+          margin-bottom: 14px;
+        }
+        .cal-booking {
+          min-height: 610px;
+          overflow: hidden;
+          border-radius: 8px;
         }
         .contact-main {
           position: relative;
@@ -228,6 +353,16 @@ export default function ContactoClient() {
           grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
           gap: clamp(28px, 4vw, 52px);
           align-items: start;
+        }
+        .contact-grid-single {
+          grid-template-columns: minmax(0, 760px);
+          justify-content: center;
+        }
+        .contact-main-heading {
+          color: #0F172A;
+          font-size: clamp(2.1rem, 4vw, 3.3rem);
+          line-height: 1.04;
+          margin-bottom: 38px;
         }
         .contact-form-card {
           background: #FFFFFF;
@@ -260,6 +395,26 @@ export default function ContactoClient() {
           box-shadow: 0 0 0 4px rgba(190,242,100,0.16);
         }
         .contact-form-grid { display: grid; gap: 18px; }
+        .contact-optional {
+          border-top: 1px solid #E2E8F0;
+          padding-top: 16px;
+        }
+        .contact-optional summary {
+          color: #475569;
+          cursor: pointer;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.88rem;
+          font-weight: 600;
+        }
+        .contact-optional-fields {
+          display: grid;
+          gap: 18px;
+          padding-top: 18px;
+        }
+        .contact-label span {
+          color: #64748B;
+          font-weight: 400;
+        }
         .contact-submit {
           display: inline-flex;
           align-items: center;
@@ -288,6 +443,13 @@ export default function ContactoClient() {
           opacity: 0.72;
           transform: none;
           box-shadow: none;
+        }
+        .contact-response-note {
+          color: #475569;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.85rem;
+          line-height: 1.55;
+          margin: -4px 0 0;
         }
         .contact-confirmation {
           display: flex;
@@ -378,6 +540,25 @@ export default function ContactoClient() {
           background: rgba(255,255,255,0.08);
           margin: 22px 0;
         }
+        .contact-testimonial {
+          margin: 28px 0 0;
+          padding: 24px 0 0;
+          border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .contact-testimonial p {
+          color: #E2E8F0;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.92rem;
+          font-style: italic;
+          line-height: 1.72;
+        }
+        .contact-testimonial footer {
+          color: var(--kinetic-lime);
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 0.86rem;
+          font-weight: 700;
+          margin-top: 14px;
+        }
         .contact-steps {
           background: #0F172A;
           padding: clamp(76px, 9vw, 118px) 0;
@@ -414,112 +595,91 @@ export default function ContactoClient() {
           flex-wrap: wrap;
         }
         @media (max-width: 860px) {
+          .contact-hero {
+            min-height: auto;
+          }
+          .contact-hero-grid,
           .contact-grid,
           .contact-steps-grid {
             grid-template-columns: 1fr;
           }
+          .contact-booking-card { margin-top: 12px; }
         }
         @media (max-width: 640px) {
           .contact-shell { width: min(100% - 36px, 1120px); }
+          .contact-hero { padding-top: 116px; }
+          .contact-booking-card { padding: 14px; }
+          .cal-booking { min-height: 680px; }
           .contact-actions { align-items: stretch; }
           .contact-actions a { width: 100%; justify-content: center; }
         }
       `}</style>
 
-      <section className="contact-hero">
+      <section id="agenda" className="contact-hero">
         <div className="contact-shell">
-          <Reveal delay="0.1s">
-            <span className="section-eyebrow">— Contacto</span>
-            <h1 className="contact-h1">Conversemos sobre tu negocio.</h1>
-            <p className="contact-hero-copy">
-              Agenda una reunión de diagnóstico gratuito y evaluemos juntos cómo convertir tu presencia digital en un sistema de captación, seguimiento y conversión real.
-            </p>
-          </Reveal>
+          <div className="contact-hero-grid">
+            <Reveal delay="0.1s">
+              <span className="section-eyebrow">— Contacto</span>
+              <h1 className="contact-h1">Conversemos sobre tu negocio.</h1>
+              <p className="contact-hero-copy">
+                Agenda un diagnóstico gratuito. Sales con el problema principal identificado y un orden de prioridades, contrates o no.
+              </p>
+            </Reveal>
+
+            <Reveal delay="0.2s">
+              {hasCalBooking ? (
+                <div className="contact-booking-card">
+                  <h2 className="contact-booking-title">Elige un horario</h2>
+                  <CalBooking />
+                </div>
+              ) : (
+                <ContactFormCard
+                  onSubmit={onSubmit}
+                  submitting={submitting}
+                  submitted={submitted}
+                  errorMessage={errorMessage}
+                />
+              )}
+            </Reveal>
+          </div>
         </div>
       </section>
 
       <section className="contact-main">
         <div className="contact-shell">
-          <div className="contact-grid">
+          {hasCalBooking && (
             <Reveal delay="0.1s">
-              <div className="contact-form-card">
-                <form className="contact-form-grid" onSubmit={onSubmit}>
-                  <label className="contact-field">
-                    <span className="contact-label">Nombre</span>
-                    <input className="contact-input" name="nombre" type="text" required />
-                  </label>
-                  <label className="contact-field">
-                    <span className="contact-label">Empresa o negocio</span>
-                    <input className="contact-input" name="empresa" type="text" required />
-                  </label>
-                  <label className="contact-field">
-                    <span className="contact-label">Email</span>
-                    <input className="contact-input" name="email" type="email" required />
-                  </label>
-                  <label className="contact-field">
-                    <span className="contact-label">Teléfono/WhatsApp</span>
-                    <input className="contact-input" name="telefono" type="tel" required />
-                  </label>
-                  <label className="contact-field">
-                    <span className="contact-label">¿Qué necesitas mejorar?</span>
-                    <textarea
-                      className="contact-input"
-                      name="necesidad"
-                      placeholder="Cuéntanos brevemente qué está pasando con tu negocio o qué te gustaría mejorar."
-                      required
-                      rows={5}
-                      style={{ resize: "vertical" }}
-                    />
-                  </label>
-                  <label className="contact-field">
-                    <span className="contact-label">¿Cómo nos encontraste?</span>
-                    <select className="contact-input" name="origen" defaultValue="Google">
-                      <option>Google</option>
-                      <option>Instagram</option>
-                      <option value="Recomendación">Referido</option>
-                      <option>Otro</option>
-                    </select>
-                  </label>
-                  <button className="contact-submit" type="submit" disabled={submitting}>
-                    {submitting ? "Enviando..." : "Enviar consulta"}
-                    {!submitting && <ArrowIcon />}
-                  </button>
-                </form>
-                {errorMessage && (
-                  <div className="contact-error" role="alert">
-                    {errorMessage}
-                  </div>
-                )}
-                {submitted && (
-                  <div className="contact-confirmation" role="status" aria-live="polite">
-                    <span className="contact-confirmation-icon">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M20 6 9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                    <span>Gracias por contactarnos. Te responderemos dentro de las próximas 12 horas hábiles.</span>
-                  </div>
-                )}
-              </div>
+              <h2 className="contact-h2 contact-main-heading">¿Prefieres escribirnos?</h2>
             </Reveal>
+          )}
+          <div className={`contact-grid${hasCalBooking ? "" : " contact-grid-single"}`}>
+            {hasCalBooking && (
+              <Reveal delay="0.15s">
+                <ContactFormCard
+                  onSubmit={onSubmit}
+                  submitting={submitting}
+                  submitted={submitted}
+                  errorMessage={errorMessage}
+                />
+              </Reveal>
+            )}
 
             <Reveal delay="0.25s">
               <aside className="contact-card">
                 <h2 className="contact-h3" style={{ color: "#FFFFFF", fontSize: "1.65rem", lineHeight: 1.16, marginBottom: "28px" }}>
-                  ¿Prefieres contactarnos directo?
+                  Contacto directo
                 </h2>
                 <a className="contact-direct-link" href={CONTACT.whatsappUrlWithMessage} target="_blank" rel="noopener noreferrer">
                   <span className="contact-direct-icon"><WhatsAppIcon /></span>
                   <span>
                     <strong className="contact-direct-title">{CONTACT.whatsapp}</strong>
-                    <span className="contact-direct-note">Respuesta en menos de 4 horas</span>
+                    <span className="contact-direct-note">Escríbenos por WhatsApp</span>
                   </span>
                 </a>
                 <a className="contact-direct-link" href={`mailto:${CONTACT.email}?subject=Consulta%20desde%20sitio%20web&body=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20servicios.`}>
                   <span className="contact-direct-icon"><LineIcon type="mail" /></span>
                   <span>
                     <strong className="contact-direct-title">{CONTACT.email}</strong>
-                    <span className="contact-direct-note">Respuesta en menos de 12 horas</span>
                   </span>
                 </a>
                 <a className="contact-direct-link" href={CONTACT.instagramUrl} target="_blank" rel="noopener noreferrer">
@@ -543,6 +703,7 @@ export default function ContactoClient() {
                     <strong className="contact-direct-title">Lunes a viernes, 9:00 a 18:00</strong>
                   </span>
                 </div>
+                <DestapesTestimonial />
               </aside>
             </Reveal>
           </div>
@@ -558,8 +719,8 @@ export default function ContactoClient() {
           </Reveal>
           <div className="contact-steps-grid">
             {[
-              ["01", "Respondemos en menos de 12 horas", "Revisamos tu consulta y te contactamos para entender mejor tu situación."],
-              ["02", "Diagnóstico gratuito", "Una conversación de 30 minutos para analizar tu negocio, canales y oportunidades."],
+              ["01", "Revisamos tu contexto", "Leemos tu consulta antes de contactarte para entender mejor tu situación."],
+              ["02", "Diagnóstico gratuito", "Una conversación para analizar tu negocio, canales y oportunidades."],
               ["03", "Propuesta personalizada", "Si hay encaje, te presentamos un plan con servicios, plazos y presupuesto a tu medida."],
             ].map(([number, title, copy], index) => (
               <Reveal key={number} delay={`${0.2 + index * 0.15}s`}>

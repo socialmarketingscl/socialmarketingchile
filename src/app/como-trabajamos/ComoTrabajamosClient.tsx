@@ -385,8 +385,8 @@ export default function ComoTrabajamosClient() {
               Agenda un diagnóstico gratuito y evaluemos juntos tu situación digital.
             </p>
             <div className="process-actions">
-              <Link href="/contacto" className="hero-cta-primary">
-                Agendar diagnóstico
+              <Link href="/contacto#agenda" className="hero-cta-primary">
+                Agendar diagnóstico gratuito
                 <ArrowIcon />
               </Link>
               <a href={CONTACT.whatsappUrlWithMessage} target="_blank" rel="noopener noreferrer" className="hero-cta-secondary">
