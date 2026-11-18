@@ -661,7 +661,7 @@ export default function ContactoClient() {
               <span className="section-eyebrow">— Contacto</span>
               <h1 className="contact-h1">Conversemos sobre tu negocio.</h1>
               <p className="contact-hero-copy">
-                Agenda un diagnóstico gratuito. Sales con el problema principal identificado y un orden de prioridades, contrates o no.
+                Agenda un diagnóstico gratuito de 30 minutos. Sales con el problema principal identificado y un orden de prioridades, contrates o no.
               </p>
             </Reveal>
 
