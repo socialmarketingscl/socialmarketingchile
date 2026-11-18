@@ -195,9 +195,13 @@ function DestapesTestimonial() {
   return (
     <blockquote className="contact-testimonial">
       <p>
-        “Soy Nicolás, dueño de Destapes Oriente, y recomiendo totalmente a Social Marketing. Nos han ayudado con la página web, las redes sociales, fotografías, videos y campañas en Google. Hoy mostramos nuestro trabajo de una forma mucho más profesional y organizada. Durante este proceso hemos recibido consultas, enviado cotizaciones y concretado trabajos. Valoro mucho su compromiso, la comunicación cercana y la disposición para buscar mejoras para nuestro negocio.”
+        “Hoy mostramos nuestro trabajo de una forma mucho más profesional y organizada. Durante este proceso hemos recibido consultas, enviado cotizaciones y concretado trabajos.”
       </p>
-      <footer>Nicolás, dueño de Destapes Oriente</footer>
+      <footer>
+        <strong>Nicolás, dueño de Destapes Oriente</strong>
+        <span>Servicio de destapes</span>
+      </footer>
+      <a href="/resultados">Ver el caso completo <span aria-hidden="true">→</span></a>
     </blockquote>
   );
 }
@@ -295,6 +299,12 @@ export default function ContactoClient() {
           align-items: center;
           scroll-margin-top: 96px;
         }
+        .contact-hero-fallback {
+          min-height: auto;
+          align-items: flex-start;
+          padding-bottom: clamp(52px, 6vw, 78px);
+        }
+        .contact-hero-fallback .contact-hero-grid { align-items: start; }
         .contact-hero-grid {
           display: grid;
           grid-template-columns: minmax(0, 0.82fr) minmax(500px, 1.18fr);
@@ -348,6 +358,7 @@ export default function ContactoClient() {
           background: #F8FAFC;
           padding: clamp(78px, 9vw, 118px) 0;
         }
+        .contact-main-fallback { padding-top: clamp(48px, 6vw, 72px); }
         .contact-grid {
           display: grid;
           grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
@@ -525,6 +536,7 @@ export default function ContactoClient() {
           font-weight: 700;
           color: #FFFFFF;
           line-height: 1.3;
+          overflow-wrap: anywhere;
           transition: color 0.18s ease;
         }
         .contact-direct-note {
@@ -541,23 +553,49 @@ export default function ContactoClient() {
           margin: 22px 0;
         }
         .contact-testimonial {
-          margin: 28px 0 0;
-          padding: 24px 0 0;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          margin: clamp(28px, 4vw, 48px) 0 0;
+          padding: clamp(26px, 4vw, 40px);
+          border: 1px solid rgba(15,23,42,0.08);
+          border-radius: 12px;
+          background: #FFFFFF;
+          box-shadow: 0 18px 46px rgba(15,23,42,0.06);
         }
         .contact-testimonial p {
-          color: #E2E8F0;
+          color: #0F172A;
           font-family: var(--font-inter), sans-serif;
-          font-size: 0.92rem;
-          font-style: italic;
-          line-height: 1.72;
+          font-size: 1rem;
+          font-style: normal;
+          line-height: 1.7;
+          max-width: 850px;
         }
         .contact-testimonial footer {
-          color: var(--kinetic-lime);
+          display: grid;
+          gap: 3px;
+          margin-top: 18px;
+          font-style: normal;
+        }
+        .contact-testimonial footer strong {
+          color: #0F172A;
           font-family: var(--font-archivo), sans-serif;
-          font-size: 0.86rem;
+          font-size: 0.95rem;
           font-weight: 700;
-          margin-top: 14px;
+        }
+        .contact-testimonial footer span {
+          color: #64748B;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.88rem;
+        }
+        .contact-testimonial > a {
+          display: inline-flex;
+          gap: 7px;
+          margin-top: 20px;
+          color: #0F172A;
+          font-family: var(--font-archivo), sans-serif;
+          font-size: 0.92rem;
+          font-weight: 700;
+          text-decoration-color: #BEF264;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 5px;
         }
         .contact-steps {
           background: #0F172A;
@@ -607,7 +645,8 @@ export default function ContactoClient() {
         }
         @media (max-width: 640px) {
           .contact-shell { width: min(100% - 36px, 1120px); }
-          .contact-hero { padding-top: 116px; }
+          .contact-hero { padding-top: 104px; }
+          .contact-hero-grid { gap: 28px; }
           .contact-booking-card { padding: 14px; }
           .cal-booking { min-height: 680px; }
           .contact-actions { align-items: stretch; }
@@ -615,7 +654,7 @@ export default function ContactoClient() {
         }
       `}</style>
 
-      <section id="agenda" className="contact-hero">
+      <section id="agenda" className={`contact-hero${hasCalBooking ? "" : " contact-hero-fallback"}`}>
         <div className="contact-shell">
           <div className="contact-hero-grid">
             <Reveal delay="0.1s">
@@ -645,7 +684,7 @@ export default function ContactoClient() {
         </div>
       </section>
 
-      <section className="contact-main">
+      <section className={`contact-main${hasCalBooking ? "" : " contact-main-fallback"}`}>
         <div className="contact-shell">
           {hasCalBooking && (
             <Reveal delay="0.1s">
@@ -703,10 +742,12 @@ export default function ContactoClient() {
                     <strong className="contact-direct-title">Lunes a viernes, 9:00 a 18:00</strong>
                   </span>
                 </div>
-                <DestapesTestimonial />
               </aside>
             </Reveal>
           </div>
+          <Reveal delay="0.1s">
+            <DestapesTestimonial />
+          </Reveal>
         </div>
       </section>
 
