@@ -1,77 +1,108 @@
 "use client";
 
-import Cal, { getCalApi, type EmbedEvent } from "@calcom/embed-react";
-import { useEffect, useRef } from "react";
-import { pushGtmConversionEvent } from "@/lib/gtm-events";
-
-const CAL_NAMESPACE = "diagnostico";
+import dynamic from "next/dynamic";
+import ReactDOM from "react-dom";
+import { useEffect, useRef, useState } from "react";
 
 export const CAL_LINK = process.env.NEXT_PUBLIC_CAL_LINK?.trim() ?? "";
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
+function CalBookingSkeleton() {
+  return (
+    <div className="cal-booking-skeleton" aria-hidden="true">
+      <div className="cal-skeleton-heading" />
+      <div className="cal-skeleton-meta" />
+      <div className="cal-skeleton-grid">
+        {Array.from({ length: 35 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+      <div className="cal-skeleton-slots">
+        {Array.from({ length: 8 }, (_, index) => (
+          <span key={index} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const CalEmbed = dynamic(() => import("@/components/booking/CalEmbed"), {
+  ssr: false,
+  loading: CalBookingSkeleton,
+});
+
 export default function CalBooking() {
-  const trackedBookings = useRef(new Set<string>());
+  ReactDOM.preconnect("https://app.cal.com", { crossOrigin: "anonymous" });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    if (!CAL_LINK) return;
+    if (!CAL_LINK || shouldLoad) return;
 
-    let active = true;
-    let calApi: Awaited<ReturnType<typeof getCalApi>> | null = null;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const handleBooking = (event: EmbedEvent<"bookingSuccessfulV2">) => {
-      const booking = event.detail.data;
-      const bookingKey = booking.uid
-        ?? `${booking.eventTypeId ?? "evento"}:${booking.startTime ?? "sin-fecha"}`;
+    const idleWindow = window as IdleWindow;
+    let animationFrame = 0;
+    let idleHandle = 0;
+    let fallbackTimer = 0;
 
-      if (trackedBookings.current.has(bookingKey)) return;
-      trackedBookings.current.add(bookingKey);
-
-      pushGtmConversionEvent("agenda_confirmada", {
-        ubicacion: "contacto_agenda",
-        pagina: window.location.pathname,
+    const scheduleLoad = () => {
+      animationFrame = window.requestAnimationFrame(() => {
+        if (idleWindow.requestIdleCallback) {
+          idleHandle = idleWindow.requestIdleCallback(
+            () => setShouldLoad(true),
+            { timeout: 1200 },
+          );
+        } else {
+          fallbackTimer = window.setTimeout(() => setShouldLoad(true), 250);
+        }
       });
     };
 
-    void getCalApi({ namespace: CAL_NAMESPACE }).then((api) => {
-      if (!active) return;
+    if (!("IntersectionObserver" in window)) {
+      scheduleLoad();
+      return () => {
+        window.cancelAnimationFrame(animationFrame);
+        window.clearTimeout(fallbackTimer);
+        idleWindow.cancelIdleCallback?.(idleHandle);
+      };
+    }
 
-      calApi = api;
-      api("ui", {
-        theme: "light",
-        layout: "month_view",
-        styles: {
-          branding: {
-            brandColor: "#0F172A",
-          },
-        },
-      });
-      api("on", {
-        action: "bookingSuccessfulV2",
-        callback: handleBooking,
-      });
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        scheduleLoad();
+      },
+      { rootMargin: "240px 0px", threshold: 0 },
+    );
+
+    observer.observe(container);
 
     return () => {
-      active = false;
-      calApi?.("off", {
-        action: "bookingSuccessfulV2",
-        callback: handleBooking,
-      });
+      observer.disconnect();
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(fallbackTimer);
+      idleWindow.cancelIdleCallback?.(idleHandle);
     };
-  }, []);
+  }, [shouldLoad]);
 
   if (!CAL_LINK) return null;
 
   return (
-    <div className="cal-booking" aria-label="Agenda de diagnóstico gratuito">
-      <Cal
-        namespace={CAL_NAMESPACE}
-        calLink={CAL_LINK}
-        config={{
-          layout: "month_view",
-          theme: "light",
-        }}
-        style={{ width: "100%", minHeight: "610px", overflow: "auto" }}
-      />
+    <div
+      ref={containerRef}
+      className="cal-booking"
+      aria-label="Agenda de diagnóstico gratuito"
+      aria-busy={!shouldLoad}
+    >
+      {shouldLoad ? <CalEmbed /> : <CalBookingSkeleton />}
     </div>
   );
 }

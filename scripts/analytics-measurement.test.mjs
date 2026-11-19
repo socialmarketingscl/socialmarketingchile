@@ -26,10 +26,31 @@ test("the floating WhatsApp button hides on mobile while the homepage hero is vi
   assert.match(contactPage, /\.contact-page \{ padding-bottom: 88px; \}/);
 });
 
+test("contact reserves Cal.com space and defers the embed until after first render", () => {
+  const calBooking = read("src/components/booking/CalBooking.tsx");
+  const calEmbed = read("src/components/booking/CalEmbed.tsx");
+  const contactPage = read("src/app/contacto/ContactoClient.tsx");
+
+  assert.match(calBooking, /dynamic\(\(\) => import\("@\/components\/booking\/CalEmbed"\)/);
+  assert.match(calBooking, /ssr: false/);
+  assert.match(calBooking, /loading: CalBookingSkeleton/);
+  assert.match(calBooking, /ReactDOM\.preconnect\("https:\/\/app\.cal\.com"/);
+  assert.match(calBooking, /requestIdleCallback/);
+  assert.match(calBooking, /new IntersectionObserver/);
+  assert.match(calBooking, /CalBookingSkeleton/);
+  assert.match(calEmbed, /cssVarsPerTheme/);
+  assert.doesNotMatch(calEmbed, /styles:\s*\{/);
+  assert.match(contactPage, /container-type: inline-size/);
+  assert.match(contactPage, /height: calc\(1395px \+ 69\.75cqw\)/);
+  assert.match(contactPage, /@container \(min-width: 769px\)[\s\S]*height: 580px/);
+  assert.match(contactPage, /contact-hero-booking/);
+  assert.match(contactPage, /<div className="contact-hero-copy-block">/);
+});
+
 test("only successful lead actions are available as GTM conversion events", () => {
   const events = read("src/lib/gtm-events.ts");
   const analyticsEvents = read("src/components/analytics/AnalyticsEvents.tsx");
-  const calBooking = read("src/components/booking/CalBooking.tsx");
+  const calBooking = read("src/components/booking/CalEmbed.tsx");
   const contactForm = read("src/app/contacto/ContactoClient.tsx");
   const guideForm = read("src/app/guia-ia-pymes/GuiaIaPymesForm.tsx");
 

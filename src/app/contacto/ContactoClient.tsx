@@ -299,6 +299,24 @@ export default function ContactoClient() {
           align-items: center;
           scroll-margin-top: 96px;
         }
+        .contact-hero-booking {
+          display: block;
+          min-height: auto;
+        }
+        .contact-hero-booking .contact-hero-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: clamp(28px, 3.5vw, 44px);
+        }
+        @media (min-width: 980px) {
+          .contact-hero-booking .contact-hero-copy-block {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            column-gap: 56px;
+            align-items: end;
+          }
+          .contact-hero-booking .contact-hero-copy-block .section-eyebrow { grid-column: 1 / -1; }
+          .contact-hero-booking .contact-h1 { margin-bottom: 0; }
+        }
         .contact-hero-fallback {
           min-height: auto;
           align-items: flex-start;
@@ -309,7 +327,7 @@ export default function ContactoClient() {
           display: grid;
           grid-template-columns: minmax(0, 0.82fr) minmax(500px, 1.18fr);
           gap: clamp(34px, 5vw, 72px);
-          align-items: center;
+          align-items: start;
         }
         .contact-h1,
         .contact-h2,
@@ -348,10 +366,53 @@ export default function ContactoClient() {
           line-height: 1.2;
           margin-bottom: 14px;
         }
+        /* Alturas medidas del iframe real de Cal.com (nov 2026):
+           - ancho >= 769px: diseño de tres columnas, 560-570px estable.
+           - ancho < 769px: diseño apilado, alto ~ 1370px + 0,6975 x ancho.
+           Se reserva el alto exacto para que nada se desplace al cargar. */
+        .contact-booking-card { container-type: inline-size; }
         .cal-booking {
-          min-height: 610px;
-          overflow: hidden;
+          position: relative;
+          height: calc(1395px + 69.75cqw);
+          min-height: calc(1395px + 69.75cqw);
+          overflow: auto;
           border-radius: 8px;
+        }
+        @container (min-width: 769px) {
+          .cal-booking { height: 580px; min-height: 580px; }
+        }
+        .cal-booking-skeleton {
+          box-sizing: border-box;
+          height: 100%;
+          padding: 22px;
+          background: #F8FAFC;
+          border: 1px solid #E2E8F0;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .cal-skeleton-heading,
+        .cal-skeleton-meta,
+        .cal-skeleton-grid span,
+        .cal-skeleton-slots span {
+          display: block;
+          background: #E2E8F0;
+          border-radius: 6px;
+          animation: cal-skeleton-pulse 1.4s ease-in-out infinite alternate;
+        }
+        .cal-skeleton-heading { width: 52%; height: 24px; }
+        .cal-skeleton-meta { width: 36%; height: 14px; margin-top: 14px; }
+        .cal-skeleton-grid {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 9px;
+          margin-top: 38px;
+        }
+        .cal-skeleton-grid span { aspect-ratio: 1; }
+        .cal-skeleton-slots { display: grid; gap: 12px; margin-top: 38px; }
+        .cal-skeleton-slots span { width: 100%; height: 48px; }
+        @keyframes cal-skeleton-pulse {
+          from { opacity: 0.55; }
+          to { opacity: 1; }
         }
         .contact-main {
           position: relative;
@@ -649,24 +710,23 @@ export default function ContactoClient() {
           .contact-hero { padding-top: 104px; }
           .contact-hero-grid { gap: 28px; }
           .contact-booking-card { padding: 14px; }
-          .cal-booking { min-height: 680px; }
           .contact-actions { align-items: stretch; }
           .contact-actions a { width: 100%; justify-content: center; }
         }
       `}</style>
 
-      <section id="agenda" className={`contact-hero${hasCalBooking ? "" : " contact-hero-fallback"}`}>
+      <section id="agenda" className={`contact-hero ${hasCalBooking ? "contact-hero-booking" : "contact-hero-fallback"}`}>
         <div className="contact-shell">
           <div className="contact-hero-grid">
-            <Reveal delay="0.1s">
+            <div className="contact-hero-copy-block">
               <span className="section-eyebrow">— Contacto</span>
               <h1 className="contact-h1">Conversemos sobre tu negocio.</h1>
               <p className="contact-hero-copy">
                 Agenda un diagnóstico gratuito de 30 minutos. Sales con el problema principal identificado y un orden de prioridades, contrates o no.
               </p>
-            </Reveal>
+            </div>
 
-            <Reveal delay="0.2s">
+            <div>
               {hasCalBooking ? (
                 <div className="contact-booking-card">
                   <h2 className="contact-booking-title">Elige un horario</h2>
@@ -680,7 +740,7 @@ export default function ContactoClient() {
                   errorMessage={errorMessage}
                 />
               )}
-            </Reveal>
+            </div>
           </div>
         </div>
       </section>
