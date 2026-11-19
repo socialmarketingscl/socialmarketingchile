@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Privacy trust anchor page for Social Marketing Chile and its treatment of personal data under Chilean privacy law.",
   alternates: { canonical: "/privacy" },
+  robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {

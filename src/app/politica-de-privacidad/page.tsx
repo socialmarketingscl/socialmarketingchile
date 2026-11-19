@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Política de privacidad de Social Marketing SpA conforme a la Ley N° 19.628 de Protección de la Vida Privada de Chile.",
   alternates: { canonical: "/politica-de-privacidad" },
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 };
 
 export default function PoliticaDePrivacidadPage() {

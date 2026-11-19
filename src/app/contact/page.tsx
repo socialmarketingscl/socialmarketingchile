@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Contact page for Social Marketing Chile in Vitacura. Request a free diagnostic by WhatsApp, email or the main contact form.",
   alternates: { canonical: "/contact" },
+  robots: { index: false, follow: true },
 };
 
 export default function ContactPage() {

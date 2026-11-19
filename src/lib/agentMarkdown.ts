@@ -1,3 +1,4 @@
+import { ARTICLES } from "@/lib/recursos";
 import { SERVICE_PAGES } from "@/lib/services";
 
 const BASE_URL = "https://socialmarketingchile.cl";
@@ -201,6 +202,14 @@ Social Marketing SpA processes personal data submitted voluntarily through the c
 ## Rights
 
 Under Chilean Law No. 19.628, people may request information, correction, blocking or deletion of their personal data by writing to administracion@socialmarketingchile.cl.
+`,
+  "/recursos": `# Recursos de Social Marketing
+
+Guias practicas sobre publicidad en Meta y Google, posicionamiento local, automatizacion con IA y medicion de consultas.
+
+## Articulos
+
+${ARTICLES.map((article) => `- ${article.title}: ${BASE_URL}/recursos/${article.slug}`).join("\n")}
 `,
   "/guia-ia-pymes": `# Guia gratuita: Tu Pyme con Inteligencia Artificial en 15 Dias
 

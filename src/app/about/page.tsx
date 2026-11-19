@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Trust anchor page for Social Marketing Chile, a marketing digital and artificial intelligence agency based in Vitacura, Santiago de Chile.",
   alternates: { canonical: "/about" },
+  robots: { index: false, follow: true },
 };
 
 export default function AboutPage() {

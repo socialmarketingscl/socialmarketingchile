@@ -377,6 +377,7 @@ export const FOOTER = {
     { label: "Nosotros", href: "/nosotros" },
     { label: "Resultados", href: "/resultados" },
     { label: "Guía gratuita de IA", href: "/guia-ia-pymes" },
+    { label: "Recursos", href: "/recursos" },
     { label: "Contacto", href: "/contacto" },
   ],
   seoLocal: "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago.",

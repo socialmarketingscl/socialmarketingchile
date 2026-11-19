@@ -33,10 +33,14 @@ test("markdown negotiation and agent 404 are implemented in proxy", () => {
   assert.match(proxy, /status: markdown \? 200 : 404/);
 });
 
-test("sitemap includes trust anchor aliases", () => {
+test("trust anchor aliases stay reachable for agents but out of the index and sitemap", () => {
   const sitemap = read("src/app/sitemap.ts");
+  const llms = read("public/llms.txt");
 
-  assert.match(sitemap, /\/about/);
-  assert.match(sitemap, /\/contact/);
-  assert.match(sitemap, /\/privacy/);
+  for (const route of ["about", "contact", "privacy"]) {
+    assert.match(read(`src/app/${route}/page.tsx`), /robots: \{ index: false, follow: true \}/);
+    assert.match(llms, new RegExp(`socialmarketingchile\\.cl/${route}\\b`));
+  }
+  assert.doesNotMatch(sitemap, /"\/(about|contact|privacy)"/);
+  assert.match(sitemap, /"\/politica-de-privacidad"/);
 });

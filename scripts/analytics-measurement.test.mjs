@@ -189,3 +189,21 @@ test("service pages carry a real case, FAQs with FAQPage schema and related link
   assert.match(resultados, /id="caso-propio"/);
   assert.match(resultados, /href="\/soluciones\/sistemas-de-ventas-con-ia#caso"/);
 });
+
+test("recursos hub publishes 8 articles with Article schema, sitemap and footer link", () => {
+  const recursos = read("src/lib/recursos.ts");
+  const article = read("src/app/recursos/[slug]/page.tsx");
+  const sitemap = read("src/app/sitemap.ts");
+  const constants = read("src/lib/constants.ts");
+  const llms = read("public/llms.txt");
+
+  assert.equal((recursos.match(/^    slug: "/gm) || []).length, 8);
+  assert.doesNotMatch(recursos, /\bpymes?\b/i);
+  assert.doesNotMatch(recursos, /—/);
+  assert.match(article, /"@type": "Article"/);
+  assert.match(article, /export const dynamicParams = false/);
+  assert.match(sitemap, /ARTICLES\.map/);
+  assert.doesNotMatch(sitemap, /\/about|\/contact"|\/privacy/);
+  assert.match(constants, /\{ label: "Recursos", href: "\/recursos" \}/);
+  assert.doesNotMatch(llms, /socialmarketingchile\.cl\/[a-z-]+\/\)/);
+});
