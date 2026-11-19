@@ -9,6 +9,7 @@ import Image from "next/image";
 
 const LOGOS = [
   { src: "/logos/normalized/Isologo-RIOSEVENTOS.png",         alt: "Ríos Eventos" },
+  { src: "/logos/normalized/Isologo-DESTAPESORIENTE.png",    alt: "Destapes Oriente" },
   { src: "/logos/normalized/Isologo-GASFITERIAYDESTAPES.png", alt: "Gasfitería y Destapes" },
   { src: "/logos/normalized/Logotipo-AMORE.png",              alt: "Amore" },
   { src: "/logos/normalized/Logotipo-GARAGE.png",             alt: "Garage" },

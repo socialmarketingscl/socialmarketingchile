@@ -272,7 +272,7 @@ export const RESULTADOS = {
       metrics: [
         { value: "+$3 millones", label: "facturados en sus primeros 3 meses, partiendo de 0 ventas" },
       ],
-      services: ["Marca", "Sitio web", "Redes sociales", "Foto y video", "Google Ads", "Meta Ads"],
+      services: ["Marca", "Sitio web", "Redes sociales", "Video con dron", "Google Ads", "Meta Ads"],
       industry: "Destapes y soluciones sanitarias",
     },
   ],

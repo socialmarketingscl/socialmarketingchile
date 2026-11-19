@@ -15,6 +15,7 @@ type ResultCase = {
   tags: string[];
   problem: string;
   work: string;
+  highlights?: string[];
   metrics: { value: string; label: string }[];
   quote: string;
   author: string;
@@ -48,11 +49,18 @@ const CASES: ResultCase[] = [
     business: "Destapes Oriente",
     subtitle: "Destapes y soluciones sanitarias en Santiago Oriente",
     periodo: "Septiembre – Noviembre 2026",
-    tags: ["Marca", "Sitio web", "Gestión de redes sociales", "Foto y video en terreno", "Google Business Profile", "Google Ads", "Meta Ads", "Medición"],
+    tags: ["Marca", "Sitio web", "Gestión de redes sociales", "Producción audiovisual con dron", "Google Business Profile", "Google Ads", "Meta Ads", "Medición"],
     problem:
       "Era una empresa nueva: sin ventas, sin clientes propios y sin presencia digital. En un rubro donde la urgencia manda y el cliente contacta al primero que le inspira confianza, necesitaban que los encontraran y les creyeran desde el primer mensaje.",
     work:
-      "Construimos la marca y el sitio web con cotizador y WhatsApp, armamos las redes con foto y video en terreno, activamos Google Business Profile con un sistema de reseñas y lanzamos campañas en Google y Meta. Además dejamos un registro de consultas para saber de dónde llega cada cliente y cuánto se cotiza.",
+      "Construimos la marca y el sitio web con cotizador y WhatsApp, armamos las redes con fotografía y video grabados en terreno, activamos Google Business Profile con un sistema de reseñas y lanzamos campañas en Google y Meta. Además dejamos un registro de consultas para saber de dónde llega cada cliente y cuánto se cotiza.",
+    highlights: [
+      "Jornadas de grabación en terreno con filmmaker profesional y especialista en dron",
+      "Sitio web con cotizador, WhatsApp y una landing para destape de alcantarillado",
+      "Perfil de Google Business con un QR para pedir la reseña a cada cliente",
+      "Contenido mensual: reels, carruseles y piezas estáticas, más historias de lunes a viernes",
+      "Registro de consultas que muestra de dónde llega cada cliente y cuánto se cotiza",
+    ],
     metrics: [
       { value: "+$3 millones", label: "facturados en sus primeros 3 meses, partiendo de 0 ventas" },
       { value: "68", label: "consultas registradas desde octubre" },
@@ -66,7 +74,7 @@ const CASES: ResultCase[] = [
       src: "/videos/destapes-oriente-terreno.mp4",
       poster: "/images/evidencia/destapes-oriente-terreno.webp",
       title: "Destapes Oriente en terreno",
-      description: "Video que grabamos para Destapes Oriente: su equipo trabajando en la azotea de un edificio en Santiago.",
+      description: "Grabado en terreno con un filmmaker profesional y un especialista en dron que contratamos para la jornada. Así producimos el contenido de nuestros clientes.",
     },
   },
   {
@@ -231,6 +239,16 @@ function CaseBlock({ item, index }: { item: ResultCase; index: number }) {
           <h3>Qué hicimos</h3>
           <p>{item.work}</p>
         </div>
+        {item.highlights && (
+          <div className="result-copy-block">
+            <h3>Detrás de este resultado</h3>
+            <ul className="result-highlights">
+              {item.highlights.map((highlight) => (
+                <li key={highlight}>{highlight}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className="result-metrics">
           {item.metrics.map((metric) => (
             <div key={metric.label} className="result-metric-card">
@@ -416,6 +434,31 @@ export default function ResultadosClient() {
           color: #64748B;
           font-family: var(--font-inter), sans-serif;
           font-size: 0.88rem;
+        }
+        .result-highlights {
+          display: grid;
+          gap: 9px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .result-highlights li {
+          position: relative;
+          padding-left: 28px;
+          color: #475569;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.95rem;
+          line-height: 1.5;
+        }
+        .result-highlights li::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0.2em;
+          width: 18px;
+          height: 18px;
+          border-radius: 5px;
+          background: #0F172A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2 7.8 12 13 6.5' fill='none' stroke='%23BEF264' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
         }
         .result-evidence .case-video figcaption { color: #475569; }
         .result-evidence .case-video figcaption a { color: #0F172A; text-decoration: underline; }

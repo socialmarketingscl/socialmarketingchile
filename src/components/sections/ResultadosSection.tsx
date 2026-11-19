@@ -35,7 +35,7 @@ const DESTAPES_ORIENTE_VIDEO: CaseVideoData = {
   src: "/videos/destapes-oriente-terreno.mp4",
   poster: "/images/evidencia/destapes-oriente-terreno.webp",
   title: "Destapes Oriente en terreno",
-  description: "Video que grabamos para Destapes Oriente: su equipo trabajando en la azotea de un edificio en Santiago.",
+  description: "Grabado en terreno con un filmmaker profesional y un especialista en dron que contratamos para la jornada. Así producimos el contenido de nuestros clientes.",
 };
 
 interface TestimonialData {
