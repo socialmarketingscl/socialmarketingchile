@@ -460,6 +460,9 @@ export default function ResultadosClient() {
           border-radius: 5px;
           background: #0F172A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.2 7.8 12 13 6.5' fill='none' stroke='%23BEF264' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
         }
+        @media (min-width: 901px) {
+          .result-evidence { align-self: start; position: sticky; top: 112px; }
+        }
         .result-evidence .case-video figcaption { color: #475569; }
         .result-evidence .case-video figcaption a { color: #0F172A; text-decoration: underline; }
         .result-evidence-button {
