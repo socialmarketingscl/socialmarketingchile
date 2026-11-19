@@ -164,7 +164,7 @@ export default function GuiaIaPymesPage() {
     <main className="bg-[#0F172A]">
       <style>{`body > footer { display: none; }`}</style>
 
-      <section className="relative isolate flex min-h-[700px] overflow-hidden px-4 pb-20 pt-28 md:min-h-[760px] md:px-6 md:py-32 lg:items-center">
+      <section className="relative isolate flex min-h-[700px] overflow-hidden px-4 pb-20 pt-24 md:min-h-[760px] md:px-6 md:pb-24 md:pt-24 lg:items-center">
         <Image
           src="/images/fondo-landing.png"
           alt=""
@@ -181,13 +181,13 @@ export default function GuiaIaPymesPage() {
             <p className="font-inter text-xs font-bold uppercase tracking-[0.18em] text-[#BEF264] md:text-sm">
               GUÍA GRATUITA 2026 · PARA PYMES CHILENAS
             </p>
-            <h1 className="mt-5 max-w-[680px] font-archivo text-4xl font-black leading-[1.08] tracking-[-0.03em] text-[#F8FAFC] md:text-5xl lg:text-6xl xl:text-[4.25rem]">
+            <h1 className="mt-5 max-w-[680px] font-archivo text-4xl font-black leading-[1.08] tracking-[-0.03em] text-[#F8FAFC] md:text-5xl lg:text-[3.5rem] xl:text-[3.75rem]">
               Aprende a usar inteligencia artificial en tu pyme en 15 días
             </h1>
-            <p className="mt-6 max-w-2xl font-inter text-lg leading-relaxed text-[#CBD5E1] md:text-xl">
+            <p className="mt-5 max-w-2xl font-inter text-lg leading-relaxed text-[#CBD5E1] md:text-xl">
               Prompts, pasos y ejemplos prácticos para aplicar IA en ventas, atención al cliente, contenido, cotizaciones, seguimiento y organización, aunque estés empezando desde cero.
             </p>
-            <div id="formulario-hero" className="mt-8 max-w-[600px] scroll-mt-28">
+            <div id="formulario-hero" className="mt-6 max-w-[600px] scroll-mt-28">
               <GuiaIaPymesForm ubicacion="hero" compact />
             </div>
           </div>

@@ -127,3 +127,15 @@ test("the AI guide is linked across the site and asks only for name and email", 
   assert.match(navbar, /MINIMAL_HEADER_PATHS = new Set\(\["\/guia-ia-pymes"\]\)/);
   assert.match(whatsapp, /if \(pathname === "\/guia-ia-pymes"\) return null/);
 });
+
+test("the Instagram section loads embeds only on demand and sits after Para quién", () => {
+  const section = read("src/components/sections/InstagramVideosSection.tsx");
+  const home = read("src/app/page.tsx");
+  const config = read("next.config.ts");
+
+  assert.match(home, /<ParaQuienSection \/>\s*<InstagramVideosSection \/>/);
+  assert.match(section, /\{active && <VideoModal/);
+  assert.match(section, /trackEvent\("video_reproducido"/);
+  assert.match(section, /aria-modal="true"/);
+  assert.match(config, /frame-src[^"]*https:\/\/www\.instagram\.com/);
+});

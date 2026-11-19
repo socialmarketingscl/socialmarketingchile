@@ -323,6 +323,38 @@ export const CTA_FINAL = {
   tagline: "Más que presencia digital, sistemas para crecer.",
 };
 
+/* ---- INSTAGRAM: VIDEOS EN LA HOME ---- */
+// Portadas locales: las URLs del CDN de Instagram caducan.
+export const INSTAGRAM_SECTION = {
+  eyebrow: "En Instagram",
+  title: "Mira cómo trabajamos",
+  body: "Procesos, grabaciones y resultados de clientes reales. Elige un video y reprodúcelo aquí mismo.",
+  profileLabel: "Ver perfil de Instagram ↗",
+};
+
+export const INSTAGRAM_VIDEOS = [
+  {
+    id: "DccGuTtxSFZ",
+    title: "Antes de tocar la campaña, revisa tu contenido",
+    poster: "/images/instagram/reel-contenido.webp",
+  },
+  {
+    id: "DfQcQRxxbXq",
+    title: "Así construimos una marca de eventos desde cero",
+    poster: "/images/instagram/reel-marca-eventos.webp",
+  },
+  {
+    id: "Dc_XYVYxB9z",
+    title: "¿Tu publicidad está funcionando de verdad?",
+    poster: "/images/instagram/reel-publicidad.webp",
+  },
+  {
+    id: "DcovOb8s2mK",
+    title: "Una web bonita no siempre es una web que vende",
+    poster: "/images/instagram/reel-web-que-vende.webp",
+  },
+] as const;
+
 /* ---- GUÍA DE IA (lead magnet) ---- */
 export const GUIA_IA = {
   href: "/guia-ia-pymes",

@@ -23,6 +23,7 @@ import SolucionesSection        from "@/components/sections/SolucionesSection";
 import MarketingIASection       from "@/components/sections/MarketingIASection";
 import ResultadosSection        from "@/components/sections/ResultadosSection";
 import GuiaIaSection            from "@/components/sections/GuiaIaSection";
+import InstagramVideosSection   from "@/components/sections/InstagramVideosSection";
 import FAQSection               from "@/components/sections/FAQSection";
 import ParaQuienSection         from "@/components/sections/ParaQuienSection";
 import CTAFinalSection          from "@/components/sections/CTAFinalSection";
@@ -105,6 +106,7 @@ export default function HomePage() {
         <ResultadosSection />
         <GuiaIaSection />
         <ParaQuienSection />
+        <InstagramVideosSection />
         <FAQSection />
         <CTAFinalSection />
       </main>
