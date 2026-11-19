@@ -5,7 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CONTACT, CTA_FINAL, GUIA_IA } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
-import type { ServiceIncludeItem } from "@/lib/services";
+import type { ServiceCase, ServiceFaq, ServiceIncludeItem } from "@/lib/services";
+import {
+  SERVICE_EXTRAS_CSS,
+  ServiceCaseBlock,
+  ServiceFaqBlock,
+  ServiceRelatedBlock,
+  ServiceToolsBlock,
+} from "@/components/templates/ServiceExtras";
 
 type ServicePageTemplateProps = {
   serviceName: string;
@@ -19,6 +26,10 @@ type ServicePageTemplateProps = {
   cta: string;
   /** Muestra el enlace a la guía de IA en el cierre (servicios de entrada). */
   guiaCta?: boolean;
+  caso?: ServiceCase;
+  herramientas?: string[];
+  faqs?: ServiceFaq[];
+  relacionados?: string[];
 };
 
 function useReveal() {
@@ -119,7 +130,12 @@ export default function ServicePageTemplate({
   indicadores,
   cta,
   guiaCta = false,
+  caso,
+  herramientas,
+  faqs,
+  relacionados,
 }: ServicePageTemplateProps) {
+  const hasFaqSection = Boolean(faqs?.length || relacionados?.length);
   useEffect(() => {
     trackEvent("service_page_viewed", {
       service_name: serviceName,
@@ -478,6 +494,7 @@ export default function ServicePageTemplate({
           }
         }
       `}</style>
+      <style>{SERVICE_EXTRAS_CSS}</style>
 
       <section className="service-hero">
         <div className="service-shell">
@@ -543,6 +560,16 @@ export default function ServicePageTemplate({
         </div>
       </section>
 
+      {caso && (
+        <section className="service-section svc-case-section">
+          <div className="service-shell">
+            <RevealBlock>
+              <ServiceCaseBlock caso={caso} />
+            </RevealBlock>
+          </div>
+        </section>
+      )}
+
       <section className="service-section service-transition-light-to-dark" style={{ backgroundColor: "#141B2D" }}>
         <div className="service-shell">
           <RevealBlock>
@@ -555,6 +582,7 @@ export default function ServicePageTemplate({
                 </li>
               ))}
             </ol>
+            {herramientas && herramientas.length > 0 && <ServiceToolsBlock herramientas={herramientas} />}
           </RevealBlock>
         </div>
       </section>
@@ -575,7 +603,21 @@ export default function ServicePageTemplate({
         </div>
       </section>
 
-      <section id="cta-final" className="service-section service-final-cta">
+      {hasFaqSection && (
+        <section className="service-section service-transition-dark-to-light svc-faq-section" id="preguntas">
+          <div className="service-shell">
+            <RevealBlock>
+              {faqs && faqs.length > 0 && <ServiceFaqBlock faqs={faqs} />}
+              {relacionados && relacionados.length > 0 && <ServiceRelatedBlock slugs={relacionados} />}
+            </RevealBlock>
+          </div>
+        </section>
+      )}
+
+      <section
+        id="cta-final"
+        className={`service-section service-final-cta${hasFaqSection ? " service-transition-light-to-dark svc-cta-after-light" : ""}`}
+      >
         <div className="service-shell">
           <RevealBlock>
             <span className="service-label" style={{ textAlign: "center" }}>

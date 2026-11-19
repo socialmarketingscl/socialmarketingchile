@@ -159,3 +159,33 @@ test("cases show Destapes Oriente with video and Amore with an on-demand reel", 
   assert.match(contacto, /href="\/resultados#destapes-oriente"/);
   assert.ok(existsSync(new URL("../public/videos/destapes-oriente-terreno.mp4", import.meta.url)));
 });
+
+test("service pages carry a real case, FAQs with FAQPage schema and related links", () => {
+  const services = read("src/lib/services.ts");
+  const template = read("src/components/templates/ServicePageTemplate.tsx");
+  const extras = read("src/components/templates/ServiceExtras.tsx");
+  const resultados = read("src/app/resultados/ResultadosClient.tsx");
+  const slugs = [
+    "estrategia-y-consultoria",
+    "publicidad-digital",
+    "posicionamiento-en-google",
+    "gestion-de-redes-sociales",
+    "identidad-visual-y-marca",
+    "sistemas-de-ventas-con-ia",
+  ];
+
+  for (const slug of slugs) {
+    const page = read(`src/app/soluciones/${slug}/page.tsx`);
+    assert.match(page, /\.\.\.serviceFaqSchema\(service\)/);
+    assert.match(page, /"@type": "City", name: "Santiago"/);
+  }
+  assert.equal((services.match(/pregunta: "/g) || []).length, 30);
+  assert.equal((services.match(/metaTitle: "[^"]*Santiago/g) || []).length, 6);
+  assert.doesNotMatch(services.split("const SERVICE_EXTRAS")[1], /\bpymes?\b/i);
+  assert.match(services, /kicker: "Caso propio · Social Marketing"/);
+  assert.match(template, /<ServiceCaseBlock caso=\{caso\} \/>/);
+  assert.match(template, /<ServiceFaqBlock faqs=\{faqs\} \/>/);
+  assert.match(extras, /"@type"|svc-faq-item/);
+  assert.match(resultados, /id="caso-propio"/);
+  assert.match(resultados, /href="\/soluciones\/sistemas-de-ventas-con-ia#caso"/);
+});

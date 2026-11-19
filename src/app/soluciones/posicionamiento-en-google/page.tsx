@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/templates/ServicePageTemplate";
-import { createServiceMetadata, SERVICE_PAGES } from "@/lib/services";
+import { createServiceMetadata, SERVICE_PAGES, serviceFaqSchema } from "@/lib/services";
 
 const service = SERVICE_PAGES["posicionamiento-en-google"];
 
@@ -14,7 +14,10 @@ const schema = {
       name: "Posicionamiento en Google e inteligencia artificial",
       serviceType: "Search Engine Optimization",
       provider: { "@id": "https://socialmarketingchile.cl/#organization" },
-      areaServed: { "@type": "Country", name: "Chile" },
+      areaServed: [
+        { "@type": "City", name: "Santiago" },
+        { "@type": "Country", name: "Chile" },
+      ],
       url: "https://socialmarketingchile.cl/soluciones/posicionamiento-en-google",
       inLanguage: "es-CL",
     },
@@ -29,6 +32,7 @@ const schema = {
           item: "https://socialmarketingchile.cl/soluciones/posicionamiento-en-google" },
       ],
     },
+    ...serviceFaqSchema(service),
   ],
 };
 

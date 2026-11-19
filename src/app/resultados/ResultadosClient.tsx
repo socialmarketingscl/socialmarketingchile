@@ -435,6 +435,96 @@ export default function ResultadosClient() {
           font-family: var(--font-inter), sans-serif;
           font-size: 0.88rem;
         }
+        .own-case {
+          scroll-margin-top: 110px;
+          display: grid;
+          grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+          gap: clamp(28px, 4vw, 56px);
+          align-items: center;
+          margin-top: clamp(44px, 6vw, 76px);
+          padding: clamp(30px, 4vw, 48px);
+          border-radius: 14px;
+          background: radial-gradient(circle at 90% 10%, rgba(190,242,100,0.09), transparent 42%), #0F172A;
+          box-shadow: 0 26px 70px rgba(15,23,42,0.16);
+        }
+        .own-case-kicker {
+          display: inline-block;
+          margin-bottom: 14px;
+          padding: 6px 12px;
+          border-radius: 999px;
+          background: rgba(190,242,100,0.1);
+          border: 1px solid rgba(190,242,100,0.22);
+          color: #BEF264;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.74rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .own-case-title {
+          color: #FFFFFF;
+          font-family: var(--font-archivo), sans-serif;
+          font-weight: 800;
+          letter-spacing: -0.024em;
+          font-size: clamp(1.6rem, 3vw, 2.3rem);
+          line-height: 1.1;
+          margin-bottom: 16px;
+        }
+        .own-case-copy {
+          color: #A8AEBB;
+          font-family: var(--font-inter), sans-serif;
+          line-height: 1.75;
+          margin-bottom: 22px;
+        }
+        .own-case-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #BEF264;
+          font-family: var(--font-inter), sans-serif;
+          font-weight: 600;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(190,242,100,0.35);
+          padding-bottom: 3px;
+        }
+        .own-case-link:hover { border-color: #BEF264; }
+        .own-case-flow {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          gap: 10px;
+        }
+        .own-case-flow li {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 14px;
+          border-radius: 10px;
+          background: rgba(248,250,252,0.04);
+          border: 1px solid rgba(248,250,252,0.1);
+          color: #E2E8F0;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.94rem;
+        }
+        .own-case-flow span {
+          flex: 0 0 auto;
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: #141B2D;
+          border: 1.5px solid rgba(190,242,100,0.45);
+          color: #BEF264;
+          font-family: var(--font-archivo), sans-serif;
+          font-weight: 800;
+          font-size: 0.72rem;
+        }
+        @media (max-width: 900px) {
+          .own-case { grid-template-columns: 1fr; }
+        }
         .result-highlights {
           display: grid;
           gap: 9px;
@@ -578,6 +668,27 @@ export default function ResultadosClient() {
               <CaseBlock key={item.business} item={item} index={index} />
             ))}
           </div>
+          <Reveal as="section" id="caso-propio" className="own-case" delay="0.1s">
+            <div>
+              <p className="own-case-kicker">Caso propio</p>
+              <h2 className="own-case-title">El sistema que vendemos, funcionando en nuestra propia agencia</h2>
+              <p className="own-case-copy">
+                Cada contacto que llega a este sitio se registra con su origen, el equipo recibe el aviso al instante,
+                la persona recibe su confirmación y la reunión se agenda sola en Google Calendar. Cada paso queda medido.
+              </p>
+              <Link href="/soluciones/sistemas-de-ventas-con-ia#caso" className="own-case-link">
+                Ver cómo funciona <ArrowIcon />
+              </Link>
+            </div>
+            <ol className="own-case-flow" aria-label="Pasos del sistema">
+              {["Llega el contacto", "Se registra solo", "Aviso y confirmación", "Agenda automática", "Todo medido"].map((step, index) => (
+                <li key={step}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </section>
 

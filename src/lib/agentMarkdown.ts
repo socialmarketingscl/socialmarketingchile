@@ -103,6 +103,10 @@ Casos reales de negocios que trabajaron con Social Marketing Chile.
 - Destapes Oriente: +$3 millones facturados en sus primeros 3 meses partiendo de 0 ventas; 68 consultas y 49 cotizaciones registradas desde octubre de 2026.
 - Amore: +4.617 seguidores desde cero en 5 meses y 3.685 visualizaciones mensuales en Instagram.
 
+## Caso propio
+
+- Sistema de captacion de la agencia: formularios y agenda registran cada contacto con su origen en Airtable, avisan al equipo y confirman a la persona con Resend, agendan en Google Calendar con Cal.com y miden cada conversion en GA4. Detalle: ${BASE_URL}/soluciones/sistemas-de-ventas-con-ia#caso
+
 ## Contacto
 
 - Diagnostico gratuito: ${BASE_URL}/contacto#agenda

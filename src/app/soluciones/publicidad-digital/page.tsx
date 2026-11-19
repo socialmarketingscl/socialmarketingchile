@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/templates/ServicePageTemplate";
-import { createServiceMetadata, SERVICE_PAGES } from "@/lib/services";
+import { createServiceMetadata, SERVICE_PAGES, serviceFaqSchema } from "@/lib/services";
 
 const service = SERVICE_PAGES["publicidad-digital"];
 
@@ -14,7 +14,10 @@ const schema = {
       name: "Publicidad digital y captación de clientes",
       serviceType: "Digital Advertising",
       provider: { "@id": "https://socialmarketingchile.cl/#organization" },
-      areaServed: { "@type": "Country", name: "Chile" },
+      areaServed: [
+        { "@type": "City", name: "Santiago" },
+        { "@type": "Country", name: "Chile" },
+      ],
       url: "https://socialmarketingchile.cl/soluciones/publicidad-digital",
       inLanguage: "es-CL",
     },
@@ -29,6 +32,7 @@ const schema = {
           item: "https://socialmarketingchile.cl/soluciones/publicidad-digital" },
       ],
     },
+    ...serviceFaqSchema(service),
   ],
 };
 

@@ -5,6 +5,21 @@ export type ServiceIncludeItem = {
   descripcion: string;
 };
 
+export type ServiceMetric = { value: string; label: string };
+
+export type ServiceCase = {
+  kicker: string;
+  titulo: string;
+  resumen: string;
+  metricas?: ServiceMetric[];
+  flujo?: { titulo: string; descripcion: string; herramienta?: string }[];
+  cita?: { texto: string; autor: string };
+  href?: string;
+  hrefLabel?: string;
+};
+
+export type ServiceFaq = { pregunta: string; respuesta: string };
+
 export type ServicePageData = {
   slug: string;
   href: string;
@@ -19,6 +34,13 @@ export type ServicePageData = {
   indicadores: string[];
   cta: string;
   guiaCta?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  resumenCorto?: string;
+  caso?: ServiceCase;
+  herramientas?: string[];
+  faqs?: ServiceFaq[];
+  relacionados?: string[];
 };
 
 export const SERVICE_LINKS = [
@@ -48,7 +70,7 @@ export const SERVICE_LINKS = [
   },
 ];
 
-export const SERVICE_PAGES: Record<string, ServicePageData> = {
+const BASE_SERVICE_PAGES: Record<string, ServicePageData> = {
   "estrategia-y-consultoria": {
     slug: "estrategia-y-consultoria",
     href: "/soluciones/estrategia-y-consultoria",
@@ -425,9 +447,9 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
           "Asistentes virtuales que responden, califican y agendan sin intervención manual.",
       },
       {
-        titulo: "CRM para pymes",
+        titulo: "CRM a la medida",
         descripcion:
-          "Sistema de gestión de clientes adaptado a negocios pequeños y medianos.",
+          "Registro y seguimiento de clientes adaptado al tamaño y la forma de vender de tu negocio.",
       },
       {
         titulo: "Calificación automática de leads",
@@ -473,18 +495,357 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
   },
 };
 
+/* ============================================================
+   Contenido ampliado de cada servicio: SEO (meta), caso real,
+   herramientas, preguntas frecuentes y servicios relacionados.
+   Regla: solo casos y cifras reales publicados en /resultados.
+   ============================================================ */
+const SERVICE_EXTRAS: Record<string, Partial<ServicePageData>> = {
+  "estrategia-y-consultoria": {
+    metaTitle: "Consultoría de marketing digital en Santiago | Social Marketing",
+    metaDescription:
+      "Consultoría de marketing digital en Santiago: diagnóstico, prioridades y plan de acción antes de invertir en campañas, web o contenido.",
+    resumenCorto: "Diagnóstico, prioridades y plan de acción antes de invertir.",
+    caso: {
+      kicker: "Caso real · Destapes Oriente",
+      titulo: "De una empresa sin ventas a +$3 millones facturados en 3 meses",
+      resumen:
+        "Destapes Oriente partió sin clientes propios ni presencia digital. Lo primero no fue lanzar anuncios: fue ordenar el camino. Marca, sitio con cotizador, Google Business, contenido grabado en terreno y recién después campañas, con un registro para saber de dónde llega cada cliente.",
+      metricas: [
+        { value: "+$3 millones", label: "facturados en sus primeros 3 meses, partiendo de 0 ventas" },
+        { value: "68", label: "consultas registradas desde octubre" },
+      ],
+      href: "/resultados#destapes-oriente",
+    },
+    herramientas: ["Google Analytics 4", "Microsoft Clarity", "Google Search Console", "Google Sheets", "Meta Business Suite"],
+    faqs: [
+      {
+        pregunta: "¿Qué recibo al terminar la consultoría?",
+        respuesta:
+          "Un documento con el diagnóstico de tus canales, tu competencia directa, la propuesta de valor y un plan de acción priorizado. La idea es que sepas qué hacer primero, qué después y qué dejar de hacer.",
+      },
+      {
+        pregunta: "¿Necesito tener redes o sitio web para empezar?",
+        respuesta:
+          "No. Muchos negocios llegan desde cero y justamente ahí la estrategia evita gastar en el orden equivocado. Si ya tienes canales activos, los revisamos con datos reales.",
+      },
+      {
+        pregunta: "¿La consultoría incluye ejecutar el plan?",
+        respuesta:
+          "No por defecto. La consultoría entrega la dirección. Si quieres que lo ejecutemos nosotros, lo cotizamos por separado con publicidad, contenido, web o automatización según lo que salga prioritario.",
+      },
+      {
+        pregunta: "¿Trabajan solo con negocios de Santiago?",
+        respuesta:
+          "Nuestra oficina está en Vitacura y la mayoría de los clientes son de Santiago, pero la consultoría funciona por videollamada para negocios de todo Chile.",
+      },
+      {
+        pregunta: "¿Cómo parte el proceso?",
+        respuesta:
+          "Con un diagnóstico gratuito de 30 minutos. Revisamos tu negocio y tus canales, y te decimos con honestidad si la consultoría es lo que necesitas o si conviene partir por otra cosa.",
+      },
+    ],
+    relacionados: ["publicidad-digital", "posicionamiento-en-google", "sistemas-de-ventas-con-ia"],
+  },
+  "publicidad-digital": {
+    metaTitle: "Agencia de Meta Ads y Google Ads en Santiago | Social Marketing",
+    metaDescription:
+      "Campañas de Meta Ads y Google Ads en Santiago para generar consultas reales, con medición de cada contacto y seguimiento hasta la venta.",
+    resumenCorto: "Meta Ads y Google Ads medidos por consultas y ventas, no por clics.",
+    caso: {
+      kicker: "Caso real · Destapes Oriente",
+      titulo: "Campañas que se miden en consultas y cotizaciones, no en clics",
+      resumen:
+        "Para Destapes Oriente activamos Google Ads y Meta Ads junto a un registro de consultas: cada contacto queda anotado con su origen, lo que se cotizó y si se cerró. Así se decide dónde poner el presupuesto con datos y no con intuición.",
+      metricas: [
+        { value: "68", label: "consultas registradas desde octubre" },
+        { value: "$8,4 millones", label: "en 49 cotizaciones enviadas" },
+      ],
+      href: "/resultados#destapes-oriente",
+    },
+    herramientas: ["Meta Ads", "Google Ads", "Google Tag Manager", "Google Analytics 4", "Píxel de Meta", "Google Sheets"],
+    faqs: [
+      {
+        pregunta: "¿Cuánto tengo que invertir en publicidad?",
+        respuesta:
+          "Depende de tu rubro, tu zona y cuántos clientes puedes atender. Lo definimos en el diagnóstico con un presupuesto de prueba y lo ajustamos según el costo real por consulta. La inversión en anuncios se paga directo a Meta o Google, aparte de nuestra gestión.",
+      },
+      {
+        pregunta: "¿Meta Ads o Google Ads: cuál me conviene?",
+        respuesta:
+          "Google capta a quien ya está buscando lo que vendes. Meta genera demanda en personas que todavía no te buscan. Para servicios urgentes suele partir Google; para productos visuales, Meta. Muchas veces se combinan.",
+      },
+      {
+        pregunta: "¿Cómo sé si las campañas están funcionando?",
+        respuesta:
+          "Configuramos la medición antes de lanzar: formularios, clics a WhatsApp y llamadas quedan registrados como conversiones. Te reportamos consultas y costo por consulta, no solo alcance o clics.",
+      },
+      {
+        pregunta: "¿Quién crea los anuncios?",
+        respuesta:
+          "Nosotros. Escribimos los textos, diseñamos las piezas y, cuando el proyecto lo pide, grabamos video en terreno. Los anuncios con material real del negocio suelen generar más confianza que las imágenes genéricas.",
+      },
+      {
+        pregunta: "¿Puedo pausar las campañas cuando quiera?",
+        respuesta:
+          "Sí. Las cuentas publicitarias quedan a nombre de tu negocio, así que el control y el historial siempre son tuyos.",
+      },
+    ],
+    relacionados: ["sistemas-de-ventas-con-ia", "posicionamiento-en-google", "gestion-de-redes-sociales"],
+  },
+  "posicionamiento-en-google": {
+    metaTitle: "SEO y posicionamiento en Google en Santiago | Social Marketing",
+    metaDescription:
+      "Posicionamiento en Google y en buscadores con IA para negocios de Santiago: SEO local, Google Business Profile y contenido que responde lo que buscan tus clientes.",
+    resumenCorto: "SEO local, Google Business y visibilidad en buscadores con IA.",
+    caso: {
+      kicker: "Caso real · Ríos Eventos",
+      titulo: "Un negocio de 9 años que empezó a recibir clientes desde Google",
+      resumen:
+        "Ríos Eventos dependía del boca a boca. Construimos su sitio web, activamos SEO local y ordenamos su presencia en Google para que quien busca servicios para eventos los encuentre y los pueda contactar de inmediato.",
+      metricas: [
+        { value: "+56%", label: "en eventos tras publicar el sitio web" },
+      ],
+      href: "/resultados#rios-eventos",
+    },
+    herramientas: ["Google Search Console", "Google Business Profile", "Google Analytics 4", "Schema.org", "Next.js"],
+    faqs: [
+      {
+        pregunta: "¿Cuánto se demora en verse el posicionamiento?",
+        respuesta:
+          "El SEO es acumulativo. Los ajustes técnicos y de Google Business pueden mostrar movimiento en semanas, pero posicionar búsquedas competitivas toma meses de trabajo constante. Te mostramos el avance con datos de Search Console.",
+      },
+      {
+        pregunta: "¿Qué es el SEO local?",
+        respuesta:
+          "Es aparecer cuando alguien busca tu servicio en tu zona, por ejemplo en Google Maps o en búsquedas con tu comuna. Se trabaja con tu perfil de Google Business, reseñas, datos de contacto consistentes y páginas pensadas para cada zona.",
+      },
+      {
+        pregunta: "¿También trabajan la visibilidad en ChatGPT y otras IA?",
+        respuesta:
+          "Sí. Ordenamos la información de tu negocio con datos estructurados y contenido claro, para que los buscadores con IA puedan entender qué haces, dónde y para quién.",
+      },
+      {
+        pregunta: "¿Necesito un sitio web nuevo?",
+        respuesta:
+          "No siempre. Primero auditamos el que tienes. Si la base técnica no permite posicionar, te lo decimos y lo cotizamos aparte.",
+      },
+      {
+        pregunta: "¿Pueden garantizar el primer lugar en Google?",
+        respuesta:
+          "No, y desconfía de quien lo garantice. Nadie controla el algoritmo. Lo que sí podemos asegurar es un trabajo técnico y de contenido bien hecho, medido mes a mes.",
+      },
+    ],
+    relacionados: ["estrategia-y-consultoria", "publicidad-digital", "gestion-de-redes-sociales"],
+  },
+  "gestion-de-redes-sociales": {
+    metaTitle: "Gestión de redes sociales en Santiago | Social Marketing",
+    metaDescription:
+      "Gestión de Instagram, Facebook y TikTok para negocios de Santiago: línea editorial, contenido grabado en terreno y métricas que se conectan con ventas.",
+    resumenCorto: "Contenido con intención comercial, grabado en terreno cuando hace falta.",
+    caso: {
+      kicker: "Caso real · Amore",
+      titulo: "De vender solo por WhatsApp a una marca con comunidad propia",
+      resumen:
+        "Amore no tenía presencia en redes. Creamos su identidad, su Instagram desde cero y campañas en fechas clave como San Valentín, con contenido pensado para que el perfil genere consultas por sí solo.",
+      metricas: [
+        { value: "+4.617", label: "seguidores construidos desde cero" },
+        { value: "3.685", label: "visualizaciones mensuales en Instagram" },
+      ],
+      href: "/resultados#amore",
+    },
+    herramientas: ["Meta Business Suite", "Instagram", "Facebook", "Google Business Profile", "Filmmaker y dron en terreno"],
+    faqs: [
+      {
+        pregunta: "¿Cuántas publicaciones incluye al mes?",
+        respuesta:
+          "Depende del plan. Un mes típico combina reels, carruseles y piezas estáticas, más historias. Lo definimos según tu objetivo y la capacidad de producción del negocio.",
+      },
+      {
+        pregunta: "¿Ustedes graban el contenido?",
+        respuesta:
+          "Sí. Organizamos jornadas de grabación en terreno y, cuando el proyecto lo pide, sumamos filmmaker profesional y tomas con dron. El contenido real del negocio genera más confianza que el material de banco.",
+      },
+      {
+        pregunta: "¿Responden los mensajes y comentarios?",
+        respuesta:
+          "La gestión de comunidad se define en el plan. Para responder consultas de venta a cualquier hora recomendamos sumar automatización con IA, así nadie se queda esperando.",
+      },
+      {
+        pregunta: "¿Cómo miden si las redes funcionan?",
+        respuesta:
+          "Además del alcance y la interacción, medimos lo que importa al negocio: consultas que llegan desde redes, clics a WhatsApp y ventas atribuibles cuando hay registro.",
+      },
+      {
+        pregunta: "¿Tengo que aprobar el contenido antes de publicar?",
+        respuesta:
+          "Sí. Trabajamos con un calendario mensual que revisas y apruebas, así nada sale sin tu visto bueno.",
+      },
+    ],
+    relacionados: ["identidad-visual-y-marca", "publicidad-digital", "sistemas-de-ventas-con-ia"],
+  },
+  "identidad-visual-y-marca": {
+    metaTitle: "Branding e identidad visual en Santiago | Social Marketing",
+    metaDescription:
+      "Branding e identidad visual para negocios de Santiago: logo, paleta, tipografías, tono de voz y manual de marca para comunicar confianza en cada canal.",
+    resumenCorto: "Logo, sistema visual y manual de marca para comunicar confianza.",
+    caso: {
+      kicker: "Caso real · Ríos Eventos",
+      titulo: "Una marca a la altura de 9 años de experiencia",
+      resumen:
+        "Ríos Eventos tenía trayectoria pero no una imagen que la reflejara. Diseñamos su identidad visual completa y la llevamos a su sitio web y redes, para que cada punto de contacto transmitiera lo profesionales que ya eran.",
+      cita: {
+        texto:
+          "Social Marketing nos transformó exactamente en lo que queríamos. Entendieron todo lo que les pedimos, nos explicaron cada paso, y fue todo muy profesional, eficiente y eficaz.",
+        autor: "Catalina Prenafeta, Fundadora de Ríos Eventos",
+      },
+      metricas: [
+        { value: "+56%", label: "en eventos tras publicar el sitio web" },
+        { value: "1.567", label: "seguidores construidos con comunidad real" },
+      ],
+      href: "/resultados#rios-eventos",
+    },
+    faqs: [
+      {
+        pregunta: "¿Qué incluye un proyecto de identidad visual?",
+        respuesta:
+          "Logo y sus versiones, paleta de colores, tipografías, estilo gráfico y fotográfico, tono de voz y un manual de marca para que cualquier persona aplique la marca de forma correcta.",
+      },
+      {
+        pregunta: "¿Puedo mantener mi logo actual?",
+        respuesta:
+          "Sí. Si tu logo tiene valor para tus clientes, lo refinamos y construimos el sistema visual alrededor de él en vez de partir de cero.",
+      },
+      {
+        pregunta: "¿Cuántas propuestas me presentan?",
+        respuesta:
+          "Presentamos propuestas basadas en el diagnóstico y hacemos rondas de ajuste hasta llegar a la versión final. El número de rondas queda definido en la propuesta comercial.",
+      },
+      {
+        pregunta: "¿Me entregan los archivos editables?",
+        respuesta:
+          "Sí. Entregamos los archivos finales en los formatos necesarios para web, redes e impresión, junto al manual de aplicación.",
+      },
+      {
+        pregunta: "¿Incluye registrar la marca?",
+        respuesta:
+          "No. El registro legal de marca se hace en INAPI y no forma parte del servicio, aunque te orientamos sobre cuándo conviene hacerlo.",
+      },
+    ],
+    relacionados: ["gestion-de-redes-sociales", "estrategia-y-consultoria", "posicionamiento-en-google"],
+  },
+  "sistemas-de-ventas-con-ia": {
+    metaTitle: "Automatización de ventas con IA en Santiago | Social Marketing",
+    metaDescription:
+      "Automatización comercial con IA en Santiago: WhatsApp, agentes que califican y agendan, CRM y seguimiento para que ninguna consulta se pierda.",
+    description:
+      "Automatización de WhatsApp e Instagram, agentes de IA, CRM a la medida y sistemas de seguimiento comercial. Convierte más oportunidades sin depender de procesos manuales.",
+    resumenCorto: "Automatización, agentes de IA y CRM para que ninguna consulta se pierda.",
+    caso: {
+      kicker: "Caso propio · Social Marketing",
+      titulo: "El sistema que capta, ordena y mide los contactos de nuestra agencia",
+      resumen:
+        "Antes de venderlo, lo usamos. Cada persona que llega a este sitio entra al mismo sistema: sus datos se guardan con el canal de donde vino, el equipo recibe el aviso al instante, la persona recibe su confirmación y cada paso queda medido. Nadie copia datos a mano y ninguna consulta se queda en un correo sin leer.",
+      flujo: [
+        {
+          titulo: "Llega el contacto",
+          descripcion:
+            "Por el formulario, la descarga de la guía de IA o la agenda. Guardamos desde qué campaña o canal llegó la persona por primera vez.",
+          herramienta: "Formularios propios + UTM",
+        },
+        {
+          titulo: "Se registra solo",
+          descripcion: "Nombre, servicio de interés, origen y fecha quedan en una base ordenada, lista para el seguimiento.",
+          herramienta: "Airtable",
+        },
+        {
+          titulo: "Avisa y responde al instante",
+          descripcion: "El equipo recibe el aviso por correo y la persona recibe su confirmación o la guía, sin que nadie escriba.",
+          herramienta: "Resend",
+        },
+        {
+          titulo: "La reunión se agenda sola",
+          descripcion:
+            "La agenda muestra solo horarios libres, crea el evento con su videollamada y envía la invitación a ambos.",
+          herramienta: "Cal.com + Google Calendar + Meet",
+        },
+        {
+          titulo: "Todo queda medido",
+          descripcion:
+            "Formularios, descargas, clics a WhatsApp y reuniones confirmadas se registran como conversiones para saber qué canal trae clientes.",
+          herramienta: "GA4 + Google Tag Manager",
+        },
+      ],
+      href: "/contacto#agenda",
+      hrefLabel: "Pruébalo agendando tu diagnóstico",
+    },
+    herramientas: ["Make", "Claude API", "ManyChat", "Airtable", "Cal.com", "Resend", "WhatsApp Business", "Google Sheets"],
+    faqs: [
+      {
+        pregunta: "¿Qué se puede automatizar en mi proceso de ventas?",
+        respuesta:
+          "Lo repetitivo: responder preguntas frecuentes, pedir los datos de cada consulta, registrar contactos, agendar reuniones, enviar confirmaciones y recordar el seguimiento. Lo que requiere criterio sigue en manos de tu equipo.",
+      },
+      {
+        pregunta: "¿Un agente de IA reemplaza a mi equipo de ventas?",
+        respuesta:
+          "No. El agente responde al instante, ordena la información y deriva a una persona cuando hay una oportunidad real. Tu equipo deja de perder tiempo en tareas manuales y se enfoca en cerrar.",
+      },
+      {
+        pregunta: "¿Funciona con WhatsApp?",
+        respuesta:
+          "Sí. Trabajamos flujos para WhatsApp e Instagram que responden, califican y derivan consultas. La integración exacta depende de la cuenta y del volumen de mensajes de tu negocio.",
+      },
+      {
+        pregunta: "¿Necesito comprar un CRM caro?",
+        respuesta:
+          "No. Armamos el registro y el seguimiento con herramientas como Airtable o Google Sheets cuando eso basta, y solo recomendamos un CRM mayor si tu operación lo necesita.",
+      },
+      {
+        pregunta: "¿Qué pasa si algo falla?",
+        respuesta:
+          "Antes de lanzar probamos el sistema con escenarios reales y después lo monitoreamos. Si una integración falla, los datos no se pierden y lo corregimos.",
+      },
+    ],
+    relacionados: ["publicidad-digital", "estrategia-y-consultoria", "gestion-de-redes-sociales"],
+  },
+};
+
+export const SERVICE_PAGES: Record<string, ServicePageData> = Object.fromEntries(
+  Object.entries(BASE_SERVICE_PAGES).map(([slug, base]) => [slug, { ...base, ...SERVICE_EXTRAS[slug] }]),
+);
+
 export function createServiceMetadata(service: ServicePageData): Metadata {
+  const title = service.metaTitle ?? service.title;
+  const description = service.metaDescription ?? service.description;
   return {
-    title: { absolute: service.title },
-    description: service.description,
+    title: { absolute: title },
+    description,
     alternates: {
       canonical: service.href,
     },
     openGraph: {
-      title: service.title,
-      description: service.description,
+      title,
+      description,
       type: "website",
       url: service.href,
+      locale: "es_CL",
     },
   };
+}
+
+/** Nodo FAQPage para el JSON-LD de cada servicio (mismas preguntas visibles en la página). */
+export function serviceFaqSchema(service: ServicePageData) {
+  if (!service.faqs?.length) return [];
+  return [
+    {
+      "@type": "FAQPage",
+      "@id": `https://socialmarketingchile.cl${service.href}#faq`,
+      mainEntity: service.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.pregunta,
+        acceptedAnswer: { "@type": "Answer", text: faq.respuesta },
+      })),
+    },
+  ];
 }

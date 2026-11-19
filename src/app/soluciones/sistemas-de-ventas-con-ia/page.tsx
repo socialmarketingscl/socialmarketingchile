@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ServicePageTemplate from "@/components/templates/ServicePageTemplate";
-import { createServiceMetadata, SERVICE_PAGES } from "@/lib/services";
+import { createServiceMetadata, SERVICE_PAGES, serviceFaqSchema } from "@/lib/services";
 
 const service = SERVICE_PAGES["sistemas-de-ventas-con-ia"];
 
@@ -14,7 +14,10 @@ const schema = {
       name: "Sistemas de ventas y conversión con inteligencia artificial",
       serviceType: "Marketing Automation",
       provider: { "@id": "https://socialmarketingchile.cl/#organization" },
-      areaServed: { "@type": "Country", name: "Chile" },
+      areaServed: [
+        { "@type": "City", name: "Santiago" },
+        { "@type": "Country", name: "Chile" },
+      ],
       url: "https://socialmarketingchile.cl/soluciones/sistemas-de-ventas-con-ia",
       inLanguage: "es-CL",
     },
@@ -29,6 +32,7 @@ const schema = {
           item: "https://socialmarketingchile.cl/soluciones/sistemas-de-ventas-con-ia" },
       ],
     },
+    ...serviceFaqSchema(service),
   ],
 };
 
