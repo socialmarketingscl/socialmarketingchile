@@ -187,16 +187,8 @@ export default function GuiaIaPymesPage() {
             <p className="mt-6 max-w-2xl font-inter text-lg leading-relaxed text-[#CBD5E1] md:text-xl">
               Prompts, pasos y ejemplos prácticos para aplicar IA en ventas, atención al cliente, contenido, cotizaciones, seguimiento y organización, aunque estés empezando desde cero.
             </p>
-            <div className="mt-8">
-              <a
-                href="#formulario"
-                className="inline-flex rounded-full bg-[#BEF264] px-7 py-3.5 font-archivo text-base font-black text-[#0F172A] shadow-[0_12px_30px_rgba(190,242,100,0.22)] transition hover:bg-[#A3E635]"
-              >
-                Quiero descargar la guía gratis
-              </a>
-              <p className="mt-4 font-inter text-sm font-medium text-[#F8FAFC] md:text-base">
-                Recibirás la guía en tu correo.
-              </p>
+            <div id="formulario-hero" className="mt-8 max-w-[600px] scroll-mt-28">
+              <GuiaIaPymesForm ubicacion="hero" compact />
             </div>
           </div>
         </div>
@@ -256,7 +248,7 @@ export default function GuiaIaPymesPage() {
 
       <section id="formulario" className="scroll-mt-24 bg-[#F8FAFC] px-4 py-16 md:px-6 md:py-24">
         <div className="mx-auto max-w-[560px]">
-          <GuiaIaPymesForm />
+          <GuiaIaPymesForm ubicacion="pie" />
         </div>
       </section>
 

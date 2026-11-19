@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CONTACT, CTA_FINAL } from "@/lib/constants";
+import { CONTACT, CTA_FINAL, GUIA_IA } from "@/lib/constants";
 
 /* ============================================================
    CTAFinalSection — Sección 9
@@ -182,6 +182,19 @@ export default function CTAFinalSection() {
             }
           }
 
+        .guia-inline-link {
+          margin-top: 22px;
+          text-align: center;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.95rem;
+          color: #A8AEBB;
+        }
+        .guia-inline-link a {
+          color: #BEF264;
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
           .final-cta-tagline {
             font-size: 1.10rem;
           }
@@ -299,6 +312,11 @@ export default function CTAFinalSection() {
             {CTA_FINAL.ctaSecondary.label}
           </a>
         </div>
+
+        <p className="final-cta-reveal guia-inline-link">
+          {GUIA_IA.inlineLead}{" "}
+          <Link href={GUIA_IA.href}>{GUIA_IA.inlineLink}</Link>
+        </p>
 
       </div>
     </section>

@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { CONTACT, CTA_FINAL } from "@/lib/constants";
+import { CONTACT, CTA_FINAL, GUIA_IA } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
 import type { ServiceIncludeItem } from "@/lib/services";
 
@@ -17,6 +17,8 @@ type ServicePageTemplateProps = {
   proceso: string[];
   indicadores: string[];
   cta: string;
+  /** Muestra el enlace a la guía de IA en el cierre (servicios de entrada). */
+  guiaCta?: boolean;
 };
 
 function useReveal() {
@@ -116,6 +118,7 @@ export default function ServicePageTemplate({
   proceso,
   indicadores,
   cta,
+  guiaCta = false,
 }: ServicePageTemplateProps) {
   useEffect(() => {
     trackEvent("service_page_viewed", {
@@ -414,6 +417,19 @@ export default function ServicePageTemplate({
           line-height: 1.8;
         }
 
+        .guia-inline-link {
+          margin-top: 22px;
+          text-align: center;
+          font-family: var(--font-inter), sans-serif;
+          font-size: 0.95rem;
+          color: #A8AEBB;
+        }
+        .guia-inline-link a {
+          color: #BEF264;
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
         .service-actions {
           display: flex;
           justify-content: center;
@@ -584,6 +600,12 @@ export default function ServicePageTemplate({
                 Escribir por WhatsApp
               </a>
             </div>
+            {guiaCta && (
+              <p className="guia-inline-link">
+                {GUIA_IA.inlineLead}{" "}
+                <Link href={GUIA_IA.href}>{GUIA_IA.inlineLink}</Link>
+              </p>
+            )}
           </RevealBlock>
         </div>
       </section>

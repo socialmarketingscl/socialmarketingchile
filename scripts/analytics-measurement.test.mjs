@@ -103,3 +103,27 @@ test("both lead APIs preserve first-touch attribution in Airtable-bound data", (
   assert.match(guideRoute, /First touch:/);
   assert.match(guideRoute, /\[AIRTABLE_FIELDS\.source\]: leadSource/);
 });
+
+test("the AI guide is linked across the site and asks only for name and email", () => {
+  const guideForm = read("src/app/guia-ia-pymes/GuiaIaPymesForm.tsx");
+  const guidePage = read("src/app/guia-ia-pymes/page.tsx");
+  const guideRoute = read("src/app/api/lead-magnet/route.ts");
+  const constants = read("src/lib/constants.ts");
+  const home = read("src/app/page.tsx");
+  const ctaFinal = read("src/components/sections/CTAFinalSection.tsx");
+  const services = read("src/lib/services.ts");
+  const navbar = read("src/components/layout/Navbar.tsx");
+  const whatsapp = read("src/components/ui/WhatsAppButton.tsx");
+
+  assert.match(guideRoute, /const REQUIRED_FIELDS = \["name", "email"\] as const/);
+  assert.match(guideRoute, /if \(businessType\) airtableFields/);
+  assert.match(guideForm, /ubicacion,/);
+  assert.match(guidePage, /<GuiaIaPymesForm ubicacion="hero" compact \/>/);
+  assert.match(guidePage, /<GuiaIaPymesForm ubicacion="pie" \/>/);
+  assert.match(constants, /\{ label: "Guía gratuita de IA", href: "\/guia-ia-pymes" \}/);
+  assert.match(home, /<GuiaIaSection \/>/);
+  assert.match(ctaFinal, /GUIA_IA\.inlineLink/);
+  assert.equal((services.match(/guiaCta: true/g) || []).length, 2);
+  assert.match(navbar, /MINIMAL_HEADER_PATHS = new Set\(\["\/guia-ia-pymes"\]\)/);
+  assert.match(whatsapp, /if \(pathname === "\/guia-ia-pymes"\) return null/);
+});

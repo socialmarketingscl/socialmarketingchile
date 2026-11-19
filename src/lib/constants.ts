@@ -323,6 +323,18 @@ export const CTA_FINAL = {
   tagline: "Más que presencia digital, sistemas para crecer.",
 };
 
+/* ---- GUÍA DE IA (lead magnet) ---- */
+export const GUIA_IA = {
+  href: "/guia-ia-pymes",
+  eyebrow: "Guía gratuita",
+  title: "¿Todavía no es momento de una reunión? Parte aplicando IA por tu cuenta.",
+  body: "113 páginas con prompts, pasos y ejemplos para usar inteligencia artificial en ventas, WhatsApp, contenido y cotizaciones. Te llega gratis al correo.",
+  ctaLabel: "Descargar la guía gratis →",
+  note: "Solo te pedimos nombre y correo.",
+  inlineLead: "¿Prefieres partir por tu cuenta?",
+  inlineLink: "Descarga la guía gratuita de IA →",
+};
+
 /* ---- FOOTER ---- */
 export const FOOTER = {
   tagline: "Marketing Digital + Inteligencia Artificial aplicada a ventas y conversión.",
@@ -332,6 +344,7 @@ export const FOOTER = {
     { label: "Soluciones", href: "/soluciones" },
     { label: "Nosotros", href: "/nosotros" },
     { label: "Resultados", href: "/resultados" },
+    { label: "Guía gratuita de IA", href: "/guia-ia-pymes" },
     { label: "Contacto", href: "/contacto" },
   ],
   seoLocal: "Agencia de marketing digital e inteligencia artificial en Vitacura, Santiago.",

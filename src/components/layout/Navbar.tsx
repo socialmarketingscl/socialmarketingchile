@@ -3,10 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { NAV_LINKS, CONTACT } from "@/lib/constants";
 import { SERVICE_LINKS } from "@/lib/services";
 
+// Landings de captación: header mínimo (solo logo) para no abrir fugas
+// antes de la conversión.
+const MINIMAL_HEADER_PATHS = new Set(["/guia-ia-pymes"]);
+
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
@@ -34,6 +40,33 @@ export default function Navbar() {
     if (menuOpen) setSolutionsOpen(false);
     setMenuOpen(!menuOpen);
   };
+
+
+  if (pathname && MINIMAL_HEADER_PATHS.has(pathname)) {
+    return (
+      <header
+        style={{
+          position: "absolute", top: 0, left: 0, right: 0, zIndex: 50,
+          padding: "18px 20px",
+        }}
+      >
+        <Link
+          href="/"
+          style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}
+          aria-label="Social Marketing: ir al inicio"
+        >
+          <Image
+            src="/social-marketing-agencia-marketing-digital-ia.png"
+            alt="Social Marketing, agencia de marketing digital e inteligencia artificial"
+            width={1920}
+            height={373}
+            style={{ objectFit: "contain", width: "clamp(180px, 16vw, 260px)", height: "auto", display: "block" }}
+            priority
+          />
+        </Link>
+      </header>
+    );
+  }
 
   return (
     <>

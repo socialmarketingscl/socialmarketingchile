@@ -56,6 +56,9 @@ export default function WhatsAppButton() {
     return () => observer.disconnect();
   }, [pathname]);
 
+  // En landings de captación el botón compite con el formulario.
+  if (pathname === "/guia-ia-pymes") return null;
+
   return (
     <>
       <style>{`

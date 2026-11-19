@@ -18,6 +18,7 @@ export type ServicePageData = {
   proceso: string[];
   indicadores: string[];
   cta: string;
+  guiaCta?: boolean;
 };
 
 export const SERVICE_LINKS = [
@@ -116,6 +117,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       "Alineación entre estrategia propuesta y ejecución real",
     ],
     cta: "¿Tu negocio necesita dirección estratégica antes de ejecutar?",
+    guiaCta: true,
   },
   "publicidad-digital": {
     slug: "publicidad-digital",
@@ -467,6 +469,7 @@ export const SERVICE_PAGES: Record<string, ServicePageData> = {
       "Tasa de conversión de lead a cliente",
     ],
     cta: "¿Tu negocio necesita convertir más sin depender de procesos manuales?",
+    guiaCta: true,
   },
 };
 

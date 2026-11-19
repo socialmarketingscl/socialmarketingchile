@@ -22,6 +22,7 @@ import ComoTrabajamosSection    from "@/components/sections/ComoTrabajamosSectio
 import SolucionesSection        from "@/components/sections/SolucionesSection";
 import MarketingIASection       from "@/components/sections/MarketingIASection";
 import ResultadosSection        from "@/components/sections/ResultadosSection";
+import GuiaIaSection            from "@/components/sections/GuiaIaSection";
 import FAQSection               from "@/components/sections/FAQSection";
 import ParaQuienSection         from "@/components/sections/ParaQuienSection";
 import CTAFinalSection          from "@/components/sections/CTAFinalSection";
@@ -102,6 +103,7 @@ export default function HomePage() {
         <SolucionesSection />
         <MarketingIASection />
         <ResultadosSection />
+        <GuiaIaSection />
         <ParaQuienSection />
         <FAQSection />
         <CTAFinalSection />

@@ -14,16 +14,15 @@ type LeadMagnetPayload = {
   referrer?: unknown;
 };
 
-const REQUIRED_FIELDS = ["name", "businessName", "email", "whatsapp", "businessType"] as const;
+// Solo nombre y email son obligatorios: rubro, negocio y WhatsApp son opcionales
+// para reducir la fricción de la descarga.
+const REQUIRED_FIELDS = ["name", "email"] as const;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LEAD_MAGNET_SOURCE = "guia_ia_pymes";
 
 const REQUIRED_FIELD_LABELS: Record<(typeof REQUIRED_FIELDS)[number], string> = {
   name: "Nombre",
-  businessName: "Nombre negocio",
   email: "Email",
-  whatsapp: "WhatsApp",
-  businessType: "Rubro",
 };
 
 const AIRTABLE_FIELDS = {
@@ -141,17 +140,20 @@ export async function POST(request: Request) {
   }
 
   const createdAt = new Date().toISOString();
-  const airtableFields = {
+  const airtableFields: Record<string, string> = {
     [AIRTABLE_FIELDS.name]: name,
-    [AIRTABLE_FIELDS.businessName]: businessName,
     [AIRTABLE_FIELDS.email]: email,
-    [AIRTABLE_FIELDS.whatsapp]: whatsapp,
-    [AIRTABLE_FIELDS.businessType]: businessType,
     [AIRTABLE_FIELDS.team]: "Social Marketing",
     [AIRTABLE_FIELDS.source]: leadSource,
     [AIRTABLE_FIELDS.date]: createdAt,
     [AIRTABLE_FIELDS.status]: "Nuevo",
   };
+
+  // Los campos opcionales solo se envían con valor: un string vacío puede ser
+  // rechazado por Airtable en campos de selección.
+  if (businessName) airtableFields[AIRTABLE_FIELDS.businessName] = businessName;
+  if (whatsapp) airtableFields[AIRTABLE_FIELDS.whatsapp] = whatsapp;
+  if (businessType) airtableFields[AIRTABLE_FIELDS.businessType] = businessType;
 
   try {
     const airtableResponse = await fetch(
