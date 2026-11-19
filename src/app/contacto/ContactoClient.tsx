@@ -644,6 +644,7 @@ export default function ContactoClient() {
           .contact-booking-card { margin-top: 12px; }
         }
         @media (max-width: 640px) {
+          .contact-page { padding-bottom: 88px; }
           .contact-shell { width: min(100% - 36px, 1120px); }
           .contact-hero { padding-top: 104px; }
           .contact-hero-grid { gap: 28px; }

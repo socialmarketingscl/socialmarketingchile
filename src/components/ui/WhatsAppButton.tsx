@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { CONTACT } from "@/lib/constants";
 
 const WHATSAPP_HREF = CONTACT.whatsappUrlWithMessage;
@@ -20,6 +22,40 @@ function WhatsAppIcon() {
 }
 
 export default function WhatsAppButton() {
+  const [isProtectedAreaVisible, setIsProtectedAreaVisible] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const protectedAreas = document.querySelectorAll<HTMLElement>(
+      "#hero, .contact-page #agenda, .contact-page form",
+    );
+
+    if (protectedAreas.length === 0) {
+      const frame = window.requestAnimationFrame(() => setIsProtectedAreaVisible(false));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    const visibleAreas = new Set<Element>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visibleAreas.add(entry.target);
+          } else {
+            visibleAreas.delete(entry.target);
+          }
+        }
+
+        setIsProtectedAreaVisible(visibleAreas.size > 0);
+      },
+      { threshold: 0 },
+    );
+
+    protectedAreas.forEach((area) => observer.observe(area));
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
     <>
       <style>{`
@@ -42,7 +78,9 @@ export default function WhatsAppButton() {
           font-weight: 700;
           line-height: 1;
           text-decoration: none;
-          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+          opacity: 1;
+          visibility: visible;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, opacity 0.2s ease, visibility 0.2s ease;
         }
 
         .floating-whatsapp-bar:hover {
@@ -72,6 +110,13 @@ export default function WhatsAppButton() {
           .floating-whatsapp-text {
             display: none;
           }
+
+          .floating-whatsapp-bar.is-hidden-on-mobile {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(12px) scale(0.92);
+          }
         }
       `}</style>
 
@@ -79,7 +124,7 @@ export default function WhatsAppButton() {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
-        className="floating-whatsapp-bar"
+        className={`floating-whatsapp-bar${isProtectedAreaVisible ? " is-hidden-on-mobile" : ""}`}
         aria-label="Escríbenos por WhatsApp"
       >
         <WhatsAppIcon />

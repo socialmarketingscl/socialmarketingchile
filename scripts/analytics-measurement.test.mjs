@@ -12,6 +12,20 @@ test("the homepage hero exposes a stable analytics id", () => {
   assert.match(hero, /<section\s+[\s\S]*?id="hero"/);
 });
 
+test("the floating WhatsApp button hides on mobile while the homepage hero is visible", () => {
+  const whatsappButton = read("src/components/ui/WhatsAppButton.tsx");
+  const contactPage = read("src/app/contacto/ContactoClient.tsx");
+
+  assert.match(whatsappButton, /"#hero, \.contact-page #agenda, \.contact-page form"/);
+  assert.match(whatsappButton, /new IntersectionObserver/);
+  assert.match(whatsappButton, /setIsProtectedAreaVisible\(visibleAreas\.size > 0\)/);
+  assert.match(whatsappButton, /usePathname\(\)/);
+  assert.match(whatsappButton, /\[pathname\]/);
+  assert.match(whatsappButton, /\.floating-whatsapp-bar\.is-hidden-on-mobile/);
+  assert.match(whatsappButton, /@media \(max-width: 767px\)/);
+  assert.match(contactPage, /\.contact-page \{ padding-bottom: 88px; \}/);
+});
+
 test("only successful lead actions are available as GTM conversion events", () => {
   const events = read("src/lib/gtm-events.ts");
   const analyticsEvents = read("src/components/analytics/AnalyticsEvents.tsx");
