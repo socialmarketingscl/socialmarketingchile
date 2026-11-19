@@ -266,14 +266,14 @@ export const RESULTADOS = {
     },
     {
       quote:
-        "Desde el primer momento entendieron lo que necesitábamos. Antes dependíamos del contacto directo por recomendaciones, pero ahora tenemos una presencia digital mucho más ordenada y preparada para recibir nuevos clientes. No solo nos hicieron una página, nos ayudaron a construir una base comercial más profesional.",
-      author: "Jason Vargas",
-      role: "Dueño de Gasfitería y Destapes",
+        "Soy Nicolás, dueño de Destapes Oriente, y recomiendo totalmente a Social Marketing. Nos han ayudado con la página web, las redes sociales, fotografías, videos y campañas en Google. Hoy mostramos nuestro trabajo de una forma mucho más profesional y organizada. Durante este proceso hemos recibido consultas, enviado cotizaciones y concretado trabajos. Valoro mucho su compromiso, la comunicación cercana y la disposición para buscar mejoras para nuestro negocio.",
+      author: "Nicolás Martínez",
+      role: "Dueño de Destapes Oriente",
       metrics: [
-        { value: "+203%", label: "visualizaciones orgánicas en redes sociales" },
+        { value: "+$3 millones", label: "facturados en sus primeros 3 meses, partiendo de 0 ventas" },
       ],
-      services: ["Logo", "Sitio web", "Formulario + WhatsApp", "Gestión de redes sociales", "Campañas", "Asesoría"],
-      industry: "Servicios técnicos de gasfitería",
+      services: ["Marca", "Sitio web", "Redes sociales", "Foto y video", "Google Ads", "Meta Ads"],
+      industry: "Destapes y soluciones sanitarias",
     },
   ],
   secondaryCards: [

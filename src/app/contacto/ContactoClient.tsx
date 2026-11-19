@@ -201,7 +201,7 @@ function DestapesTestimonial() {
         <strong>Nicolás, dueño de Destapes Oriente</strong>
         <span>Servicio de destapes</span>
       </footer>
-      <a href="/resultados">Ver el caso completo <span aria-hidden="true">→</span></a>
+      <a href="/resultados#destapes-oriente">Ver el caso completo <span aria-hidden="true">→</span></a>
     </blockquote>
   );
 }

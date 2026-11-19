@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { test } from "node:test";
 
 function read(path) {
@@ -138,4 +138,24 @@ test("the Instagram section loads embeds only on demand and sits after Para qui√
   assert.match(section, /trackEvent\("video_reproducido"/);
   assert.match(section, /aria-modal="true"/);
   assert.match(config, /frame-src[^"]*https:\/\/www\.instagram\.com/);
+});
+
+test("cases show Destapes Oriente with video and Amore with an on-demand reel", () => {
+  const page = read("src/app/resultados/ResultadosClient.tsx");
+  const home = read("src/components/sections/ResultadosSection.tsx");
+  const caseVideo = read("src/components/ui/CaseVideo.tsx");
+  const constants = read("src/lib/constants.ts");
+  const contacto = read("src/app/contacto/ContactoClient.tsx");
+
+  for (const source of [page, home, constants]) {
+    assert.doesNotMatch(source, /Gasfiter[i√≠]a y Destapes 24H|Jason Vargas/);
+  }
+  assert.match(page, /slug: "destapes-oriente"/);
+  assert.match(page, /src: "\/videos\/destapes-oriente-terreno\.mp4"/);
+  assert.match(page, /id: "DFWfRRvvSrJ"/);
+  assert.match(home, /video: DESTAPES_ORIENTE_VIDEO/);
+  assert.match(caseVideo, /preload="none"/);
+  assert.match(caseVideo, /\{playing \? \(\s*<iframe/);
+  assert.match(contacto, /href="\/resultados#destapes-oriente"/);
+  assert.ok(existsSync(new URL("../public/videos/destapes-oriente-terreno.mp4", import.meta.url)));
 });

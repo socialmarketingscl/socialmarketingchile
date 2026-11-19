@@ -56,7 +56,7 @@ Sistemas digitales para captar, ordenar y convertir clientes.
 ## Casos de resultado
 
 - Rios Eventos: +56% en eventos y +627% de alcance organico.
-- Gasfiteria y Destapes: +203% de alcance organico.
+- Destapes Oriente: +$3 millones facturados en 3 meses, partiendo de 0 ventas.
 - Amore: +4.617 seguidores construidos desde cero.
 
 ## Donde seguir
@@ -100,7 +100,7 @@ Casos reales de negocios que trabajaron con Social Marketing Chile.
 ## Casos destacados
 
 - Rios Eventos: +56% en eventos en 3 meses y +627% de alcance organico en 6 meses.
-- Gasfiteria y Destapes: +203% de alcance organico en 4 meses.
+- Destapes Oriente: +$3 millones facturados en sus primeros 3 meses partiendo de 0 ventas; 68 consultas y 49 cotizaciones registradas desde octubre de 2026.
 - Amore: +4.617 seguidores desde cero en 5 meses y 3.685 visualizaciones mensuales en Instagram.
 
 ## Contacto

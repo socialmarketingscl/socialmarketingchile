@@ -6,14 +6,14 @@ export const metadata: Metadata = {
     absolute: "Resultados — Casos de Éxito | Social Marketing",
   },
   description:
-    "Casos reales: Ríos Eventos +56% en eventos, Gasfitería y Destapes +627% en alcance, Amore +4.617 seguidores. Marketing digital que funciona.",
+    "Casos reales en Santiago: Ríos Eventos +56% en eventos, Destapes Oriente +$3 millones facturados en 3 meses partiendo de 0 ventas, Amore +4.617 seguidores.",
   alternates: {
     canonical: "/resultados",
   },
   openGraph: {
     title: "Resultados — Casos de Éxito | Social Marketing",
     description:
-      "Casos reales: Ríos Eventos +56% en eventos, Gasfitería y Destapes +627% en alcance, Amore +4.617 seguidores. Marketing digital que funciona.",
+      "Casos reales en Santiago: Ríos Eventos +56% en eventos, Destapes Oriente +$3 millones facturados en 3 meses partiendo de 0 ventas, Amore +4.617 seguidores.",
     type: "website",
     url: "/resultados",
   },

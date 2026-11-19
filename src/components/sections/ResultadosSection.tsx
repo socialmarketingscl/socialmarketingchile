@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RESULTADOS } from "@/lib/constants";
+import CaseVideo, { type CaseVideoData } from "@/components/ui/CaseVideo";
 
 /* Amore no está en constants.ts — se define aquí */
-const AMORE_TESTIMONIAL = {
+const AMORE_TESTIMONIAL: TestimonialData = {
   quote:
     "Amore pasó de vender solo por WhatsApp a tener una presencia real en Instagram. Nos armaron la identidad visual, el contenido y las campañas en fechas clave. Hoy el perfil genera consultas solo, sin depender solo del boca a boca.",
   author: "Luciano Cataldo",
@@ -16,14 +17,26 @@ const AMORE_TESTIMONIAL = {
     { value: "3.685", label: "visualizaciones mensuales en Instagram" },
   ],
   services: ["Branding", "Gestión de redes sociales", "Meta Ads", "Contenido", "Campañas estacionales"],
+  video: {
+    kind: "instagram",
+    id: "DFWfRRvvSrJ",
+    poster: "/images/evidencia/amore-reel.webp",
+    title: "Reel de San Valentín de Amore",
+    description: "El reel más viral de Amore, creado para su campaña del 14 de febrero.",
+  },
 };
 
-/* Evidence images: índice coincide con orden de renderizado (Catalina, Jason, Amore) */
-const EVIDENCE: string[][] = [
-  ["/images/evidencia/Rios-Eventos-evidencia.jpeg"],
-  ["/images/evidencia/Gasfiteria-y-Destapes-evidencia.jpeg"],
-  ["/images/evidencia/Amore-evidencia-optimized.jpg"],
-];
+/* Evidencia: índice coincide con orden de renderizado (Ríos Eventos, Destapes Oriente, Amore).
+   Destapes Oriente y Amore muestran video en vez de imagen. */
+const EVIDENCE: string[][] = [["/images/evidencia/Rios-Eventos-evidencia.jpeg"], [], []];
+
+const DESTAPES_ORIENTE_VIDEO: CaseVideoData = {
+  kind: "file",
+  src: "/videos/destapes-oriente-terreno.mp4",
+  poster: "/images/evidencia/destapes-oriente-terreno.webp",
+  title: "Destapes Oriente en terreno",
+  description: "Video que grabamos para Destapes Oriente: su equipo trabajando en la azotea de un edificio en Santiago.",
+};
 
 interface TestimonialData {
   quote: string;
@@ -31,15 +44,12 @@ interface TestimonialData {
   role: string;
   metrics: { value: string; label: string }[];
   services: string[];
+  video?: CaseVideoData;
 }
 
 function getEvidenceAlt(src: string, index = 0) {
   if (src.includes("Rios-Eventos")) {
     return "Evidencia de resultados digitales del caso Ríos Eventos";
-  }
-
-  if (src.includes("Gasfiteria-y-Destapes")) {
-    return "Evidencia de resultados digitales del caso Gasfitería y Destapes";
   }
 
   if (src.includes("Amore")) {
@@ -273,7 +283,11 @@ function CompactCase({ data, evidenceImages }: { data: TestimonialData; evidence
       </div>
       <p className="results-quote">{data.quote}</p>
       <MetricList metrics={data.metrics} />
-      {evidenceImages.length > 0 && <EvidenceStrip images={evidenceImages} />}
+      {data.video ? (
+        <CaseVideo video={data.video} business={data.role} ubicacion="home_resultados" variant="compact" />
+      ) : (
+        evidenceImages.length > 0 && <EvidenceStrip images={evidenceImages} />
+      )}
       <div className="results-author-block">
         <p className="results-author">{data.author}</p>
         <p className="results-role">{data.role}</p>
@@ -299,7 +313,11 @@ export default function ResultadosSection() {
   const secondaryCases: TestimonialData[] = [
     {
       ...RESULTADOS.testimonials[1],
-      metrics: [{ value: "+203%", label: "alcance orgánico — en 4 meses" }],
+      metrics: [
+        { value: "+$3 millones", label: "facturados en 3 meses, desde 0 ventas" },
+        { value: "68", label: "consultas registradas desde octubre" },
+      ],
+      video: DESTAPES_ORIENTE_VIDEO,
     },
     AMORE_TESTIMONIAL,
   ];

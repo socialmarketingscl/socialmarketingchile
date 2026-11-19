@@ -5,8 +5,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CONTACT } from "@/lib/constants";
+import CaseVideo, { type CaseVideoData } from "@/components/ui/CaseVideo";
 
 type ResultCase = {
+  slug: string;
   business: string;
   subtitle: string;
   periodo: string;
@@ -16,11 +18,13 @@ type ResultCase = {
   metrics: { value: string; label: string }[];
   quote: string;
   author: string;
-  evidence: string;
+  evidence?: string;
+  video?: CaseVideoData;
 };
 
 const CASES: ResultCase[] = [
   {
+    slug: "rios-eventos",
     business: "Ríos Eventos",
     subtitle: "Planificación de eventos — Bar & Catering",
     periodo: "Marzo – Abril 2026",
@@ -40,25 +44,33 @@ const CASES: ResultCase[] = [
     evidence: "/images/evidencia/Rios-Eventos-evidencia.jpeg",
   },
   {
-    business: "Gasfitería y Destapes 24H",
-    subtitle: "Servicios de gasfitería — Santiago y Chillán",
-    periodo: "Mayo – Junio 2026",
-    tags: ["Logo", "Sitio web", "Formulario + WhatsApp", "Gestión de redes sociales", "Campañas", "Asesoría"],
+    slug: "destapes-oriente",
+    business: "Destapes Oriente",
+    subtitle: "Destapes y soluciones sanitarias en Santiago Oriente",
+    periodo: "Septiembre – Noviembre 2026",
+    tags: ["Marca", "Sitio web", "Gestión de redes sociales", "Foto y video en terreno", "Google Business Profile", "Google Ads", "Meta Ads", "Medición"],
     problem:
-      "Dependían del contacto directo por recomendaciones. No tenían presencia digital profesional ni un sistema para recibir y gestionar consultas de clientes nuevos.",
+      "Era una empresa nueva: sin ventas, sin clientes propios y sin presencia digital. En un rubro donde la urgencia manda y el cliente contacta al primero que le inspira confianza, necesitaban que los encontraran y les creyeran desde el primer mensaje.",
     work:
-      "Creamos su logo e identidad visual, construimos su sitio web con formulario de contacto integrado a WhatsApp, implementamos gestión de redes sociales y activamos campañas para generar consultas.",
+      "Construimos la marca y el sitio web con cotizador y WhatsApp, armamos las redes con foto y video en terreno, activamos Google Business Profile con un sistema de reseñas y lanzamos campañas en Google y Meta. Además dejamos un registro de consultas para saber de dónde llega cada cliente y cuánto se cotiza.",
     metrics: [
-      { value: "+203%", label: "visualizaciones orgánicas en redes sociales" },
-      { value: "17.200", label: "visualizaciones mensuales en Instagram" },
-      { value: "100%", label: "presencia digital profesional desde cero" },
+      { value: "+$3 millones", label: "facturados en sus primeros 3 meses, partiendo de 0 ventas" },
+      { value: "68", label: "consultas registradas desde octubre" },
+      { value: "$8,4 millones", label: "en 49 cotizaciones enviadas" },
     ],
     quote:
-      "Desde el primer momento entendieron lo que necesitábamos. Antes dependíamos del contacto directo por recomendaciones, pero ahora tenemos una presencia digital mucho más ordenada y preparada para recibir nuevos clientes.",
-    author: "Jason Vargas, Dueño de Gasfitería y Destapes",
-    evidence: "/images/evidencia/Gasfiteria-y-Destapes-evidencia.jpeg",
+      "Soy Nicolás, dueño de Destapes Oriente, y recomiendo totalmente a Social Marketing. Nos han ayudado con la página web, las redes sociales, fotografías, videos y campañas en Google. Hoy mostramos nuestro trabajo de una forma mucho más profesional y organizada. Durante este proceso hemos recibido consultas, enviado cotizaciones y concretado trabajos. Valoro mucho su compromiso, la comunicación cercana y la disposición para buscar mejoras para nuestro negocio.",
+    author: "Nicolás Martínez, Dueño de Destapes Oriente",
+    video: {
+      kind: "file",
+      src: "/videos/destapes-oriente-terreno.mp4",
+      poster: "/images/evidencia/destapes-oriente-terreno.webp",
+      title: "Destapes Oriente en terreno",
+      description: "Video que grabamos para Destapes Oriente: su equipo trabajando en la azotea de un edificio en Santiago.",
+    },
   },
   {
+    slug: "amore",
     business: "Amore",
     subtitle: "Florería y detalles — Santiago",
     periodo: "Octubre 2025 – Junio 2026",
@@ -75,7 +87,13 @@ const CASES: ResultCase[] = [
     quote:
       "Amore pasó de vender solo por WhatsApp a tener una presencia real en Instagram. Nos armaron la identidad visual, el contenido y las campañas en fechas clave. Hoy el perfil genera consultas solo, sin depender solo del boca a boca.",
     author: "Luciano Cataldo, Fundador de Amore",
-    evidence: "/images/evidencia/Amore-evidencia-optimized.jpg",
+    video: {
+      kind: "instagram",
+      id: "DFWfRRvvSrJ",
+      poster: "/images/evidencia/amore-reel.webp",
+      title: "Reel de San Valentín de Amore",
+      description: "El reel más viral de Amore, creado para su campaña del 14 de febrero.",
+    },
   },
 ];
 
@@ -109,7 +127,9 @@ function Reveal({
   className = "",
   delay = "0.2s",
   as = "div",
+  id,
 }: {
+  id?: string;
   children: ReactNode;
   className?: string;
   delay?: string;
@@ -120,6 +140,7 @@ function Reveal({
 
   return (
     <Component
+      id={id}
       ref={ref as never}
       className={`results-page-reveal${visible ? " is-visible" : ""}${className ? ` ${className}` : ""}`}
       style={{ transitionDelay: visible ? delay : "0s" }}
@@ -191,7 +212,7 @@ function CaseBlock({ item, index }: { item: ResultCase; index: number }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
-    <Reveal as="article" className="result-case" delay={`${0.12 + index * 0.08}s`}>
+    <Reveal as="article" id={item.slug} className="result-case" delay={`${0.12 + index * 0.08}s`}>
       <div className="result-case-content">
         <p className="result-case-kicker">Caso {String(index + 1).padStart(2, "0")}</p>
         <h2 className="result-case-title">{item.business}</h2>
@@ -224,16 +245,20 @@ function CaseBlock({ item, index }: { item: ResultCase; index: number }) {
         </blockquote>
       </div>
       <div className="result-evidence">
-        <button
-          type="button"
-          className="result-evidence-button"
-          onClick={() => setLightboxOpen(true)}
-          aria-label={`Abrir evidencia de ${item.business}`}
-        >
-          <Image src={item.evidence} alt={`Evidencia de resultados de ${item.business}`} width={620} height={760} />
-        </button>
+        {item.video ? (
+          <CaseVideo video={item.video} business={item.business} ubicacion="resultados_caso" />
+        ) : item.evidence ? (
+          <button
+            type="button"
+            className="result-evidence-button"
+            onClick={() => setLightboxOpen(true)}
+            aria-label={`Abrir evidencia de ${item.business}`}
+          >
+            <Image src={item.evidence} alt={`Evidencia de resultados de ${item.business}`} width={620} height={760} />
+          </button>
+        ) : null}
       </div>
-      {lightboxOpen && (
+      {lightboxOpen && item.evidence && (
         <Lightbox src={item.evidence} alt={`Evidencia de resultados de ${item.business}`} onClose={() => setLightboxOpen(false)} />
       )}
     </Reveal>
@@ -285,6 +310,7 @@ export default function ResultadosClient() {
           gap: clamp(44px, 6vw, 76px);
         }
         .result-case {
+          scroll-margin-top: 110px;
           display: grid;
           grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
           gap: clamp(28px, 4vw, 54px);
@@ -391,6 +417,8 @@ export default function ResultadosClient() {
           font-family: var(--font-inter), sans-serif;
           font-size: 0.88rem;
         }
+        .result-evidence .case-video figcaption { color: #475569; }
+        .result-evidence .case-video figcaption a { color: #0F172A; text-decoration: underline; }
         .result-evidence-button {
           display: block;
           width: 100%;
