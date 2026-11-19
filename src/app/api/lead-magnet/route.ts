@@ -1,3 +1,4 @@
+import { isRateLimited } from "@/lib/rateLimit";
 type LeadMagnetPayload = {
   name?: unknown;
   businessName?: unknown;
@@ -90,6 +91,10 @@ async function readErrorBody(response: Response) {
 }
 
 export async function POST(request: Request) {
+  if (isRateLimited(request, "lead-magnet")) {
+    return jsonError("Recibimos varios envíos seguidos. Espera unos minutos e inténtalo de nuevo.", 429);
+  }
+
   let payload: LeadMagnetPayload;
 
   try {

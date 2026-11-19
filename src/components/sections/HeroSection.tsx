@@ -12,42 +12,50 @@ const METRICS = [
   { end: 50, type: "plus", label: "negocios han confiado" },
 ];
 
+/* El valor final se renderiza en el servidor (lo ven Google, los agentes y
+   quien no tiene JavaScript). Solo si la métrica parte fuera de pantalla se
+   anima el conteo cuando entra al viewport, sin parpadeos. */
 function useCountUp(end: number, duration: number = 2000) {
-  const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [count, setCount] = useState(end);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const rect = element.getBoundingClientRect();
+    const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (alreadyVisible) return;
+
+    let frame = 0;
+    setCount(0);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          const startTime = performance.now();
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        const startTime = performance.now();
 
-          const animate = (currentTime: number) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.round(eased * end));
+        const animate = (currentTime: number) => {
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setCount(Math.round(eased * end));
+          if (progress < 1) frame = requestAnimationFrame(animate);
+        };
 
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            }
-          };
-
-          requestAnimationFrame(animate);
-        }
+        frame = requestAnimationFrame(animate);
       },
       { threshold: 0.5 },
     );
 
     observer.observe(element);
 
-    return () => observer.disconnect();
-  }, [end, duration, hasAnimated]);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [end, duration]);
 
   return { count, ref };
 }

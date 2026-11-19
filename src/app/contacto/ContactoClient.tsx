@@ -124,6 +124,10 @@ function ContactFormCard({
   return (
     <div className="contact-form-card">
       <form className="contact-form-grid" onSubmit={onSubmit}>
+        <label className="contact-honeypot" aria-hidden="true">
+          Sitio web
+          <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
         <label className="contact-field">
           <span className="contact-label">Nombre</span>
           <input className="contact-input" name="nombre" type="text" autoComplete="name" required />
@@ -237,6 +241,7 @@ export default function ContactoClient() {
       origen: "Sitio web Social Marketing",
       fechaIngreso: new Date().toISOString(),
       pageUrl: window.location.href,
+      website: String(formData.get("website") ?? ""),
       ...attribution,
     };
 
@@ -466,6 +471,7 @@ export default function ContactoClient() {
           border-color: #BEF264;
           box-shadow: 0 0 0 4px rgba(190,242,100,0.16);
         }
+        .contact-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
         .contact-form-grid { display: grid; gap: 18px; }
         .contact-optional {
           border-top: 1px solid #E2E8F0;

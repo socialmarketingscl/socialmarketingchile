@@ -113,7 +113,7 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Organization", "LocalBusiness"],
+      "@type": ["Organization", "ProfessionalService"],
       "@id": "https://socialmarketingchile.cl/#organization",
       name: "Social Marketing",
       legalName: "Social Marketing Chile",
@@ -132,8 +132,24 @@ const organizationSchema = {
         streetAddress: "Av. Pdte. Kennedy 5600, Of. 507",
         addressLocality: "Vitacura",
         addressRegion: "Región Metropolitana",
+        postalCode: "7650258",
         addressCountry: "CL",
       },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: -33.3992283,
+        longitude: -70.5756282,
+      },
+      hasMap: "https://www.google.com/maps/search/?api=1&query=Social+Marketing+Chile%2C+Av.+Pdte.+Kennedy+5600%2C+Vitacura",
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+      ],
+      knowsLanguage: "es-CL",
       contactPoint: [
         {
           "@type": "ContactPoint",
@@ -154,12 +170,12 @@ const organizationSchema = {
       email: "administracion@socialmarketingchile.cl",
       sameAs: [
         "https://www.instagram.com/socialmarketing_cl",
-        "https://share.google/oe8amNvyOkbtjiG0Q",
+        "https://www.google.com/search?kgmid=/g/11npxm4ztk",
       ],
-      areaServed: {
-        "@type": "Country",
-        name: "Chile",
-      },
+      areaServed: [
+        { "@type": "City", name: "Santiago" },
+        { "@type": "Country", name: "Chile" },
+      ],
       knowsAbout: [
         "Marketing Digital",
         "Publicidad Digital",
@@ -196,7 +212,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="es-CL"
       className={`${archivo.variable} ${instrumentSerif.variable} ${inter.variable}`}
     >
       <head>

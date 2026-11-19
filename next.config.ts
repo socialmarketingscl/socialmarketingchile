@@ -55,6 +55,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: false,
   images: {
+    formats: ["image/avif", "image/webp"],
     qualities: [75, 95],
   },
   experimental: {

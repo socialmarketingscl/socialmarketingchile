@@ -1,4 +1,7 @@
+import { isRateLimited } from "@/lib/rateLimit";
+
 type ContactPayload = {
+  website?: unknown;
   nombre?: unknown;
   empresa?: unknown;
   cargo?: unknown;
@@ -391,12 +394,21 @@ async function sendContactEmails(contact: ReturnType<typeof buildContactData>) {
 }
 
 export async function POST(request: Request) {
+  if (isRateLimited(request, "contact")) {
+    return jsonError("Recibimos varios envíos seguidos. Espera unos minutos o escríbenos por WhatsApp.", 429);
+  }
+
   let payload: ContactPayload;
 
   try {
     payload = (await request.json()) as ContactPayload;
   } catch {
     return jsonError("El cuerpo de la solicitud debe ser JSON válido.", 400);
+  }
+
+  // Honeypot: un humano nunca completa este campo oculto.
+  if (getString(payload.website)) {
+    return Response.json({ success: true }, { status: 200 });
   }
 
   const missingField = REQUIRED_FIELDS.find((field) => !getString(payload[field]));

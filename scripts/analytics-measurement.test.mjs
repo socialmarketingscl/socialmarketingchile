@@ -207,3 +207,23 @@ test("recursos hub publishes 8 articles with Article schema, sitemap and footer 
   assert.match(constants, /\{ label: "Recursos", href: "\/recursos" \}/);
   assert.doesNotMatch(llms, /socialmarketingchile\.cl\/[a-z-]+\/\)/);
 });
+
+test("technical hardening: local SEO schema, SSR counters, honeypot and rate limit", () => {
+  const layout = read("src/app/layout.tsx");
+  const hero = read("src/components/sections/HeroSection.tsx");
+  const contact = read("src/app/api/contact/route.ts");
+  const leadMagnet = read("src/app/api/lead-magnet/route.ts");
+  const contactForm = read("src/app/contacto/ContactoClient.tsx");
+  const config = read("next.config.ts");
+
+  assert.match(layout, /"@type": "GeoCoordinates"/);
+  assert.match(layout, /openingHoursSpecification/);
+  assert.match(layout, /lang="es-CL"/);
+  assert.doesNotMatch(layout, /share\.google/);
+  assert.match(hero, /useState\(end\)/);
+  assert.match(contact, /isRateLimited\(request, "contact"\)/);
+  assert.match(contact, /getString\(payload\.website\)/);
+  assert.match(leadMagnet, /isRateLimited\(request, "lead-magnet"\)/);
+  assert.match(contactForm, /name="website"/);
+  assert.match(config, /formats: \["image\/avif", "image\/webp"\]/);
+});

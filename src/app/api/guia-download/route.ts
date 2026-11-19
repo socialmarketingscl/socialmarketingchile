@@ -34,6 +34,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "x-forwarded-for": request.headers.get("x-forwarded-for") ?? "",
     },
     body: JSON.stringify(normalizedPayload),
   });
